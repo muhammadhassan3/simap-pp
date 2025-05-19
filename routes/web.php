@@ -83,3 +83,11 @@ Route::get('/penjadwalan_proyek/edit/{id}', [PenjadwalanProyekController::class,
 Route::put('/penjadwalan_proyek/update/{id}', [PenjadwalanProyekController::class, 'update']);
 Route::delete('/penjadwalan_proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete']);
 Route::get('/getSupervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor']);
+
+//Restu
+// Route utama evaluasi proyek
+Route::get('/evaluasi', [EvaluasiProyekController::class, 'index'])->name('evaluasi.index');
+Route::get('/evaluasi/{id}/edit', [EvaluasiProyekController::class, 'edit'])->name('evaluasi.edit');
+Route::put('/evaluasi/{id}', [EvaluasiProyekController::class, 'update'])->name('evaluasi.update');
+// Route untuk menambahkan otomatis proyek selesai ke evaluasi_proyek
+Route::get('/evaluasi/tambah-dari-proyek', [EvaluasiProyekController::class, 'tambahEvaluasiDariProyek']);
