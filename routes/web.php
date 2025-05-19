@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PengawasProyekController;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,6 @@ Route::delete('/customer/{id}/delete', [CustomerController::class, 'destroy'])->
 Route::get('/pengawas-proyek', [PengawasProyekController::class, 'index'])->name('pengawas-proyek.index');
 Route::get('/pengawas-proyek/{id}/edit', [PengawasProyekController::class, 'edit'])->name('pengawas-proyek.edit');
 Route::put('/pengawas-proyek/{id}', [PengawasProyekController::class, 'update'])->name('pengawas-proyek.update');
+
+//Arisa
+Route::resource('aktor', AktorController::class);
