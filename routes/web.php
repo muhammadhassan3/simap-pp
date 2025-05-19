@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PengawasProyekController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -25,3 +26,7 @@ Route::put('/customer/{id}/update', [CustomerController::class, 'update'])->name
 Route::delete('/customer/{id}/delete', [CustomerController::class, 'destroy'])->name('customer.delete');
 
 
+//Alin
+Route::get('/pengawas-proyek', [PengawasProyekController::class, 'index'])->name('pengawas-proyek.index');
+Route::get('/pengawas-proyek/{id}/edit', [PengawasProyekController::class, 'edit'])->name('pengawas-proyek.edit');
+Route::put('/pengawas-proyek/{id}', [PengawasProyekController::class, 'update'])->name('pengawas-proyek.update');
