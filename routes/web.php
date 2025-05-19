@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\ProyekDisetujuiController;
+use App\Http\Controllers\SewaAlatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -52,3 +53,11 @@ Route::post('store', [MarketingController::class, 'store'])->name('market.store'
 Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
 Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
 Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');
+
+//Hanny
+Route::get('/sewa-alat', [SewaAlatController::class, 'index']);
+Route::resource('sewa_alat', SewaAlatController::class);
+Route::post('/sewa_alat/store', [SewaAlatController::class, 'store'])->name('sewa_alat.store');
+Route::delete('/sewa_alat/{id}', [SewaAlatController::class, 'destroy'])->name('sewa_alat.destroy');
+Route::get('/sewa_alat/{id}/edit', [SewaAlatController::class, 'edit'])->name('sewa_alat.edit');
+Route::put('/sewa_alat/{id}', [SewaAlatController::class, 'update'])->name('sewa_alat.update');
