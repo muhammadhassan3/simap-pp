@@ -3,6 +3,7 @@
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\MonitoringProyekController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
@@ -61,3 +62,17 @@ Route::post('/sewa_alat/store', [SewaAlatController::class, 'store'])->name('sew
 Route::delete('/sewa_alat/{id}', [SewaAlatController::class, 'destroy'])->name('sewa_alat.destroy');
 Route::get('/sewa_alat/{id}/edit', [SewaAlatController::class, 'edit'])->name('sewa_alat.edit');
 Route::put('/sewa_alat/{id}', [SewaAlatController::class, 'update'])->name('sewa_alat.update');
+
+//Ilham
+// Route untuk mengarahkan ke tampilan index pada controller monitoring_proyek
+Route::get('/monitoring_proyek', [MonitoringProyekController::class, 'index']);
+// upload foto
+Route::post('/monitoring/upload-foto/{id}', [MonitoringProyekController::class, 'uploadFoto'])->name('monitoring.uploadFoto');
+
+Route::resource('monitoring_proyek', MonitoringProyekController::class);
+
+// Route untuk menampilkan form edit
+Route::get('/monitoring_proyek/{id}/edit', [MonitoringProyekController::class, 'edit'])->name('monitoring_proyek.edit');
+// Route untuk menyimpan perubahan
+Route::put('/monitoring_proyek/{id}', [MonitoringProyekController::class, 'update'])->name('monitoring_proyek.update');
+Route::get('monitoring_proyek/reset/{id}', [MonitoringProyekController::class, 'reset'])->name('monitoring_proyek.reset');
