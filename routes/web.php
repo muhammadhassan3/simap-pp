@@ -3,6 +3,7 @@
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PengawasProyekController;
+use App\Http\Controllers\ProyekDisetujuiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -34,3 +35,10 @@ Route::put('/pengawas-proyek/{id}', [PengawasProyekController::class, 'update'])
 
 //Arisa
 Route::resource('aktor', AktorController::class);
+
+//Farah
+Route::get('/proyekdisetujui', [ProyekDisetujuiController::class, 'index'])->name('proyekdisetujui.index');
+Route::get('/proyekdisetujui/{id}/edit', [ProyekDisetujuiController::class, 'edit'])->name('proyekdisetujui.edit');
+Route::put('/proyekdisetujui/{id}', [ProyekDisetujuiController::class, 'update'])->name('proyekdisetujui.update');
+
+Route::get('/proyekdisetujui/{id}/show', [ProyekDisetujuiController::class, 'show'])->name('proyekdisetujui.show');

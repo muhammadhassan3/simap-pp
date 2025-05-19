@@ -12,15 +12,22 @@ class PengajuanProposal extends Model
     protected $table = 'pengajuan_proposal';
     public $timestamps = false;
     protected $fillable = [
-        'file', 
-        'id_tempat_proyek', 
-        'tanggal_pengajuan', 
-        'nama_proyek', 
-        'keterangan'
+        'tanggal_pengajuan',
+        'nama_proyek',
+        'keterangan',
+        'id',
+        'file_proposal',
+        'harga',
+        'status_proposal'
     ];
 
     public function proyekDisetujui()
     {
         return $this->hasOne(ProyekDisetujui::class, 'id_pengajuan_proposal');
+    }
+
+    public function tempat_proyek()
+    {
+        return $this->belongsTo(TempatProyek::class, 'id_tempat_proyek');
     }
 }
