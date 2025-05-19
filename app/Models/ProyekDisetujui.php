@@ -11,9 +11,9 @@ class ProyekDisetujui extends Model
 
     protected $table = 'proyek_disetujui';
     protected $fillable = [
-        'id_pengajuan_proposal', 
-        'status', 
-        'tanggal_mulai', 
+        'id_pengajuan_proposal',
+        'status',
+        'tanggal_mulai',
         'tanggal_selesai'
     ];
 
@@ -25,5 +25,10 @@ class ProyekDisetujui extends Model
     public function timProyek()
     {
         return $this->hasMany(TimProyek::class, 'id_proyek_disetujui');
+    }
+
+    public function Monitoring_proyek()
+    {
+        return $this->hasMany(MonitoringProyek::class, 'id_proyek_disetujui');
     }
 }

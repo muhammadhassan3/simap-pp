@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('status', ['Tersedia', 'Dikerjakan','Batal','Selesai'])->default('Tersedia');
             $table->date('tanggal_mulai')->nullable();
             $table->date('tanggal_selesai')->nullable();
+
             $table->timestamps();
         });
     }

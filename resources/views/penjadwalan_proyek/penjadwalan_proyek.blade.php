@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jadwal Proyek</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- <div class="card-body"> -->
+                <h4 class="card-title mb-3">Penjadwalan Proyek</h4>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Tombol Tambah Jadwal (Kiri) -->
+                    <a class="btn btn-primary d-flex align-items-center px-3 mb-3" href="/penjadwalan_proyek/tambah">
+                        <i class="bi bi-plus-lg me-2"></i> Tambah Jadwal
+                    </a>
+
+                    <!-- Kolom Pencarian (Kanan) -->
+                    <div class="input-group mb-3" style="width: 200px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari Data">
+                        <!-- <span class="input-group-text"><i class="bi bi-search"></i></span> -->
+                    </div>
+                </div>
+                <!-- </div> -->
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0" id="jadwalTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Proyek</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Supervisor</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Mulai</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Selesai</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pekerjaan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jadwalTableBody">
+                            @foreach ($penjadwalanProyek as $jadwal)
+                            <tr>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $loop->iteration }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Diketahui' }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">
+                                    {{ $jadwal->supervisor->pekerja->nama ?? $jadwal->nama_supervisor ?? 'Tidak Diketahui' }}
+                                </td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->pekerjaan }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->status }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">
+                                    <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}" class="btn btn-warning btn-sm">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form id="delete-form-{{ $jadwal->id }}" action="/penjadwalan_proyek/delete/{{ $jadwal->id }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="hapusJadwal('{{ $jadwal->id }}')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <!-- Baris untuk "Data tidak ditemukan" -->
+                            <tr id="noDataRow" style="display: none;">
+                                <td colspan="7" class="text-center text-secondary">Data tidak ditemukan</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function hapusJadwal(id) {
+            Swal.fire({
+                title: "Hapus Jadwal Proyek",
+                html: "Apakah anda yakin akan menghapus jadwal ini? <b>Jadwal yang dihapus tidak dapat dikembalikan lagi.</b>",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Ya, hapus",
+                cancelButtonText: "Tidak, kembali",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("delete-form-" + id).submit();
+                }
+            });
+        }
+
+        // Fitur Pencarian (Live Search)
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#jadwalTableBody tr:not(#noDataRow)");
+            let noDataRow = document.getElementById("noDataRow");
+            let found = false;
+
+            rows.forEach(row => {
+                let namaProyek = row.children[1].textContent.toLowerCase();
+                let supervisor = row.children[5].textContent.toLowerCase();
+                let tanggalmulai = row.children[2].textContent.toLowerCase();
+                let tanggalselesai = row.children[3].textContent.toLowerCase();
+                let pekerjaan = row.children[4].textContent.toLowerCase();
+                let status = row.children[5].textContent.toLowerCase();
+
+
+                if (namaProyek.includes(filter) || supervisor.includes(filter) || tanggalmulai.includes(filter) || tanggalselesai.includes(filter) ||
+                    pekerjaan.includes(filter) ||
+                    status.includes(filter)) {
+                    row.style.display = "";
+                    found = true;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+            // Tampilkan "Data tidak ditemukan" jika tidak ada hasil
+            noDataRow.style.display = found ? "none" : "";
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

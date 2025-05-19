@@ -14,6 +14,9 @@ return new class extends Migration {
             $table->string('pekerjaan');
             $table->unsignedBigInteger('id_proyek_disetujui');
             $table->enum('status', ['tersedia', 'sedang dikerjakan', 'batal', 'selesai'])->default('tersedia');
+            $table->foreignId('id_tim_project')->nullable()
+                ->constrained('tim_project')
+                ->cascadeOnDelete(); // Jika tim proyek dihapus, jadwalnya juga ikut terhapus
             $table->timestamps();
 
             // Foreign key ke tabel proyek_disetujui
