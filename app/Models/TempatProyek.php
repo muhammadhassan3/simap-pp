@@ -24,6 +24,6 @@ class TempatProyek extends Model
 
     public function pengajuanProposal()
     {
-        return $this->hasMany(Pengajuan_proposal::class, 'id_tempat_proyek');
+        return $this->hasMany(PengajuanProposal::class, 'id_tempat_proyek');
     }
 }

@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EvaluasiProyekController;
+use App\Http\Controllers\LaporanDetail;
+use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
 use App\Http\Controllers\PengawasProyekController;
@@ -91,3 +94,8 @@ Route::get('/evaluasi/{id}/edit', [EvaluasiProyekController::class, 'edit'])->na
 Route::put('/evaluasi/{id}', [EvaluasiProyekController::class, 'update'])->name('evaluasi.update');
 // Route untuk menambahkan otomatis proyek selesai ke evaluasi_proyek
 Route::get('/evaluasi/tambah-dari-proyek', [EvaluasiProyekController::class, 'tambahEvaluasiDariProyek']);
+
+//Rizal
+Route::get('/laporan',[LaporanProyekController::class, "show"]);
+Route::get('/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
+Route::get('/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');

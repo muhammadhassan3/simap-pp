@@ -13,7 +13,7 @@ class PengajuanProposal extends Model
     public $timestamps = false;
     protected $fillable = [
         'tanggal_pengajuan',
-        'nama_proyek',
+        'id_tempat_proyek',
         'keterangan',
         'id',
         'file_proposal',
