@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -7,8 +8,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Hassan
 Route::get("/tempat-proyek", [TempatProyekController::class, "show"])->name("show-tempat-proyek");
 Route::get("/tempat-proyek/add", [TempatProyekController::class, "add"])->name("add-tempat-proyek");
 Route::get("/tempat-proyek/{id}/edit", [TempatProyekController::class, "edit"])->name("edit-tempat-proyek");
 Route::post("/tempat-proyek/delete", [TempatProyekController::class, "delete"])->name("delete-tempat-proyek");
 Route::post("/tempat-proyek/save", [TempatProyekController::class, "save"])->name("save-tempat-proyek");
+
+
+//Husna
+Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
+Route::get('/customer/create', [CustomerController::class, 'create'])->name('customer.create');
+Route::post('/customer/store', [CustomerController::class, 'store'])->name('customer.store');
+Route::get('/customer/{id}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+Route::put('/customer/{id}/update', [CustomerController::class, 'update'])->name('customer.update');
+Route::delete('/customer/{id}/delete', [CustomerController::class, 'destroy'])->name('customer.delete');
+
+
