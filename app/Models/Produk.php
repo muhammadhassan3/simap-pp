@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Produk extends Model
 {
     use HasFactory;
 
-    protected $table = 'customer';
-    protected $fillable = [
-        'no_identitas',
-        'nama_customer',
-        'alamat',
-        'no_hp',
-        'email',
-    ];
+    protected $table = 'produk';
+    protected $fillable = ['nama', 'harga', 'foto', 'deskripsi', 'satuan'];
+
     public function marketings()
     {
         return $this->hasMany(Marketing::class);

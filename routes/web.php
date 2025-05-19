@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use Illuminate\Support\Facades\Route;
@@ -42,3 +43,12 @@ Route::get('/proyekdisetujui/{id}/edit', [ProyekDisetujuiController::class, 'edi
 Route::put('/proyekdisetujui/{id}', [ProyekDisetujuiController::class, 'update'])->name('proyekdisetujui.update');
 
 Route::get('/proyekdisetujui/{id}/show', [ProyekDisetujuiController::class, 'show'])->name('proyekdisetujui.show');
+
+//Fiqhi
+Route::get('/', [MarketingController::class, 'index'])->name('market.index');
+Route::get('create', [MarketingController::class, 'create'])->name('market.create');
+Route::post('store', [MarketingController::class, 'store'])->name('market.store');
+Route::post('store', [MarketingController::class, 'store'])->name('market.store');
+Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
+Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
+Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');
