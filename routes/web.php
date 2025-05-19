@@ -7,6 +7,7 @@ use App\Http\Controllers\LaporanDetail;
 use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
+use App\Http\Controllers\PengajuanProposalController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\PenjadwalanProyekController;
 use App\Http\Controllers\ProyekDisetujuiController;
@@ -99,3 +100,15 @@ Route::get('/evaluasi/tambah-dari-proyek', [EvaluasiProyekController::class, 'ta
 Route::get('/laporan',[LaporanProyekController::class, "show"]);
 Route::get('/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
 Route::get('/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
+
+//Safinka
+Route::prefix('pengajuan_proposal')->group(function () {
+    Route::get('/', [PengajuanProposalController::class, 'index'])->name('pengajuan_proposal.index');
+    Route::get('/create', [PengajuanProposalController::class, 'create'])->name('pengajuan_proposal.create');
+    Route::post('/', [PengajuanProposalController::class, 'store'])->name('pengajuan_proposal.store');
+    Route::get('/{id}/edit', [PengajuanProposalController::class, 'edit'])->name('pengajuan_proposal.edit');
+    Route::put('/{id_pengajuan_proposal}', [PengajuanProposalController::class, 'update'])->name('pengajuan_proposal.update');
+    Route::delete('/{id}', [PengajuanProposalController::class, 'destroy'])->name('pengajuan_proposal.destroy');
+    Route::put('/proposal/update-status/{id_pengajuan_proposal}/{status}', [PengajuanProposalController::class, 'updateStatus'])
+        ->name('proposal.updateStatus');
+});
