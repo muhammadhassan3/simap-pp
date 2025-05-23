@@ -13,6 +13,7 @@ use App\Http\Controllers\PenjadwalanProyekController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
+use App\Http\Controllers\TimProyekController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -116,3 +117,14 @@ Route::prefix('pengajuan_proposal')->group(function () {
 
 //Alfiah
 Route::resource('produk', ProdukController::class);
+
+//Davin
+Route::get('/tim_proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
+Route::get('/tim_proyek/{id}', [TimProyekController::class, 'detail'])->name('tim-proyek.detail');
+Route::get('/tim-proyek/{id}/edit', [TimProyekController::class, 'edit'])->name('tim-proyek.edit');
+Route::put('/tim-proyek/{id}', [TimProyekController::class, 'update'])->name('tim-proyek.update');
+Route::delete('/tim-proyek/{id}', [TimProyekController::class, 'destroy'])->name('tim-proyek.destroy');
+Route::get('/tim-proyek/create', [TimProyekController::class, 'create'])->name('tim-proyek.create');
+Route::post('/tim-proyek', [TimProyekController::class, 'store'])->name('tim-proyek.store');
+Route::get('/tim_proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
+
