@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AktorController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DokumenPenyelesaianProyekController;
@@ -183,3 +184,24 @@ Route::get('/pembelian/edit/{id}', [PembelianController::class, 'edit'])->name('
 Route::put('/pembelian/update/{id}', [PembelianController::class, 'update'])->name('pembelian.update');
 Route::post('/pembelian/delete/{id}', [PembelianController::class, 'delete'])->name('pembelian.delete');
 Route::get('/pembelian/detail/{id}', [PembelianController::class, 'detail'])->name('pembelian.detail');
+
+//Lintang
+Route::get('/', function () {
+    return view('login');
+});
+// Halaman Login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// Proses Login
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+// Logout
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// Dashboard (Harus login dulu)
+Route::get('/dashboard', function (
+) {
+    $user = Auth::user();
+    return view('dashboard',['user'=>$user]);
+})->name('dashboard');
+Route::get('/profilemanagement', [AuthController::class, "profile"]);
+Route::post('/profilemanagement', [AuthController::class, "updateProfile"])->name("updateprofile");
+Route::post('/profilemanagement/editPassword', [AuthController::class, "updatePassword"])->name("updatepassword");
+Route::post('/profile/delete', [AuthController::class, 'deleteAccount'])->name('deleteaccount');
