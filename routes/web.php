@@ -7,6 +7,7 @@ use App\Http\Controllers\DokumenPenyelesaianProyekController;
 use App\Http\Controllers\EvaluasiProyekController;
 use App\Http\Controllers\KategoriProyekController;
 use App\Http\Controllers\LaporanDetail;
+use App\Http\Controllers\LaporanProdukController;
 use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
@@ -168,3 +169,6 @@ Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::cl
 //Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('proyek.detail');
 //Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
 
+//Anas
+Route::get('/laporan',[LaporanProdukController::class, "show"]);
+Route::get('/cetak',[LaporanProdukController::class, "convert"]);
