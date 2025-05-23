@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('component.layout')
 
 @section('content')
     <div class="mb-3">
@@ -10,7 +10,7 @@
             <input type="text" id="searchInput" class="form-control" placeholder="Cari..." onkeyup="searchTable()">
         </div>
     </div>
-    
+
 
     <div class="card">
         <div class="table-responsive">
@@ -26,7 +26,7 @@
                         <th width="100">AKSI</th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     @forelse ($customers as $customer)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -40,9 +40,9 @@
                                     <a href="{{ route('customer.edit', $customer->id) }}" class="btn btn-sm text-white" style="background-color: #DEAA00;">
                                         <i class="bi bi-pencil-fill text-white"></i>
                                     </a>
-                                    <a href="#" class="btn btn-sm text-white" style="background-color: #DE3F00;" 
-                                    data-bs-toggle="modal" data-bs-target="#hapusCustomerModal" 
-                                    onclick="showModalHapus({{ $customer->id }})"> 
+                                    <a href="#" class="btn btn-sm text-white" style="background-color: #DE3F00;"
+                                    data-bs-toggle="modal" data-bs-target="#hapusCustomerModal"
+                                    onclick="showModalHapus({{ $customer->id }})">
                                         <i class="bi bi-trash-fill text-white"></i>
                                     </a>
                                     @include('customer.delete_cust')
@@ -55,10 +55,10 @@
                         </tr>
                     @endforelse
                 </tbody>
-                
+
             </table>
 
-        </div>      
+        </div>
     </div>
 @endsection
 

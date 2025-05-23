@@ -12,6 +12,7 @@ use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
 use App\Http\Controllers\PelaksanaanProyekController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PengajuanProposalController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\PenjadwalanProyekController;
@@ -172,3 +173,13 @@ Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::cl
 //Anas
 Route::get('/laporan',[LaporanProdukController::class, "show"]);
 Route::get('/cetak',[LaporanProdukController::class, "convert"]);
+
+//Rista
+Route::get('/pembelian', [PembelianController::class, 'tampil'])->name('pembelian.tampil');
+Route::get('/pembelian/tambah', [PembelianController::class, 'tambah'])->name('pembelian.tambah');
+// Route::get('/pembelian/tambah', DetailPembelian::class)->name('pembelian.tambah');
+Route::post('/pembelian/simpan', [PembelianController::class, 'simpan'])->name('pembelian.simpan');
+Route::get('/pembelian/edit/{id}', [PembelianController::class, 'edit'])->name('pembelian.edit');
+Route::put('/pembelian/update/{id}', [PembelianController::class, 'update'])->name('pembelian.update');
+Route::post('/pembelian/delete/{id}', [PembelianController::class, 'delete'])->name('pembelian.delete');
+Route::get('/pembelian/detail/{id}', [PembelianController::class, 'detail'])->name('pembelian.detail');
