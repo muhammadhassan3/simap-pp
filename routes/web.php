@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DokumenPenyelesaianProyekController;
 use App\Http\Controllers\EvaluasiProyekController;
 use App\Http\Controllers\KategoriProyekController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\MonitoringProyekController;
 use App\Http\Controllers\PengajuanProposalController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\PenjadwalanProyekController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
@@ -143,3 +145,9 @@ Route::get('/dokumen/{id}/edit', [DokumenPenyelesaianProyekController::class, 'e
 Route::put('/dokumen/{id}', [DokumenPenyelesaianProyekController::class, 'update'])->name('dokumen.update');
 Route::delete('/dokumen/{id}', [DokumenPenyelesaianProyekController::class, 'destroy'])->name('dokumen.destroy');
 
+//Refina
+Route::get('/detail-penjualan/{id}', [DetailPenjualanController::class, 'show'])->name('detail-penjualan.show');
+Route::get('/detail_penjualan/{id}/{detail_id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
+Route::get('detail_penjualan/{id}', [PenjualanController::class, 'show'])->name('detail_penjualan.show');
+//Resource route untuk penjualan (semua CRUD)
+Route::resource('penjualan', PenjualanController::class);
