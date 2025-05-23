@@ -3,6 +3,7 @@
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EvaluasiProyekController;
+use App\Http\Controllers\KategoriProyekController;
 use App\Http\Controllers\LaporanDetail;
 use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
@@ -128,3 +129,7 @@ Route::get('/tim-proyek/create', [TimProyekController::class, 'create'])->name('
 Route::post('/tim-proyek', [TimProyekController::class, 'store'])->name('tim-proyek.store');
 Route::get('/tim_proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
 
+//Dea
+Route::resource('kategori_proyek', KategoriProyekController::class)->parameters([
+    'kategori_proyek' => 'id'
+]);
