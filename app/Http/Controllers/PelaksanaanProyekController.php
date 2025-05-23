@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PelaksanaanProyek;
+use App\Models\Penjadwalan;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -19,7 +21,7 @@ class PelaksanaanProyekController extends Controller
         $search = $request->input('search');
 
         // Query untuk mencari data berdasarkan nama pelaksanaan atau keterangan
-        $pelaksanaan = Pelaksanaan_Proyek::with('PenjadwalanProyek')
+        $pelaksanaan = PelaksanaanProyek::with('PenjadwalanProyek')
             ->where('id_penjadwalan', $id)
             ->when($search, function ($query) use ($search) {
                 return $query->where(function ($q) use ($search) {
@@ -30,7 +32,7 @@ class PelaksanaanProyekController extends Controller
             })
             ->get();
 
-        $penjadwalan = PenjadwalanProyek::with('ProjekDisetujui')->where('id', $id)->first();
+        $penjadwalan = Penjadwalan::with('ProjekDisetujui')->where('id', $id)->first();
 
         return view('Pelaksanaan.index', compact('pelaksanaan', 'penjadwalan'));
     }
@@ -38,7 +40,7 @@ class PelaksanaanProyekController extends Controller
 
     public function create($id)
     {
-        $penjadwalan = PenjadwalanProyek::where('id', $id)->first();
+        $penjadwalan = Penjadwalan::where('id', $id)->first();
         return view('Pelaksanaan.create', compact('penjadwalan'));
     }
 
@@ -65,7 +67,7 @@ class PelaksanaanProyekController extends Controller
             return redirect()->back()->with('error', 'Tanggal pelaksanaan tidak boleh lebih dari hari ini.');
         }
 
-        Pelaksanaan_Proyek::create([
+        PelaksanaanProyek::create([
             'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
             'nama_pelaksanaan' => $request->nama_pelaksanaan,
             'foto' => $fotoPath,
@@ -79,7 +81,7 @@ class PelaksanaanProyekController extends Controller
 
     public function edit($id, $kode)
     {
-        $pelaksanaan = Pelaksanaan_Proyek::where('id', $kode)->where('id_penjadwalan', $id)->firstOrFail();
+        $pelaksanaan = PelaksanaanProyek::where('id', $kode)->where('id_penjadwalan', $id)->firstOrFail();
         return view('Pelaksanaan.edit', compact('pelaksanaan'));
     }
 
@@ -92,7 +94,7 @@ class PelaksanaanProyekController extends Controller
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $pelaksanaan = Pelaksanaan_Proyek::where('id', $kode)->where('id_penjadwalan', $id)->firstOrFail();
+        $pelaksanaan = PelaksanaanProyek::where('id', $kode)->where('id_penjadwalan', $id)->firstOrFail();
 
         $tanggalSekarang = Carbon::now()->toDateString();
 
@@ -131,7 +133,7 @@ class PelaksanaanProyekController extends Controller
     public function confirm($id, $kode)
     {
         // Temukan data pelaksanaan berdasarkan ID dan ID Penjadwalan
-        $pelaksanaan = Pelaksanaan_Proyek::where('id', $kode)
+        $pelaksanaan = PelaksanaanProyek::where('id', $kode)
             ->where('id_penjadwalan', $id)
             ->firstOrFail();
 
@@ -146,7 +148,7 @@ class PelaksanaanProyekController extends Controller
     public function finish($id)
     {
         // Ambil data penjadwalan berdasarkan ID
-        $penjadwalan = PenjadwalanProyek::where('id', $id)->first();
+        $penjadwalan = Penjadwalan::where('id', $id)->first();
 
         // Cek apakah penjadwalan ditemukan
         if (!$penjadwalan) {
@@ -154,7 +156,7 @@ class PelaksanaanProyekController extends Controller
         }
 
         // Ambil tanggal pelaksanaan terakhir berdasarkan ID penjadwalan
-        $tanggalPelaksanaanTerakhir = Pelaksanaan_Proyek::where('id_penjadwalan', $id)
+        $tanggalPelaksanaanTerakhir = PelaksanaanProyek::where('id_penjadwalan', $id)
             ->orderBy('tanggal_pelaksanaan', 'desc')
             ->first()
             ->tanggal_pelaksanaan ?? null;
@@ -183,7 +185,7 @@ class PelaksanaanProyekController extends Controller
 
     public function destroy($id)
     {
-        $pelaksanaan = Pelaksanaan_Proyek::findOrFail($id);
+        $pelaksanaan = PelaksanaanProyek::findOrFail($id);
 
         // Cek apakah foto lama ada sebelum menghapus
         $filePath = storage_path('app/public/' . $pelaksanaan->foto);

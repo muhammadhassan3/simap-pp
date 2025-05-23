@@ -10,6 +10,7 @@ use App\Http\Controllers\LaporanDetail;
 use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
+use App\Http\Controllers\PelaksanaanProyekController;
 use App\Http\Controllers\PengajuanProposalController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\PenjadwalanProyekController;
@@ -151,3 +152,19 @@ Route::get('/detail_penjualan/{id}/{detail_id}', [DetailPenjualanController::cla
 Route::get('detail_penjualan/{id}', [PenjualanController::class, 'show'])->name('detail_penjualan.show');
 //Resource route untuk penjualan (semua CRUD)
 Route::resource('penjualan', PenjualanController::class);
+
+//Yusuf
+// ROUTE PELAKSANAAN
+Route::get('pelaksanaan/{id}', [PelaksanaanProyekController::class, 'index'])->name('pelaksanaan.index');
+Route::get('pelaksanaan/{id}/create', [PelaksanaanProyekController::class,'create'])->name('pelaksanaan.create');
+Route::post('pelaksanaan', [PelaksanaanProyekController::class,'store'])->name('pelaksanaan.store');
+Route::get('pelaksanaan/{id}/edit/{kode}', [PelaksanaanProyekController::class,'edit'])->name('pelaksanaan.edit');
+Route::put('pelaksanaan/{id}/update/{kode}', [PelaksanaanProyekController::class,'update'])->name('pelaksanaan.update');
+Route::put('pelaksanaan/{id}/confirm/{kode}', [PelaksanaanProyekController::class, 'confirm'])->name('pelaksanaan.confirm');
+Route::put('pelaksanaan/{id}/finish', [PelaksanaanProyekController::class, 'finish'])->name('pelaksanaan.finish');
+Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::class, 'destroy'])->name('pelaksanaan.destroy');
+// ROUTE PROYEK DITERIMA
+//Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.index');
+//Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('proyek.detail');
+//Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
+
