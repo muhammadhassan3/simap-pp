@@ -27,7 +27,7 @@ class PengajuanProposal extends Model
         return $this->hasOne(ProyekDisetujui::class, 'id_pengajuan_proposal');
     }
 
-    public function tempat_proyek()
+    public function tempatProyek()
     {
         return $this->belongsTo(TempatProyek::class, 'id_tempat_proyek');
     }

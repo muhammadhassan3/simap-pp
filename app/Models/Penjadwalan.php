@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Penjadwalan extends Model
 {
@@ -18,15 +19,15 @@ class Penjadwalan extends Model
     }
     public function timProject()
     {
-        return $this->belongsTo(TimProjectModel::class, 'id_tim_project');
+        return $this->belongsTo(TimProyek::class, 'id_tim_project');
     }
     public function proyekDisetujui()
     {
-        return $this->belongsTo(ProyekDisetujuiModel::class, 'id_proyek_disetujui');
+        return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
     }
 
-    public function supervisor()
+    public function PelaksanaanProyek(): HasMany
     {
-        return $this->belongsTo(TimProjectModel::class, 'id_tim_project');
+        return $this->hasMany(PelaksanaanProyek::class, 'id_penjadwalan');
     }
 }

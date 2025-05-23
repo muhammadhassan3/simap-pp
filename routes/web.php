@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DokumenPenyelesaianProyekController;
 use App\Http\Controllers\EvaluasiProyekController;
 use App\Http\Controllers\KategoriProyekController;
 use App\Http\Controllers\LaporanDetail;
@@ -133,3 +134,12 @@ Route::get('/tim_proyek/{id}/search', [TimProyekController::class, 'detail'])->n
 Route::resource('kategori_proyek', KategoriProyekController::class)->parameters([
     'kategori_proyek' => 'id'
 ]);
+
+//Erlangga
+Route::get('/dokumen', [DokumenPenyelesaianProyekController::class, 'index'])->name('dokumen.index');
+Route::get('/dokumen/create', [DokumenPenyelesaianProyekController::class, 'create'])->name('dokumen.create');
+Route::post('/dokumen', [DokumenPenyelesaianProyekController::class, 'store'])->name('dokumen.store');
+Route::get('/dokumen/{id}/edit', [DokumenPenyelesaianProyekController::class, 'edit'])->name('dokumen.edit');
+Route::put('/dokumen/{id}', [DokumenPenyelesaianProyekController::class, 'update'])->name('dokumen.update');
+Route::delete('/dokumen/{id}', [DokumenPenyelesaianProyekController::class, 'destroy'])->name('dokumen.destroy');
+

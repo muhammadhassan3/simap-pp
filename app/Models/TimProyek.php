@@ -11,9 +11,9 @@ class TimProyek extends Model
 
     protected $table = 'tim_proyek';
     protected $fillable = [
-        'id_proyek_disetujui', 
-        'peran', 
-        'id_pekerja', 
+        'id_proyek_disetujui',
+        'peran',
+        'id_pekerja',
         'keahlian'
     ];
 

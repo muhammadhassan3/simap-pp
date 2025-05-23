@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProyekDisetujui extends Model
 {
@@ -30,5 +31,14 @@ class ProyekDisetujui extends Model
     public function Monitoring_proyek()
     {
         return $this->hasMany(MonitoringProyek::class, 'id_proyek_disetujui');
+    }
+
+    public function Penjadwalan(): HasMany
+    {
+        return $this->hasMany(Penjadwalan::class, 'id_proyek_disetujui');
+    }
+    public function dokumenPenyelesaian()
+    {
+        return $this->hasMany(DokumenPenyelesaianProyek::class, 'id_proyek_disetujui');
     }
 }
