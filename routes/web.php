@@ -10,6 +10,7 @@ use App\Http\Controllers\MonitoringProyekController;
 use App\Http\Controllers\PengajuanProposalController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\PenjadwalanProyekController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
 use Illuminate\Support\Facades\Route;
@@ -112,3 +113,6 @@ Route::prefix('pengajuan_proposal')->group(function () {
     Route::put('/proposal/update-status/{id_pengajuan_proposal}/{status}', [PengajuanProposalController::class, 'updateStatus'])
         ->name('proposal.updateStatus');
 });
+
+//Alfiah
+Route::resource('produk', ProdukController::class);
