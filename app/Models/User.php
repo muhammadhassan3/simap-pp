@@ -12,7 +12,7 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $table = 'user'; // Ubah nama tabel menjadi 'user'
+    protected $table = 'users'; // Ubah nama tabel menjadi 'user'
 
     protected $fillable = [
         'name',
