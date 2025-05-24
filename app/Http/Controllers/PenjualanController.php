@@ -49,7 +49,7 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['id_customer' => 'required|exists:customers,id', 'tanggal_penjualan' => 'required|date', 'jenis_pembayaran' => 'required|string', 'id_produk' => 'nullable|array', 'id_produk.*' => 'exists:produk,id',]);
+        $request->validate(['id_customer' => 'required|exists:customer,id', 'tanggal_penjualan' => 'required|date', 'jenis_pembayaran' => 'required|string', 'id_produk' => 'nullable|array', 'id_produk.*' => 'exists:produk,id',]);
 
         $penjualan = Penjualan::create(['id_customer' => $request->id_customer, 'tanggal_penjualan' => $request->tanggal_penjualan, 'jenis_pembayaran' => $request->jenis_pembayaran, 'total_harga' => 0,]);
 
@@ -95,7 +95,7 @@ class PenjualanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate(['id_customer' => 'required|exists:customers,id', 'tanggal_penjualan' => 'required|date', 'jenis_pembayaran' => 'required|string', 'id_produk' => 'nullable|array', 'id_produk.*' => 'exists:produk,id',]);
+        $request->validate(['id_customer' => 'required|exists:customer,id', 'tanggal_penjualan' => 'required|date', 'jenis_pembayaran' => 'required|string', 'id_produk' => 'nullable|array', 'id_produk.*' => 'exists:produk,id',]);
 
         $penjualan = Penjualan::findOrFail($id);
         $penjualan->update(['id_customer' => $request->id_customer, 'tanggal_penjualan' => $request->tanggal_penjualan, 'jenis_pembayaran' => $request->jenis_pembayaran,]);

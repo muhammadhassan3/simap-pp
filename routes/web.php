@@ -155,8 +155,9 @@ Route::delete('/dokumen/{id}', [DokumenPenyelesaianProyekController::class, 'des
 Route::get('/detail-penjualan/{id}', [DetailPenjualanController::class, 'show'])->name('detail-penjualan.show');
 Route::get('/detail_penjualan/{id}/{detail_id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
 Route::get('detail_penjualan/{id}', [PenjualanController::class, 'show'])->name('detail_penjualan.show');
+
 //Resource route untuk penjualan (semua CRUD)
-Route::resource('penjualan', PenjualanController::class);
+Route::resource('/penjualan', PenjualanController::class);
 
 //Syam
 Route::resource('/pekerja', PekerjaController::class);
