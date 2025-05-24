@@ -1,6 +1,4 @@
-@extends('component.layout')
-
-@section('content')
+<x-layout>
     <div class="mb-3">
         <h3 class="font-weight-bold text-md">Proyek Disetujui</h3>
     </div>
@@ -55,7 +53,7 @@
             </table>
         </div>
     </div>
-@endsection
+</x-layout>
 
 <script>
     function searchTable() {
