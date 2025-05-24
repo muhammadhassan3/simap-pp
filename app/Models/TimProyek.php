@@ -9,9 +9,9 @@ class TimProyek extends Model
 {
     use HasFactory;
 
-    protected $table = 'tim_proyek';
+    protected $table = 'tim_project';
     protected $fillable = [
-        'id_proyek_disetujui',
+        'id_project_disetujui',
         'peran',
         'id_pekerja',
         'keahlian'
@@ -19,7 +19,7 @@ class TimProyek extends Model
 
     public function proyekDisetujui()
     {
-        return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
+        return $this->belongsTo(ProyekDisetujui::class, 'id_project_disetujui');
     }
 
     public function pekerja()
