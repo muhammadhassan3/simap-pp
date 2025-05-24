@@ -22,6 +22,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
 use App\Http\Controllers\TimProyekController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -167,7 +168,7 @@ Route::put('pelaksanaan/{id}/confirm/{kode}', [PelaksanaanProyekController::clas
 Route::put('pelaksanaan/{id}/finish', [PelaksanaanProyekController::class, 'finish'])->name('pelaksanaan.finish');
 Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::class, 'destroy'])->name('pelaksanaan.destroy');
 // ROUTE PROYEK DITERIMA
-//Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.index');
+Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.index');
 //Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('proyek.detail');
 //Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
 
@@ -187,7 +188,7 @@ Route::get('/pembelian/detail/{id}', [PembelianController::class, 'detail'])->na
 
 //Lintang
 Route::get('/', function () {
-    return view('login');
+    return view('auth.login');
 });
 // Halaman Login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -199,7 +200,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function (
 ) {
     $user = Auth::user();
-    return view('dashboard',['user'=>$user]);
+    return view('auth.dashboard',['user'=>$user]);
 })->name('dashboard');
 Route::get('/profilemanagement', [AuthController::class, "profile"]);
 Route::post('/profilemanagement', [AuthController::class, "updateProfile"])->name("updateprofile");
