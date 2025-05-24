@@ -94,13 +94,13 @@ Route::put('/monitoring_proyek/{id}', [MonitoringProyekController::class, 'updat
 Route::get('monitoring_proyek/reset/{id}', [MonitoringProyekController::class, 'reset'])->name('monitoring_proyek.reset');
 
 //Nisa
-Route::get('/penjadwalan_proyek', [PenjadwalanProyekController::class, 'index']);
-Route::get('/penjadwalan_proyek/tambah', [PenjadwalanProyekController::class, 'create']);
-Route::post('/penjadwalan_proyek/store', [PenjadwalanProyekController::class, 'store']);
-Route::get('/penjadwalan_proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit']);
-Route::put('/penjadwalan_proyek/update/{id}', [PenjadwalanProyekController::class, 'update']);
-Route::delete('/penjadwalan_proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete']);
-Route::get('/getSupervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor']);
+Route::get('/penjadwalan-proyek', [PenjadwalanProyekController::class, 'index'])->name('penjadwalan-proyek.index');
+Route::get('/penjadwalan-proyek/tambah', [PenjadwalanProyekController::class, 'create'])->name('penjadwalan-proyek.create');
+Route::post('/penjadwalan-proyek/store', [PenjadwalanProyekController::class, 'store'])->name('penjadwalan-proyek.store');
+Route::get('/penjadwalan-proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit'])->name('penjadwalan-proyek.edit');
+Route::put('/penjadwalan-proyek/update/{id}', [PenjadwalanProyekController::class, 'update'])->name('penjadwalan-proyek.update');
+Route::delete('/penjadwalan-proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete'])->name('penjadwalan-proyek.delete');
+Route::get('/supervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor'])->name('supervisor.get');
 
 //Restu
 // Route utama evaluasi proyek
