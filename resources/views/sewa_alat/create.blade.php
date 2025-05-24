@@ -71,7 +71,7 @@
                 <select class="form-select" name="customer_id" required>
                     <option value="" disabled selected>Pilih Perusahaan</option>
                     @foreach($customers as $customer) <!-- Mengganti $customer menjadi $customers -->
-                        <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
+                        <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
                     @endforeach
                 </select>
             </div>
@@ -88,7 +88,7 @@
                 <select class="form-select" name="id_proyek" required>
                     <option value="" disabled selected>Pilih Proyek</option>
                     @foreach($tempatProyek as $proyek)
-                        <option value="{{ $proyek->id }}">{{ $proyek->nama }}</option>
+                        <option value="{{ $proyek->id }}">{{ $proyek->nama_tempat }}</option>
                     @endforeach
                 </select>
             </div>

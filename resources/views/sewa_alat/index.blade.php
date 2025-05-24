@@ -142,10 +142,10 @@
                     <td>{{ $alat->id }}</td>
                     <td>{{ $alat->nama_alat }}</td>
                     <td>Rp. {{ number_format($alat->harga_sewa, 0, ',', '.') }}/jam</td>
-                    <td>{{ $alat->customer->nama }}</td>
+                    <td>{{ $alat->customer->nama_customer }}</td>
                     <td>{{ $alat->durasi }} menit</td>
                     <td>{{ $alat->qty }}</td>
-                    <td>{{ $alat->tempatProyek ? $alat->tempatProyek->nama : 'Tidak Diketahui' }}</td>
+                    <td>{{ $alat->tempatProyek ? $alat->tempatProyek->nama_tempat : 'Tidak Diketahui' }}</td>
                     <td>{{ $alat->detail }}</td>
                     <td class="action-buttons">
                         <a href="/sewa_alat/{{ $alat->id }}/edit" class="edit-button">

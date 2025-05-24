@@ -177,8 +177,9 @@ return new class extends Migration
             $table->id();
             $table->string('nama_alat');
             $table->double('harga_sewa');
-            $table->foreignId('customer_id')->references('id')->on('tempat_proyek')->onDelete('cascade');
+            $table->foreignId('customer_id')->references('id')->on('customer')->onDelete('cascade');
             $table->integer('durasi');
+            $table->foreignId('id_proyek')->references('id')->on('tempat_proyek')->onDelete('cascade');
             $table->integer('qty');
             $table->string('detail');
             $table->timestamps();
