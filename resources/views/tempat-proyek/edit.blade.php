@@ -1,48 +1,64 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah Tempat Proyek</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-</head>
-<body>
-<form action="{{route("save-tempat-proyek")}}" enctype="multipart/form-data" method="post">
-    @csrf
-    <input type="text" name="id" value="{{$data->id}}" hidden>
-    <div style="display: flex; flex-direction: row">
-        <p>Nama Tempat</p>
-        <input type="text" name="nama_tempat" value="{{$data->nama_tempat}}">
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <p>Alamat Tempat</p>
-        <textarea name="alamat">{{$data->alamat}}</textarea>
-    </div>
-    <div>
-        <p>Customer</p>
-        <select name="id_customer">
-            <option value="-1" disabled selected>Pilih</option>
-            <option value="1" @if($data->id_customer == 1)selected @endif>PT Pertamina Persero</option>
-        </select>
-    </div>
-    <div style="display: flex; flex-direction: row">
-        <div>
-            <p>Foto</p>
-            <input type="file" name="foto">
+<x-layout>
+    @if($errors->any())
+        <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div>
-            <p>kategori Proyek</p>
-            <select name="id_kategori_proyek">
-                <option value="1" @if($data->id_customer == 1)selected @endif>Konstruksi</option>
+
+        <script>
+            setTimeout(() => {
+                let alertBox = document.getElementById("alert-error");
+                if (alertBox) {
+                    alertBox.style.transition = "opacity 0.5s";
+                    alertBox.style.opacity = "0";
+                    setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah animasi
+                }
+            }, 3000); // Alert hilang setelah 3 detik
+        </script>
+    @endif
+    <form action="{{route("save-tempat-proyek")}}" enctype="multipart/form-data" method="post">
+        @csrf
+        <input type="text" name="id" value="{{$data->id}}" hidden>
+        <div class="mb-3 flex-row d-flex">
+            <label for="namaTempat" class="col-sm-2 col-form-label">Nama Tempat</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="namaTempat" name="nama_tempat" value="{{$data->nama_tempat}}">
+            </div>
+        </div>
+        <div class="mb-3 flex-row d-flex">
+            <label for="alamat" class="col-sm-2 col-form-label">Alamat Tempat</label>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" id="alamat" name="alamat">{{$data->alamat}}</textarea>
+            </div>
+        </div>
+        <div class="mb-3 flex-row d-flex">
+            <label for="customer" class="col-sm-2 col-form-label">Customer</label>
+            <select name="id_customer" class="form-select" aria-label="Default select example">
+                <option value="-1" disabled selected>Pilih</option>
+                @foreach($customer as $item)
+                    <option value="{{$item->id}}" @if($data->id_customer == 1)selected @endif >{{$item->nama_customer}}</option>
+                @endforeach
             </select>
         </div>
-    </div>
-    <input type="submit" value="Tambah Tempat Proyek">
-</form>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+        <div class="mb-3 flex-row d-flex">
+            <div class="me-3 w-50">
+                <label for="foto" class="col col-form-label">Foto</label>
+                <input type="file" name="foto" id="foto" class="form-control">
+            </div>
+            <div class="w-100">
+                <label for="kategoriProyek" class="col col-form-label">kategori Proyek</label>
+                <select name="id_kategori_proyek" class="form-select" aria-label="Default select example">
+                    <option value="-1" disabled selected>Pilih</option>
+                    @foreach($kategoriProyek as $item)
+                        <option value="{{$item->id}}" @if($data->id_customer == 1)selected @endif>{{$item->nama}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <input type="submit" value="Tambah Tempat Proyek" class="btn btn-primary w-100">
+    </form>
+</x-layout>

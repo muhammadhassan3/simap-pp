@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\KategoriProyek;
 use App\Models\TempatProyek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,10 +21,19 @@ class TempatProyekController{
     }
 
     function add(){
-        return view('tempat-proyek.add');
+        $customer = Customer::all();
+        $kategoriProyek = KategoriProyek::all();
+        return view('tempat-proyek.add', ['customer' => $customer, 'kategoriProyek' => $kategoriProyek]);
     }
 
     function save(Request $request){
+        $request->validate([
+            'nama_tempat' => 'required',
+            'alamat' => 'required',
+            'id_customer' => 'required',
+            'id_kategori_proyek' => 'required',
+        ]);
+
         $id = $request->id;
         $filePath = "";
         if($request->hasFile('foto')){
@@ -46,8 +57,10 @@ class TempatProyekController{
     }
 
     function edit(int $id){
+        $customer = Customer::all();
+        $kategoriProyek = KategoriProyek::all();
         $data = TempatProyek::where("id", $id)->first();
-        return view('tempat-proyek.edit', ["data" => $data]);
+        return view('tempat-proyek.edit', ["data" => $data, 'customer' => $customer, 'kategoriProyek' => $kategoriProyek]);;
     }
 
     function delete(Request $request){
