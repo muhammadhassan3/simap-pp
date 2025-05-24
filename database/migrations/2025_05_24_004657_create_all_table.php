@@ -85,7 +85,8 @@ return new class extends Migration
         });
         Schema::create('kategori_proyek', function (Blueprint $table) {
             $table->id();
-            $table->enum('nama', ['produk', 'kontruksi']);
+//            $table->string('nama', ['produk', 'kontruksi']);
+            $table->string('nama');
             $table->timestamps();
         });
         Schema::create('dokumen_penyelesaian_proyek', function (Blueprint $table) {
@@ -103,11 +104,6 @@ return new class extends Migration
             $table->string('tujuan_pembelian');
             $table->string('jenis_pembayaran');
             $table->string('keterangan_pembayaran')->nullable();
-            $table->timestamps();
-        });
-        Schema::create('kategori_proyeks', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('nama');
             $table->timestamps();
         });
         Schema::create('penjadwalan', function (Blueprint $table) {
@@ -150,7 +146,7 @@ return new class extends Migration
             $table->string('keterangan');
             $table->timestamps();
         });
-        Schema::table('kategori_proyeks', function (Blueprint $table) {
+        Schema::table('kategori_proyek', function (Blueprint $table) {
             $table->string('keterangan')->nullable()->after('nama'); // Menambahkan kolom "keterangan"
         });
         Schema::create('aktor', function (Blueprint $table) {

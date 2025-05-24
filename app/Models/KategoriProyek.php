@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class KategoriProyek extends Model
 {
     use HasFactory;
-    protected $table = 'kategori_proyeks';
+    protected $table = 'kategori_proyek';
     protected $fillable = ['id', 'nama', 'keterangan'];
 
     public function tempatProyek()
