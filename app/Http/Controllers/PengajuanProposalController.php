@@ -31,11 +31,11 @@ class PengajuanProposalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_tempat' => 'required|exists:tempat_proyek,id_tempat_proyek',
+            'nama_tempat' => 'required',
             'nama_proyek' => 'required|string|max:100',
             'tanggal_pengajuan' => 'required|date',
             'harga_proyek' => 'required|string',
-            'file_proposal' => 'required|file|mimes:pdf,docx,jpeg,jpg,png,svg,webp|max:1048576',
+            'file_proposal' => 'required|file|mimes:pdf,docx|max:1048576',
             'keterangan_proposal' => 'required|string',
         ]);
 
@@ -54,9 +54,9 @@ class PengajuanProposalController extends Controller
             'id_tempat_proyek' => $request->nama_tempat,
             'nama_proyek' => $request->nama_proyek,
             'tanggal_pengajuan' => $request->tanggal_pengajuan,
-            'harga_proyek' => $harga_proyek,
+            'harga' => $harga_proyek,
             'file_proposal' => $fileName,
-            'keterangan_proposal' => $request->keterangan_proposal,
+            'keterangan' => $request->keterangan_proposal,
         ]);
 
         return redirect()->route('pengajuan_proposal.index')->with('message', 'Data Pengajuan Proposal berhasil disimpan!');
