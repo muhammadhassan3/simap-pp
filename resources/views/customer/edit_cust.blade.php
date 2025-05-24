@@ -1,11 +1,11 @@
-@extends('layout')
+@extends('component.layout')
 
 @section('content')
 <div class="container mt-4">
     <a href="{{ url()->previous() }}" class="text-dark fw-semibold text-decoration-none d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i> Edit Customer
     </a>
-    
+
     <div class="card mt-3">
         <div class="card-body">
             <form action="{{ route('customer.update', $customers->id) }}" method="POST">

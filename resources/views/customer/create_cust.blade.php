@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('component.layout')
 
 @section('content')
 <div class="container mt-4">
@@ -27,7 +27,7 @@
                         <input type="text" class="form-control bg-light" id="no_hp" name="no_hp" required>
                     </div>
                 </div>
-                
+
                 <div class="row mt-3">
                     <div class="col-md-12">
                         <label for="alamat" class="form-label">Alamat</label>

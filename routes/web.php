@@ -1,17 +1,20 @@
 <?php
 
 use App\Http\Controllers\AktorController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DokumenPenyelesaianProyekController;
 use App\Http\Controllers\EvaluasiProyekController;
 use App\Http\Controllers\KategoriProyekController;
 use App\Http\Controllers\LaporanDetail;
+use App\Http\Controllers\LaporanProdukController;
 use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
 use App\Http\Controllers\PekerjaController;
 use App\Http\Controllers\PelaksanaanProyekController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PengajuanProposalController;
 use App\Http\Controllers\PengawasProyekController;
 use App\Http\Controllers\PenjadwalanProyekController;
@@ -20,6 +23,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
 use App\Http\Controllers\TimProyekController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -168,7 +172,41 @@ Route::put('pelaksanaan/{id}/confirm/{kode}', [PelaksanaanProyekController::clas
 Route::put('pelaksanaan/{id}/finish', [PelaksanaanProyekController::class, 'finish'])->name('pelaksanaan.finish');
 Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::class, 'destroy'])->name('pelaksanaan.destroy');
 // ROUTE PROYEK DITERIMA
-//Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.index');
+Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.index');
 //Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('proyek.detail');
 //Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
 
+//Anas
+Route::get('/laporan',[LaporanProdukController::class, "show"]);
+Route::get('/cetak',[LaporanProdukController::class, "convert"]);
+
+//Rista
+Route::get('/pembelian', [PembelianController::class, 'tampil'])->name('pembelian.tampil');
+Route::get('/pembelian/tambah', [PembelianController::class, 'tambah'])->name('pembelian.tambah');
+// Route::get('/pembelian/tambah', DetailPembelian::class)->name('pembelian.tambah');
+Route::post('/pembelian/simpan', [PembelianController::class, 'simpan'])->name('pembelian.simpan');
+Route::get('/pembelian/edit/{id}', [PembelianController::class, 'edit'])->name('pembelian.edit');
+Route::put('/pembelian/update/{id}', [PembelianController::class, 'update'])->name('pembelian.update');
+Route::post('/pembelian/delete/{id}', [PembelianController::class, 'delete'])->name('pembelian.delete');
+Route::get('/pembelian/detail/{id}', [PembelianController::class, 'detail'])->name('pembelian.detail');
+
+//Lintang
+Route::get('/', function () {
+    return view('auth.login');
+});
+// Halaman Login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// Proses Login
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+// Logout
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// Dashboard (Harus login dulu)
+Route::get('/dashboard', function (
+) {
+    $user = Auth::user();
+    return view('auth.dashboard',['user'=>$user]);
+})->name('dashboard');
+Route::get('/profilemanagement', [AuthController::class, "profile"]);
+Route::post('/profilemanagement', [AuthController::class, "updateProfile"])->name("updateprofile");
+Route::post('/profilemanagement/editPassword', [AuthController::class, "updatePassword"])->name("updatepassword");
+Route::post('/profile/delete', [AuthController::class, 'deleteAccount'])->name('deleteaccount');
