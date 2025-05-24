@@ -31,7 +31,7 @@ class ProyekDisetujui extends Model
 
     public function timProyek()
     {
-        return $this->hasMany(TimProyek::class, 'id_proyek_disetujui');
+        return $this->hasMany(TimProyek::class, 'id_project_disetujui');
     }
 
     public function Monitoring_proyek()

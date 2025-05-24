@@ -126,9 +126,12 @@ return new class extends Migration
         });
         Schema::create('pelaksanaan_proyek', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tim_proyek');
+            $table->unsignedBigInteger('id_penjadwalan');
+            $table->date('tanggal_pelaksanaan');
+            $table->text('nama_pelaksanaan')->nullable();
             $table->string('foto')->nullable();
-            $table->text('deskripsi_pengerjaan')->nullable();
+            $table->text('status')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
         Schema::table('monitoring_proyek', function (Blueprint $table) {

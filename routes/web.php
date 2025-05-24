@@ -173,7 +173,7 @@ Route::put('pelaksanaan/{id}/finish', [PelaksanaanProyekController::class, 'fini
 Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::class, 'destroy'])->name('pelaksanaan.destroy');
 // ROUTE PROYEK DITERIMA
 Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.index');
-//Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('proyek.detail');
+Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('proyek.detail');
 //Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
 
 //Anas

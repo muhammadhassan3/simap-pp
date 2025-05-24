@@ -32,7 +32,7 @@ class PelaksanaanProyekController extends Controller
             })
             ->get();
 
-        $penjadwalan = Penjadwalan::with('ProjekDisetujui')->where('id', $id)->first();
+        $penjadwalan = Penjadwalan::with('ProyekDisetujui')->where('id', $id)->first();
 
         return view('Pelaksanaan.index', compact('pelaksanaan', 'penjadwalan'));
     }

@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Models\MonitoringProyek;
 use App\Models\Penjadwalan;
+use Illuminate\Http\Request;
+use App\Models\ProyekDisetujui;
+use App\Models\MonitoringProyek;
+use Illuminate\Support\Facades\Storage;
 
 class MonitoringProyekController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
-        // Deklarasikan id_proyek_disetujui yang ingin diambil
-        $idProyekDisetujui = 15; // Ganti dengan ID yang diinginkan
+
 
         // Ambil data monitoring proyek berdasarkan id_proyek_disetujui
-        $monitoringProyek = MonitoringProyek::with([
-            'penjadwalan',
-            'timProyek.pekerja',
-            'Proyek_disetujui.pengajuanProposal.tempatProyek.kategoriProyek',
-            'Proyek_disetujui.pengajuanProposal.tempatProyek.customer'
-        ])
-            ->where('id_proyek_disetujui', $idProyekDisetujui)
+        $monitoringProyek = ProyekDisetujui::with([
+                    'pengajuanProposal',
+                    'timProyek',
+                    'Penjadwalan'
+                ])
+            ->where('id_pengajuan_proposal', $id)
             ->first();
 
         return view('monitoring_proyek.index', compact('monitoringProyek'));

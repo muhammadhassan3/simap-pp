@@ -30,14 +30,14 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $proyek->pengajuanProposal->nama_proyek }}</td>
-                            <td>{{ $proyek->pengajuanProposal->tempatProyek->nama }}</td>
+                            <td>{{ $proyek->pengajuanProposal->tempatProyek->nama_tempat }}</td>
                             <td>Rp {{ number_format($proyek->pengajuanProposal->harga, 0, ',', '.') }}</td>
                             <td>{{ $proyek->status }}</td>
                             <td>{{ $proyek->tanggal_mulai }}</td>
                             <td>{{ $proyek->tanggal_selesai }}</td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="{{ route('proyekdisetujui.show', $proyek->id) }}" class="btn btn-sm text-white"
+                                    <a href="{{ route('proyek.detail', $proyek->id) }}" class="btn btn-sm text-white"
                                         style="background-color: #007BFF;" style="background-color: #DEAA00;">
                                         <i class="bi bi-eye-fill text-white"></i>
                                     </a>

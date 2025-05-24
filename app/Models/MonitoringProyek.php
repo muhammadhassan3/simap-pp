@@ -26,6 +26,6 @@ class MonitoringProyek extends Model
 
     public function Proyek_disetujui()
     {
-        return $this->belongsTo(Proyek_disetujui::class, 'id_proyek_disetujui');
+        return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
     }
 }

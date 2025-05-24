@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-layout>
 
 <!-- Garis Pembatas -->
 <hr class="mt-0 mb-2">
@@ -20,8 +18,8 @@
     <!-- Kolom Foto atau Placeholder -->
     <div class="col-md-4 p-4 d-flex align-items-center justify-content-center" style="border: 2px solid black; border-radius: 12px; max-width: 350px; height: 100%;">
         <div class="img-container d-flex align-items-center justify-content-center mb-3 w-100" style="max-height: 150px; min-height: 150px;">
-            @if($monitoringProyek && $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->foto)
-            <img src="{{ asset('storage/' . $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->foto) }}" class="img-fluid rounded" alt="Foto Proyek" style="max-width: 100%; max-height: 150px; object-fit: contain;">
+            @if($monitoringProyek->pengajuanProposal->tempatProyek->foto)
+            <img src="" class="img-fluid rounded" alt="Foto Proyek" style="max-width: 100%; max-height: 150px; object-fit: contain;">
             @else
             <p class="text-muted text-center m-0">Belum ada foto</p>
             @endif
@@ -31,14 +29,14 @@
     <!-- Kolom Detail Proyek -->
     <div class="col-md-7 p-4" style="border: 2px solid black; border-radius: 12px; display: flex; flex-direction: column; justify-content: center;">
         @if($monitoringProyek)
-        <strong class="mb-3" style="font-size: 1.3rem;">{{ strtoupper($monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->nama) }}</strong>
+        <strong class="mb-3" style="font-size: 1.3rem;">{{ strtoupper($monitoringProyek->pengajuanProposal->tempatProyek->nama_tempat ?? '-') }}</strong>
         <div style="display: grid; grid-template-columns: 150px 10px auto; gap: 8px 12px;">
-            <span style="font-weight: 600;">Kategori</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->kategoriProyek->nama ?? '-' }}</span>
-            <span style="font-weight: 600;">Customer</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->customer->nama ?? '-' }}</span>
-            <span style="font-weight: 600;">Alamat</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? '-' }}</span>
+            <span style="font-weight: 600;">Kategori</span><span>:</span><span>{{ $monitoringProyek->pengajuanProposal->tempatProyek->kategoriProyek->nama ?? '-' }}</span>
+            <span style="font-weight: 600;">Customer</span><span>:</span><span>{{ $monitoringProyek->pengajuanProposal->tempatProyek->customer->nama_customer ?? '-' }}</span>
+            <span style="font-weight: 600;">Alamat</span><span>:</span><span>{{ $monitoringProyek->pengajuanProposal->tempatProyek->alamat ?? '-' }}</span>
             <span style="font-weight: 600;">Jangka Waktu</span><span>:</span>
-            @if($monitoringProyek->Proyek_disetujui->tanggal_mulai && $monitoringProyek->Proyek_disetujui->tanggal_selesai)
-            <span>{{ date('d-m-Y', strtotime($monitoringProyek->Proyek_disetujui->tanggal_mulai)) }} s/d {{ date('d-m-Y', strtotime($monitoringProyek->Proyek_disetujui->tanggal_selesai)) }}</span>
+            @if($monitoringProyek->tanggal_mulai && $monitoringProyek->tanggal_selesai)
+            <span>{{ date('d-m-Y', strtotime($monitoringProyek->tanggal_mulai ?? '-')) }} s/d {{ date('d-m-Y', strtotime($monitoringProyek->tanggal_selesai ?? '-')) }}</span>
             @else
             <span>-</span>
             @endif
@@ -57,7 +55,9 @@
 </div>
 
 <!-- Penjadwalan -->
-<h5 class="fw-normal">Timeline</h5>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h5 class="fw-normal">Timeline</h5>
+</div>
 <!-- Garis Pembatas -->
 <hr class="mt-0 mb-0">
 <div class="table-responsive">
@@ -76,26 +76,24 @@
             </tr>
         </thead>
         <tbody>
-            @if($monitoringProyek && $monitoringProyek->penjadwalan && $monitoringProyek->penjadwalan->isNotEmpty())
-            @foreach($monitoringProyek->penjadwalan as $index => $item)
+            @if($monitoringProyek && $monitoringProyek->Penjadwalan && $monitoringProyek->Penjadwalan->isNotEmpty())
+            @foreach($monitoringProyek->Penjadwalan as $index => $item)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ date('d-m-Y', strtotime($item->tanggal_mulai)) }}</td>
-                <td>{{ date('d-m-Y', strtotime($item->tanggal_selesai)) }}</td>
-                <td>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->nama ?? 'Tidak Ada Nama Proyek' }}</td>
-                <td>{{ $item->pekerjaan }}</td>
-                <td class="{{ strtotime($item->tanggal_selesai) > strtotime($monitoringProyek->Proyek_disetujui->tanggal_selesai) ? 'text-danger' : 'text-success' }}">
-                    {{ strtotime($item->tanggal_selesai) > strtotime($monitoringProyek->Proyek_disetujui->tanggal_selesai) ? 'failure' : 'BH' }}
-                </td>
-                <td class="{{ $item->keterangan ? 'text-grey' : 'text-danger' }}">
+                <td>{{ date('d-m-Y', strtotime($item->tanggal_mulai ?? '-')) }}</td>
+                <td>{{ date('d-m-Y', strtotime($item->tanggal_selesai ?? '-')) }}</td>
+                <td>{{ $monitoringProyek->pengajuanProposal->tempatProyek->nama_tempat ?? 'Tidak Ada Nama Proyek' }}</td>
+                <td>{{ $item->pekerjaan ?? '-'}}</td>
+                <td>{{ $item->status ?? '-'}}</td>
+                <td class="{{ $item->keterangan ? 'text-grey' : 'text-danger'  }}">
                     {{ $item->keterangan ? 'Sudah Direview' : 'Belum Direview' }}
                 </td>
                 <td>{{ $item->keterangan ?? '-' }}</td>
                 <td>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="{{ route('monitoring_proyek.edit', $item->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="{{ route('monitoring_proyek.reset', $item->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin melakukan reset?')">Reset</a>
-                        <a href="" class="btn btn-secondary btn-sm">Detail</a>
+                        <a href="" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin melakukan reset?')">Reset</a>
+                        <a href="{{ route('pelaksanaan.index', $item->id) }}" class="btn btn-secondary btn-sm">Detail</a>
                     </div>
                 </td>
             </tr>
@@ -167,5 +165,4 @@
         });
     });
 </script>
-
-@endsection
+</x-layout>
