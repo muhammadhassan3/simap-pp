@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\TempatProyekModel;
+use App\Models\TempatProyek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -10,9 +10,9 @@ class TempatProyekController{
     function show(Request $request){
         if($request->has('search')){
             $query = $request->get('search');
-            $data = TempatProyekModel::where('nama_tempat', 'LIKE', "%$query%")->get();
+            $data = TempatProyek::where('nama_tempat', 'LIKE', "%$query%")->get();
         }else{
-            $data = TempatProyekModel::all();
+            $data = TempatProyek::all();
         }
 
         return view('tempat-proyek.index', ["data" => $data]);
@@ -31,9 +31,9 @@ class TempatProyekController{
             $filePath = Storage::disk("public")->put("tempat-proyek", $foto);
         }
         if(isset($id) && $id != "" && $id != null){
-            $tempatProyek = TempatProyekModel::where("id", $id)->first();
+            $tempatProyek = TempatProyek::where("id", $id)->first();
         }else{
-            $tempatProyek = new TempatProyekModel();
+            $tempatProyek = new TempatProyek();
         }
         $tempatProyek->nama_tempat = $request->nama_tempat;
         $tempatProyek->alamat = $request->alamat;
@@ -46,13 +46,13 @@ class TempatProyekController{
     }
 
     function edit(int $id){
-        $data = TempatProyekModel::where("id", $id)->first();
+        $data = TempatProyek::where("id", $id)->first();
         return view('tempat-proyek.edit', ["data" => $data]);
     }
 
     function delete(Request $request){
         $id = $request->id;
-        $data = TempatProyekModel::where("id", $id)->first();
+        $data = TempatProyek::where("id", $id)->first();
         $data->delete();
 
         return redirect()->route("show-tempat-proyek");
