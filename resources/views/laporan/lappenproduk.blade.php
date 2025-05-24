@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Penjualan Produk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-</head>
-<body>
+<x-layout>
+
     <div class="container mt-5">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -18,17 +10,21 @@
                 <div class="row mb-2">
                     <div class="col-auto">
                         <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
-                        <input type="date" id="tgl_mulai" name="tgl_mulai" class="form-control form-control-sm" style="width: 200px; background-color:rgb(232, 232, 232); border: 1px solid #d9d9d9; color: #333; padding: 5px; border-radius: 5px;">
+                        <input type="date" id="tgl_mulai" name="tgl_mulai" class="form-control form-control-sm"
+                               style="width: 200px; background-color:rgb(232, 232, 232); border: 1px solid #d9d9d9; color: #333; padding: 5px; border-radius: 5px;">
                     </div>
                     <div class="col-auto d-flex align-items-end">
                         <i class="bi bi-dash-lg"></i>
                     </div>
                     <div class="col-auto">
                         <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
-                        <input type="date" id="tgl_selesai" name="tgl_selesai" class="form-control form-control-sm" style="width: 200px; background-color:rgb(232, 232, 232); border: 1px solid #d9d9d9; color: #333; padding: 5px; border-radius: 5px;">
+                        <input type="date" id="tgl_selesai" name="tgl_selesai" class="form-control form-control-sm"
+                               style="width: 200px; background-color:rgb(232, 232, 232); border: 1px solid #d9d9d9; color: #333; padding: 5px; border-radius: 5px;">
                     </div>
                     <div class="col-auto align-self-end">
-                        <button id="filter-btn" type="submit" name="tampilkan" class="btn btn-primary btn-sm">Tampilkan</button>
+                        <button id="filter-btn" type="submit" name="tampilkan" class="btn btn-primary btn-sm">
+                            Tampilkan
+                        </button>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
@@ -39,20 +35,36 @@
                 <div class="table-responsive">
                     <table id="dataTable" class="table align-items-center mb-0">
                         <thead>
-                            <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NO</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">TANGGAL</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CUSTOMER</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">PRODUK</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">QTY</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">HARGA</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">TOTAL PEMBAYARAN</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">JENIS PEMBAYARAN</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                NO
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                TANGGAL
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                CUSTOMER
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                PRODUK
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                QTY
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                HARGA
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                TOTAL PEMBAYARAN
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                JENIS PEMBAYARAN
+                            </th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @php $no = 1; @endphp
-                            @foreach($detailpenjualan as $d)
+                        @php $no = 1; @endphp
+                        @foreach($detailpenjualan as $d)
                             <tr>
                                 <td class="text-center">{{ $no++ }}</td>
                                 <td class="text-center">{{ $d["tanggal"] }}</td>
@@ -63,14 +75,15 @@
                                 <td class="text-center">Rp {{ number_format($d["total"], 0, ',', '.') }}</td>
                                 <td class="text-center">{{ $d["jenis_pembayaran"] }}</td>
                             </tr>
-                            @endforeach
+                        @endforeach
                         </tbody>
                         <tfoot class="table-secondary">
-                            <tr>
-                                <th colspan="6" class="text-end">Total:</th>
-                                <th id="totalKeseluruhan" class="text-center">Rp {{ number_format($totalKeseluruhan, 0, ',', '.') }}</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th colspan="6" class="text-end">Total:</th>
+                            <th id="totalKeseluruhan" class="text-center">
+                                Rp {{ number_format($totalKeseluruhan, 0, ',', '.') }}</th>
+                            <th></th>
+                        </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -86,7 +99,7 @@
             document.querySelector('button[name="tampilkan"]').addEventListener("click", function () {
                 var startDate = document.getElementById("tgl_mulai").value;
                 var endDate = document.getElementById("tgl_selesai").value;
-                                
+
                 if (startDate && endDate) {
                     console.log("Start Date:", startDate);
                     console.log("End Date:", endDate);
@@ -97,7 +110,7 @@
                     rows.forEach(function (row) {
                         var rowDate = row.cells[1].textContent.trim(); // Ambil tanggal dari kolom kedua (Tanggal)
                         var rowTotal = row.cells[6].textContent.replace(/[^\d]/g, ''); // Ambil total pembayaran dan hilangkan format Rp
-                        
+
                         if (rowDate >= startDate && rowDate <= endDate) {
                             row.style.display = "";
                             totalFiltered += parseInt(rowTotal) || 0; // Tambahkan total pembayaran hanya jika baris terlihat
@@ -125,5 +138,4 @@
             }
         });
     </script>
-</body>
-</html>
+</x-layout>

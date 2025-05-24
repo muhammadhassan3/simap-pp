@@ -1,9 +1,4 @@
 <x-layout>
-    <div>
-        @php
-            $c = 1;
-        @endphp
-    </div>
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
@@ -17,7 +12,7 @@
                     <div class="me-2">
                         <input type="text" name="search" id="search" class="form-control" placeholder="Cari Tempat Proyek">
                     </div>
-                    <div >
+                    <div>
                         <button type="button" class="btn" onclick="onSearch()">Cari</button>
                     </div>
                 </div>
@@ -43,6 +38,9 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @php
+                            $c = 1;
+                        @endphp
                         @foreach($data as $item)
                             <tr>
                                 <td>
@@ -98,11 +96,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Hapus</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah anda yakin akan menghapus Tempat Proyek ini? Tempat Proyek yang dihapus tiidak dapat
+                    Apakah anda yakin akan menghapus Tempat Proyek ini? Tempat Proyek yang dihapus tidak dapat
                     dikembalikan lagi.
                 </div>
                 <div class="modal-footer">
@@ -116,19 +114,16 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
+
     <script>
         function selectItem(id) {
             document.getElementById("id").value = id
         }
 
-        function onSearch(i) {
+        function onSearch() {
             let query = document.getElementById("search").value
             if (query.length > 0) {
                 window.location.href = "{{route('show-tempat-proyek')}}?search=" + query
-            } else {
             }
         }
     </script>

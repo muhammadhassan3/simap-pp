@@ -1,54 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengajuan Proposal</title>
-    <!-- Link ke CSS Bootstrap -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <style>
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            min-width: 1200px;
-            font-size: 1rem;
-        }
-
-        .table thead th {
-            font-size: 0.9rem;
-        }
-
-        .table td,
-        .table th {
-            padding: 1rem;
-        }
-
-        .card {
-            width: 100%;
-            max-width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            max-width: 100%;
-        }
-    </style>
-
-</head>
-
-<body>
+<x-layout>
 
     <div class="container mt-5">
         <h4 class="mb-4">Pengajuan Proposal</h4>
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="{{ route('pengajuan_proposal.create') }}" class="btn btn-primary">+ Tambah Proposal</a>
+            <a href="{{ route('pengajuan_proposal.create') }}" class="btn btn-info">+ Tambah Proposal</a>
             <input type="text" class="form-control w-25" placeholder="Cari proposal..." id="searchInput">
         </div>
 
@@ -89,7 +44,7 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="btn btn-success" title="Proposal Disetujui">
-                                                <i class="fas fa-check"></i> 
+                                                <i class="fas fa-check"></i>
                                             </button>
                                         </form>
 
@@ -97,16 +52,16 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="btn btn-danger" title="Proposal Ditolak">
-                                                <i class="fas fa-times"></i> 
+                                                <i class="fas fa-times"></i>
                                             </button>
                                         </form>
                                     @elseif ($p->status_proposal === 'disetujui')
                                         <button class="btn btn-success" title="Proposal Disetujui">
-                                            <i class="fas fa-check"></i> 
+                                            <i class="fas fa-check"></i>
                                         </button>
                                     @elseif ($p->status_proposal === 'ditolak')
                                         <button class="btn btn-danger" title="Proposal Ditolak">
-                                            <i class="fas fa-times"></i> 
+                                            <i class="fas fa-times"></i>
                                         </button>
                                     @endif
                                 </td>
@@ -124,25 +79,25 @@
         </div>
     </div>
 
-    <!-- Link ke JS Bootstrap (opsional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#proposalTableBody tr');
+        <!-- Link ke JS Bootstrap (opsional) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.getElementById('searchInput').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase();
+                let rows = document.querySelectorAll('#proposalTableBody tr');
 
-            rows.forEach(row => {
-                let cells = row.getElementsByTagName('td');
-                let found = false;
+                rows.forEach(row => {
+                    let cells = row.getElementsByTagName('td');
+                    let found = false;
 
                 for (let i = 0; i < cells.length; i++) {
                     if (cells[i]) {
                         let cellValue = cells[i].textContent || cells[i].innerText;
                         if (cellValue.toLowerCase().indexOf(filter) > -1) {
                             found = true;
-                            break; 
+                            break;
                         }
                     }
                 }
@@ -155,6 +110,6 @@
             });
         });
     </script>
-</body>
+</x-layout>
 
 </html>

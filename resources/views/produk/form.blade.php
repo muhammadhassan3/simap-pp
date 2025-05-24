@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ isset($produk) ? 'Edit Produk' : 'Tambah Produk' }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
+<x-layout>
     <div class="container mt-4">
         <div class="card shadow-sm">
             <div class="card-body d-flex justify-content-center">
-                <div class="w-75"> 
+                <div class="w-75">
                     <a href="{{ route('produk.index') }}" class="btn btn-light mb-3 fw-bold">
                         ← Daftar Produk
                     </a>
-                    
+
                     <form action="{{ isset($produk) ? route('produk.update', $produk->id) : route('produk.store') }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
@@ -76,7 +66,8 @@
 
                             @if (isset($produk) && $produk->foto)
                                 <div class="mt-2">
-                                    <img src="{{ asset('storage/' . $produk->foto) }}" width="100" alt="Foto Produk">
+                                    <img src="{{ asset('storage/' . $produk->foto) }}" width="100"
+                                        alt="Foto Produk">
                                 </div>
                             @endif
                         </div>
@@ -95,6 +86,4 @@
             </div>
         </div>
     </div>
-</body>
-
-</html>
+</x-layout>
