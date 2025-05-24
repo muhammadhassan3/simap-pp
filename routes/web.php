@@ -129,14 +129,14 @@ Route::prefix('pengajuan_proposal')->group(function () {
 Route::resource('/produk', ProdukController::class);
 
 //Davin
-Route::get('/tim_proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
-Route::get('/tim_proyek/{id}', [TimProyekController::class, 'detail'])->name('tim-proyek.detail');
+Route::get('/tim-proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
+Route::get('/tim-proyek/{id}', [TimProyekController::class, 'detail'])->where(['id' => '[0-9]+'])->name('tim-proyek.detail');
 Route::get('/tim-proyek/{id}/edit', [TimProyekController::class, 'edit'])->name('tim-proyek.edit');
 Route::put('/tim-proyek/{id}', [TimProyekController::class, 'update'])->name('tim-proyek.update');
 Route::delete('/tim-proyek/{id}', [TimProyekController::class, 'destroy'])->name('tim-proyek.destroy');
 Route::get('/tim-proyek/create', [TimProyekController::class, 'create'])->name('tim-proyek.create');
 Route::post('/tim-proyek', [TimProyekController::class, 'store'])->name('tim-proyek.store');
-Route::get('/tim_proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
+Route::get('/tim-proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
 
 //Dea
 Route::resource('kategori_proyek', KategoriProyekController::class)->parameters([
