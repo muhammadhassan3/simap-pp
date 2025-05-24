@@ -85,6 +85,59 @@
                                                 data-bs-target="#deleteModal{{ $produk->id }}">
                                                 <i class="bi bi-trash"></i>
                                             </button>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-2">PRODUK</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <form method="GET" action="{{ route('produk.index') }}" class="w-50">
+                            <input type="text" id="searchProduk" name="search"
+                                class="form-control form-control-sm bg-light border border-primary-subtle px-3 shadow-sm"
+                                placeholder="Cari Produk..." value="{{ request('search') }}">
+                        </form>
+                        <a href="{{ route('produk.create') }}" class="btn btn-primary px-3">
+                            <i class="bi bi-plus-lg"></i> Tambah Produk
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center align-middle table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama Produk</th>
+                                    <th>Harga/KG</th>
+                                    <th>Foto</th>
+                                    <th>Deskripsi</th>
+                                    <th>Qty</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($produks as $index => $produk)
+                                    <tr>
+                                        <td>{{ $index + $produks->firstItem() }}</td>
+                                        <td>{{ $produk->nama }}</td>
+                                        <td>Rp
+                                            {{ is_numeric($produk->harga) ? number_format($produk->harga, 0, ',', '.') : 'Format salah' }}
+                                        </td>
+                                        <td>
+                                            @if ($produk->foto)
+                                                <img src="{{ Storage::url($produk->foto) }}" alt="Foto Produk"
+                                                    width="50" class="rounded">
+                                            @else
+                                                Tidak ada foto
+                                            @endif
+                                        </td>
+                                        <td>{{ $produk->deskripsi ?? '-' }}</td>
+                                        <td>{{ number_format($produk->satuan, 0, ',', '.') }}</td>
+                                        <td>
+                                            <a href="{{ route('produk.edit', $produk->id) }}"
+                                                class="btn btn-warning btn-sm">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ $produk->id }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
 
                                             <!-- Modal Konfirmasi Hapus -->
                                             <div class="modal fade" id="deleteModal{{ $produk->id }}" tabindex="-1"
