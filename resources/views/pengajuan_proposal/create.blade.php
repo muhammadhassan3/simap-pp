@@ -1,6 +1,28 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Proposal</title>
+    <!-- Link ke CSS Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+        }
+        .vh-100{
+            height: 100vh;
+        }
+    </style>
+</head>
 
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="w-50">
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -67,29 +89,28 @@
     </div>
     </div>
 
-<!-- Link ke JS Bootstrap (opsional) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    function setStatus(status) {
-        document.getElementById('status').value = status;
-        alert('Status diatur ke: ' + status);
-    }
-</script>
-<script>
-    function formatCurrency(input) {
-        // Menghapus semua karakter yang bukan angka
-        let value = input.value.replace(/[^0-9]/g, '');
+    <!-- Link ke JS Bootstrap (opsional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+            function setStatus(status) {
+            document.getElementById('status').value = status;
+            alert('Status diatur ke: ' + status);
+        }
+    </script>
+    <script>
+        function formatCurrency(input) {
+            // Menghapus semua karakter yang bukan angka
+            let value = input.value.replace(/[^0-9]/g, '');
 
-        // Format angka dengan pemisah ribuan
-        value = new Intl.NumberFormat('id-ID').format(value);
+            // Format angka dengan pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
 
-        // Mengupdate nilai input
-        input.value = value;
-    }
-</script>
+            // Mengupdate nilai input
+            input.value = value;
+        }
+    </script>
 </body>
 
-
-</x-layout>
+</html>

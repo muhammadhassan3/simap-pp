@@ -79,18 +79,18 @@
         </div>
     </div>
 
-    <!-- Link ke JS Bootstrap (opsional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#proposalTableBody tr');
+        <!-- Link ke JS Bootstrap (opsional) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.getElementById('searchInput').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase();
+                let rows = document.querySelectorAll('#proposalTableBody tr');
 
-            rows.forEach(row => {
-                let cells = row.getElementsByTagName('td');
-                let found = false;
+                rows.forEach(row => {
+                    let cells = row.getElementsByTagName('td');
+                    let found = false;
 
                 for (let i = 0; i < cells.length; i++) {
                     if (cells[i]) {
@@ -111,3 +111,5 @@
         });
     </script>
 </x-layout>
+
+</html>
