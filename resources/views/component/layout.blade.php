@@ -30,6 +30,8 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('asset/css/soft-ui-dashboard.css') }}" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -45,7 +47,11 @@
         <x-navbar></x-navbar>
         <!-- End Navbar -->
         <div class="" style="margin: 10px;">
-            {{ $slot }}
+            @hasSection('content')
+                @yield('content')
+            @else
+                {{ $slot }}
+            @endif
         </div>
 
     </main>

@@ -126,7 +126,7 @@ Route::prefix('pengajuan_proposal')->group(function () {
 });
 
 //Alfiah
-Route::resource('produk', ProdukController::class);
+Route::resource('/produk', ProdukController::class);
 
 //Davin
 Route::get('/tim_proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');

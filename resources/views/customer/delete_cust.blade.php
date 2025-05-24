@@ -7,7 +7,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin akan menghapus Customer ini? <strong>Customer yang dihapus tidak dapat dikembalikan lagi.</strong></p>
+                <p class="text-wrap">Apakah anda yakin akan menghapus Customer ini? <strong>Customer yang dihapus tidak
+                        dapat dikembalikan lagi.</strong></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tidak, kembali</button>
@@ -16,7 +17,7 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Ya, hapus</button>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -25,7 +26,6 @@
 <script>
     function showModalHapus(customerId) {
         let formHapus = document.getElementById("formHapusCustomer");
-        formHapus.action = "/customer/" + customerId + "/delete"; 
+        formHapus.action = "/customer/" + customerId + "/delete";
     }
 </script>
-
