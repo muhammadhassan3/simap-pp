@@ -31,13 +31,13 @@ class EvaluasiProyekController extends Controller
             ->get();
 
 
-        return view('evaluasi_proyek', compact('proyekSelesai'));
+        return view('evaluasi_proyek.evaluasi_proyek', compact('proyekSelesai'));
     }
 
     public function edit($id)
     {
         $proyek = EvaluasiProyek::with('proyekDisetujui.pengajuanProposal')->findOrFail($id);
-        return view('tulis_evaluasi', compact('proyek'));
+        return view('evaluasi_proyek.tulis_evaluasi', compact('proyek'));
     }
 
     public function update(Request $request, $id)
