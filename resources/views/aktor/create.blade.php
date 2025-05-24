@@ -1,7 +1,5 @@
-@extends('layout.template')
+<x-layout>
 
-<!-- START FORM -->
-@section('konten')
     <form action='{{ url('aktor') }}' method='post'>
         @csrf
         <div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -89,5 +87,4 @@
         </script>
 
     </form>
-    <!-- AKHIR FORM -->
-@endsection
+</x-layout>
