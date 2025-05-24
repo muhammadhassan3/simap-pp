@@ -12,6 +12,7 @@ use App\Http\Controllers\LaporanProdukController;
 use App\Http\Controllers\LaporanProyekController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MonitoringProyekController;
+use App\Http\Controllers\PekerjaController;
 use App\Http\Controllers\PelaksanaanProyekController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PengajuanProposalController;
@@ -156,6 +157,9 @@ Route::get('/detail_penjualan/{id}/{detail_id}', [DetailPenjualanController::cla
 Route::get('detail_penjualan/{id}', [PenjualanController::class, 'show'])->name('detail_penjualan.show');
 //Resource route untuk penjualan (semua CRUD)
 Route::resource('penjualan', PenjualanController::class);
+
+//Syam
+Route::resource('/pekerja', PekerjaController::class);
 
 //Yusuf
 // ROUTE PELAKSANAAN
