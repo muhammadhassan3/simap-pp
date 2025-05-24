@@ -29,7 +29,7 @@ class DokumenPenyelesaianProyekController extends Controller
 
     public function create()
     {
-        $proyekSelesai = ProyekDisetujui::where('status', 'selesai')->get(); // Ambil proyek yang sudah selesai
+        $proyekSelesai = ProyekDisetujui::with('PengajuanProposal')->where('status', 'selesai')->get(); // Ambil proyek yang sudah selesai
         return view('dokumen_penyelesaian_proyek.create', compact('proyekSelesai'));
     }
 
