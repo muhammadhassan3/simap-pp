@@ -1,28 +1,18 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengawas Proyek</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-</head>
-<body class="bg-light py-5">
-
+<x-layout>
     <div class="container d-flex justify-content-center">
-        <div class="card shadow w-75">
+        <div class="card shadow w-100">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Pengawas Proyek</h2>
                 <br>
-                <div class="mb-3 d-flex justify-content-start">
-                    <div class="input-group w-50">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari proyek atau pekerja...">
-                        <span class="input-group-text">
-                            <i class="bi bi-search"></i>
-                        </span>
+
+                <div class="d-flex flex-row w-25 mb-1 items-center justify-content-between">
+                    <div class="me-2">
+                        <input type="text" name="search" id="search" class="form-control" placeholder="Cari Tempat Proyek">
                     </div>
-                </div>                
-                
+                    <div >
+                        <button type="button" class="btn" onclick="onSearch()">Cari</button>
+                    </div>
+                </div>
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -44,7 +34,7 @@
                                 <a href="{{ route('pengawas-proyek.edit', $item['id']) }}" class="btn btn-sm" style="background-color: #DEAA00;">
                                     <i class="bi bi-pencil-fill text-white"></i>
                                 </a>
-                            </td>                            
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -52,7 +42,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <script>
         // Fitur Pencarian
@@ -67,6 +57,18 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <script>
+        function selectItem(id) {
+            document.getElementById("id").value = id
+        }
+
+        function onSearch(i) {
+            let query = document.getElementById("search").value
+            if (query.length > 0) {
+                window.location.href = "{{route('pengawas-proyek.index')}}?search=" + query
+            } else {
+            }
+        }
+    </script>
+
+</x-layout>

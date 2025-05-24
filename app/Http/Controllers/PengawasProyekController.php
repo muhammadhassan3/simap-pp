@@ -7,20 +7,37 @@ use App\Models\TimProyek;
 
 class PengawasProyekController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = TimProyek::with(['proyekDisetujui', 'pekerja'])
-            ->where('peran', 'Pengawas') // Hanya mengambil pengawas
-            ->get()
-            ->map(function ($tim) {
-                return [
-                    'id' => $tim->id, // Tambahkan ID agar bisa digunakan di Blade
-                    'nama_proyek' => $tim->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada',
-                    'peran' => $tim->peran,
-                    'nama_pekerja' => $tim->pekerja->nama ?? 'Tidak Ada',
-                ];
-            });
-
+        if($request->has('search')){
+            $searchTerm = $request['search'];
+            $data = TimProyek::with(['proyekDisetujui', 'pekerja', 'proposal'])
+                ->where('peran', 'Pengawas')
+                ->whereHas('proyekDisetujui.pengajuanProposal', function ($query) use ($searchTerm) {
+                    $query->where('nama_proyek', 'like', "%$searchTerm%");
+                })
+                ->get()
+                ->map(function ($tim) {
+                    return [
+                        'id' => $tim->id, // Tambahkan ID agar bisa digunakan di Blade
+                        'nama_proyek' => $tim->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada',
+                        'peran' => $tim->peran,
+                        'nama_pekerja' => $tim->pekerja->nama ?? 'Tidak Ada',
+                    ];
+                });
+        }else{
+            $data = TimProyek::with(['proyekDisetujui', 'pekerja'])
+                ->where('peran', 'Pengawas') // Hanya mengambil pengawas
+                ->get()
+                ->map(function ($tim) {
+                    return [
+                        'id' => $tim->id, // Tambahkan ID agar bisa digunakan di Blade
+                        'nama_proyek' => $tim->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada',
+                        'peran' => $tim->peran,
+                        'nama_pekerja' => $tim->pekerja->nama ?? 'Tidak Ada',
+                    ];
+                });
+        }
         return view('pengawas_proyek.index', compact('data'));
     }
 
