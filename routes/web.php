@@ -22,6 +22,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProyekDisetujuiController;
 use App\Http\Controllers\SewaAlatController;
 use App\Http\Controllers\TimProyekController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TempatProyekController;
 
@@ -187,7 +188,7 @@ Route::get('/pembelian/detail/{id}', [PembelianController::class, 'detail'])->na
 
 //Lintang
 Route::get('/', function () {
-    return view('login');
+    return view('auth.login');
 });
 // Halaman Login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
