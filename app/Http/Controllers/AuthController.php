@@ -53,7 +53,7 @@ class AuthController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('profilemanagement', compact('user'));
+        return view('auth.profilemanagement', compact('user'));
     }
 
     // Update data user yang sedang login
