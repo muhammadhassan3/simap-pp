@@ -28,7 +28,8 @@
                                 <a href="{{ route('pekerja.index') }}" class="btn btn-secondary"
                                     style="border-radius: 10px; padding: 10px 24px;">Batal</a>
                                 <button type="submit" class="btn text-white"
-                                    style="background-color: #007ADE; border-radius: 10px; padding: 10px 24px;">Simpan Perubahan</button>
+                                    style="background-color: #007ADE; border-radius: 10px; padding: 10px 24px;">Simpan
+                                    Perubahan</button>
                             </div>
                         </form>
                     </div>

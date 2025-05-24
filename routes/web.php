@@ -126,7 +126,7 @@ Route::prefix('pengajuan_proposal')->group(function () {
 });
 
 //Alfiah
-Route::resource('produk', ProdukController::class);
+Route::resource('/produk', ProdukController::class);
 
 //Davin
 Route::get('/tim_proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
@@ -164,10 +164,10 @@ Route::resource('/pekerja', PekerjaController::class);
 //Yusuf
 // ROUTE PELAKSANAAN
 Route::get('pelaksanaan/{id}', [PelaksanaanProyekController::class, 'index'])->name('pelaksanaan.index');
-Route::get('pelaksanaan/{id}/create', [PelaksanaanProyekController::class,'create'])->name('pelaksanaan.create');
-Route::post('pelaksanaan', [PelaksanaanProyekController::class,'store'])->name('pelaksanaan.store');
-Route::get('pelaksanaan/{id}/edit/{kode}', [PelaksanaanProyekController::class,'edit'])->name('pelaksanaan.edit');
-Route::put('pelaksanaan/{id}/update/{kode}', [PelaksanaanProyekController::class,'update'])->name('pelaksanaan.update');
+Route::get('pelaksanaan/{id}/create', [PelaksanaanProyekController::class, 'create'])->name('pelaksanaan.create');
+Route::post('pelaksanaan', [PelaksanaanProyekController::class, 'store'])->name('pelaksanaan.store');
+Route::get('pelaksanaan/{id}/edit/{kode}', [PelaksanaanProyekController::class, 'edit'])->name('pelaksanaan.edit');
+Route::put('pelaksanaan/{id}/update/{kode}', [PelaksanaanProyekController::class, 'update'])->name('pelaksanaan.update');
 Route::put('pelaksanaan/{id}/confirm/{kode}', [PelaksanaanProyekController::class, 'confirm'])->name('pelaksanaan.confirm');
 Route::put('pelaksanaan/{id}/finish', [PelaksanaanProyekController::class, 'finish'])->name('pelaksanaan.finish');
 Route::delete('pelaksanaan/{id}/delete/{kode}', [PelaksanaanProyekController::class, 'destroy'])->name('pelaksanaan.destroy');
@@ -177,8 +177,8 @@ Route::get('proyek', [ProyekDisetujuiController::class, 'index'])->name('proyek.
 //Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
 
 //Anas
-Route::get('/laporan',[LaporanProdukController::class, "show"]);
-Route::get('/cetak',[LaporanProdukController::class, "convert"]);
+Route::get('/laporan', [LaporanProdukController::class, "show"]);
+Route::get('/cetak', [LaporanProdukController::class, "convert"]);
 
 //Rista
 Route::get('/pembelian', [PembelianController::class, 'tampil'])->name('pembelian.tampil');
@@ -201,12 +201,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 // Logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Dashboard (Harus login dulu)
-Route::get('/dashboard', function (
-) {
+Route::get('/dashboard', function () {
     $user = Auth::user();
-    return view('auth.dashboard',['user'=>$user]);
+    return view('auth.dashboard', ['user' => $user]);
 })->name('dashboard');
-Route::get('/profilemanagement', [AuthController::class, "profile"]);
+Route::get('/profilemanagement', [AuthController::class, "profile"])->name("profile");
 Route::post('/profilemanagement', [AuthController::class, "updateProfile"])->name("updateprofile");
 Route::post('/profilemanagement/editPassword', [AuthController::class, "updatePassword"])->name("updatepassword");
 Route::post('/profile/delete', [AuthController::class, 'deleteAccount'])->name('deleteaccount');

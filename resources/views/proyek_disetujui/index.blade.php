@@ -5,7 +5,8 @@
 
     <!-- Form Search -->
     <div class="d-flex justify-content-end mb-4">
-        <input type="text" id="searchInput" class="search-box" placeholder="Cari Proyek..." onkeyup="searchTable()" style="width: 250px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
+        <input type="text" id="searchInput" class="search-box" placeholder="Cari Proyek..." onkeyup="searchTable()"
+            style="width: 250px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
 
     </div>
 
@@ -28,9 +29,9 @@
                     @foreach ($proyek as $index => $proyek)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $proyek->pengajuan_proposal->nama_proyek }}</td>
-                            <td>{{ $proyek->pengajuan_proposal->tempat_proyek->nama }}</td>
-                            <td>Rp {{ number_format($proyek->pengajuan_proposal->harga, 0, ',', '.') }}</td>
+                            <td>{{ $proyek->pengajuanProposal->nama_proyek }}</td>
+                            <td>{{ $proyek->pengajuanProposal->tempatProyek->nama }}</td>
+                            <td>Rp {{ number_format($proyek->pengajuanProposal->harga, 0, ',', '.') }}</td>
                             <td>{{ $proyek->status }}</td>
                             <td>{{ $proyek->tanggal_mulai }}</td>
                             <td>{{ $proyek->tanggal_selesai }}</td>

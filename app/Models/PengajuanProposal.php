@@ -31,4 +31,10 @@ class PengajuanProposal extends Model
     {
         return $this->belongsTo(TempatProyek::class, 'id_tempat_proyek');
     }
+
+    // Alias for tempatProyek to support snake_case usage in controller
+    public function tempat_proyek()
+    {
+        return $this->tempatProyek();
+    }
 }
