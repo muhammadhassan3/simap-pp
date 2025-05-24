@@ -17,6 +17,8 @@ class TimProyek extends Model
         'keahlian'
     ];
 
+    public function test(){}
+
     public function proyekDisetujui()
     {
         return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
