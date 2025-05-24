@@ -1,23 +1,21 @@
 <x-layout>
     @if(session('error'))
-    <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    
-    <script>
-        setTimeout(() => {
-            let alertBox = document.getElementById("alert-error");
-            if (alertBox) {
-                alertBox.style.transition = "opacity 0.5s";
-                alertBox.style.opacity = "0";
-                setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah animasi
-            }
-        }, 3000); // Alert hilang setelah 3 detik
-    </script>
-    @endif
-    
+        <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
+        <script>
+            setTimeout(() => {
+                let alertBox = document.getElementById("alert-error");
+                if (alertBox) {
+                    alertBox.style.transition = "opacity 0.5s";
+                    alertBox.style.opacity = "0";
+                    setTimeout(() => alertBox.remove(), 500); // Hapus elemen setelah animasi
+                }
+            }, 3000); // Alert hilang setelah 3 detik
+        </script>
+    @endif
     <div class="container">
         <h2>Tambah Tim Proyek</h2>
         <form action="{{ route('tim-proyek.store') }}" method="POST">

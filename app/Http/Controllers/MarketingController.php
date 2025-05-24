@@ -23,7 +23,7 @@ class MarketingController extends Controller
 
         // Query data marketing dengan pencarian
         $marketings = Marketing::with(['produk', 'customer'])
-            ->when($customer, fn($query) => $query->whereHas('customer', fn($q) => $q->where('nama', 'like', "%$customer%")))
+            ->when($customer, fn($query) => $query->whereHas('customer', fn($q) => $q->where('nama_customer', 'like', "%$customer%")))
             ->when($produk, fn($query) => $query->whereHas('produk', fn($q) => $q->where('nama', 'like', "%$produk%")))
             ->when($tanggal, fn($query) => $query->whereDate('tanggal_pembelian', $tanggal)) // Filter berdasarkan tanggal
             ->when($jenis_pembayaran, fn($query) => $query->where('jenis_pembayaran', $jenis_pembayaran))
@@ -31,7 +31,7 @@ class MarketingController extends Controller
             ->paginate(5); // Batasi 5 data per halaman
 
         // Ambil semua nama customer dan produk unik
-        $customers = Customer::select('nama')->get();
+        $customers = Customer::select('nama_customer')->get();
         $produks = Produk::pluck('nama');
 
 

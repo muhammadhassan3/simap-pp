@@ -63,13 +63,15 @@ Route::put('/proyekdisetujui/{id}', [ProyekDisetujuiController::class, 'update']
 Route::get('/proyekdisetujui/{id}/show', [ProyekDisetujuiController::class, 'show'])->name('proyekdisetujui.show');
 
 //Fiqhi
-Route::get('/', [MarketingController::class, 'index'])->name('market.index');
-Route::get('create', [MarketingController::class, 'create'])->name('market.create');
-Route::post('store', [MarketingController::class, 'store'])->name('market.store');
-Route::post('store', [MarketingController::class, 'store'])->name('market.store');
-Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
-Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
-Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');
+Route::prefix('marketing')->group(function () {
+    Route::get('/', [MarketingController::class, 'index'])->name('market.index');
+    Route::get('create', [MarketingController::class, 'create'])->name('market.create');
+    Route::post('store', [MarketingController::class, 'store'])->name('market.store');
+    Route::post('store', [MarketingController::class, 'store'])->name('market.store');
+    Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
+    Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
+    Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');
+});
 
 //Hanny
 Route::get('/sewa-alat', [SewaAlatController::class, 'index']);
@@ -92,13 +94,13 @@ Route::put('/monitoring_proyek/{id}', [MonitoringProyekController::class, 'updat
 Route::get('monitoring_proyek/reset/{id}', [MonitoringProyekController::class, 'reset'])->name('monitoring_proyek.reset');
 
 //Nisa
-Route::get('/penjadwalan_proyek', [PenjadwalanProyekController::class, 'index']);
-Route::get('/penjadwalan_proyek/tambah', [PenjadwalanProyekController::class, 'create']);
-Route::post('/penjadwalan_proyek/store', [PenjadwalanProyekController::class, 'store']);
-Route::get('/penjadwalan_proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit']);
-Route::put('/penjadwalan_proyek/update/{id}', [PenjadwalanProyekController::class, 'update']);
-Route::delete('/penjadwalan_proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete']);
-Route::get('/getSupervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor']);
+Route::get('/penjadwalan-proyek', [PenjadwalanProyekController::class, 'index'])->name('penjadwalan-proyek.index');
+Route::get('/penjadwalan-proyek/tambah', [PenjadwalanProyekController::class, 'create'])->name('penjadwalan-proyek.create');
+Route::post('/penjadwalan-proyek/store', [PenjadwalanProyekController::class, 'store'])->name('penjadwalan-proyek.store');
+Route::get('/penjadwalan-proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit'])->name('penjadwalan-proyek.edit');
+Route::put('/penjadwalan-proyek/update/{id}', [PenjadwalanProyekController::class, 'update'])->name('penjadwalan-proyek.update');
+Route::delete('/penjadwalan-proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete'])->name('penjadwalan-proyek.delete');
+Route::get('/supervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor'])->name('supervisor.get');
 
 //Restu
 // Route utama evaluasi proyek
@@ -129,14 +131,14 @@ Route::prefix('pengajuan_proposal')->group(function () {
 Route::resource('/produk', ProdukController::class);
 
 //Davin
-Route::get('/tim_proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
-Route::get('/tim_proyek/{id}', [TimProyekController::class, 'detail'])->name('tim-proyek.detail');
+Route::get('/tim-proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
+Route::get('/tim-proyek/{id}', [TimProyekController::class, 'detail'])->where(['id' => '[0-9]+'])->name('tim-proyek.detail');
 Route::get('/tim-proyek/{id}/edit', [TimProyekController::class, 'edit'])->name('tim-proyek.edit');
 Route::put('/tim-proyek/{id}', [TimProyekController::class, 'update'])->name('tim-proyek.update');
 Route::delete('/tim-proyek/{id}', [TimProyekController::class, 'destroy'])->name('tim-proyek.destroy');
 Route::get('/tim-proyek/create', [TimProyekController::class, 'create'])->name('tim-proyek.create');
 Route::post('/tim-proyek', [TimProyekController::class, 'store'])->name('tim-proyek.store');
-Route::get('/tim_proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
+Route::get('/tim-proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
 
 //Dea
 Route::resource('kategori_proyek', KategoriProyekController::class)->parameters([

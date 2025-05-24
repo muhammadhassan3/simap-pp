@@ -66,7 +66,7 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-2 text-center">
-                                    <a href="{{ route('pengajuan_proposal.edit', $p->id_pengajuan_proposal) }}" class="btn btn-warning text-black" title="Edit Proposal">
+                                    <a href="{{ route('pengajuan_proposal.edit', $p->id) }}" class="btn btn-warning text-black" title="Edit Proposal">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                 </td>

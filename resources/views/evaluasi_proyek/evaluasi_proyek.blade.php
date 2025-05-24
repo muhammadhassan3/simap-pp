@@ -1,47 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluasi Proyek</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-    <style>
-        .status-selesai {
-            color: green;
-            font-weight: bold;
-        }
-        .btn-evaluasi {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: bold;
-            padding: 4px 10px; /* Ukuran tombol diperkecil */
-            border-radius: 6px;
-            text-transform: uppercase;
-            font-size: 14px; /* Ukuran font disesuaikan */
-        }
-        .btn-evaluasi-green {
-            background-color: #28a745;
-            color: white;
-            border: none;
-        }
-        .btn-evaluasi-gray {
-            background-color: gray;
-            color: white;
-            border: none;
-        }
-        td.keterangan-belum {
-            color: red !important;
-            font-weight: bold;
-        }
-
-
-    </style>
-</head>
-<body>
+<x-layout>
     <div class="container mt-4">
         <h2 class="mb-4">Evaluasi Proyek</h2>
 
@@ -69,7 +26,7 @@
                     <td class="{{ empty($proyek->keterangan) ? 'keterangan-belum' : '' }}">
                         {{ !empty($proyek->keterangan) ? $proyek->keterangan : 'Belum dievaluasi' }}
                     </td>
-                    
+
                     <td>
                         <a href="{{ route('evaluasi.edit', $proyek->id) }}" class="btn btn-success">
                             <i class="fas fa-pencil"></i> Evaluasi
@@ -78,7 +35,6 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table>        
+        </table>
     </div>
-</body>
-</html>
+</x-layout>
