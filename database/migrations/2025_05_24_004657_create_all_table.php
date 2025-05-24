@@ -173,6 +173,15 @@ return new class extends Migration
             $table->string('total_harga');
             $table->timestamps();
         });
+        Schema::create('sewa_alat', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_alat');
+            $table->double('harga_sewa');
+            $table->foreignId('customer_id')->references('id')->on('tempat_proyek')->onDelete('cascade');
+            $table->integer('qty');
+            $table->string('detail');
+            $table->timestamps();
+        });
     }
 
     /**
