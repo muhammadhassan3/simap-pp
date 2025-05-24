@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="d-grid mt-4">
-                    <button type="submit" class="btn btn-md" style="background-color: #DEAA00">Update Customer</button>
+                    <button type="submit" class="btn btn-md" style="background-color: #DEAA00; color: white;">Update Customer</button>
                 </div>
             </form>
         </div>
