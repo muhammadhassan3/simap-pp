@@ -19,7 +19,7 @@
                 <div class="mb-3">
                     <label class="form-label">Tempat Proyek</label>
                     <input type="text" class="form-control"
-                           value="{{ $proyek->pengajuan_proposal->tempat_proyek->nama }}"
+                           value="{{ $proyek->pengajuan_proposal->tempat_proyek->nama_tempat }}"
                            disabled>
                 </div>
 
