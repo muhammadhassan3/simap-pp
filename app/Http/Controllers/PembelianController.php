@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPembelianModel;
 use App\Models\PembeliansModel;
-use App\Models\ProyekDisetujuiModel;
+use App\Models\ProyekDisetujui;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +20,7 @@ class PembelianController extends Controller
 
     public function tambah()
     {
-        $proyekDisetujui = ProyekDisetujuiModel::with('pengajuanProposal')->get();
+        $proyekDisetujui = ProyekDisetujui::with('pengajuanProposal')->get();
         //        dd($proyekDisetujui);
         return view('pembelian.tambah', compact('proyekDisetujui'));
     }

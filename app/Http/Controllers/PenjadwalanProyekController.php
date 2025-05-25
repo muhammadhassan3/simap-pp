@@ -75,6 +75,7 @@ class PenjadwalanProyekController extends Controller
         ]);
 
         $jadwal = Penjadwalan::findOrFail($id);
+        $jadwal = Penjadwalan::findOrFail($id);
 
         // Update jadwal
         $jadwal->tanggal_mulai = $request->tanggal_mulai;
@@ -88,6 +89,7 @@ class PenjadwalanProyekController extends Controller
 
     public function delete($id)
     {
+        Penjadwalan::findOrFail($id)->delete();
         Penjadwalan::findOrFail($id)->delete();
         return redirect('/penjadwalan_proyek')->with('success', 'Jadwal proyek berhasil dihapus');
     }

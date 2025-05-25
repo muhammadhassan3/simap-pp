@@ -86,7 +86,7 @@
                                                 </form>
 
                                                 <!-- Hapus Dokumen dengan Konfirmasi SweetAlert -->
-                                                <button type="button" class="btn btn-danger"
+                                                <button type="submit" class="btn btn-danger"
                                                     onclick="confirmDelete({{ $data->id }})">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
