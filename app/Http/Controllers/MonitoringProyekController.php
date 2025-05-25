@@ -11,8 +11,8 @@ class MonitoringProyekController extends Controller
 {
     public function index(Request $request)
     {
-        // Deklarasikan id_proyek_disetujui yang ingin diambil
-        $idProyekDisetujui = 15; // Ganti dengan ID yang diinginkan
+        // Ambil id_proyek_disetujui dari parameter URL
+        $idProyekDisetujui = $request->input('id_proyek_disetujui');
 
         // Ambil data monitoring proyek berdasarkan id_proyek_disetujui
         $monitoringProyek = MonitoringProyek::with([
@@ -24,18 +24,37 @@ class MonitoringProyekController extends Controller
             ->where('id_proyek_disetujui', $idProyekDisetujui)
             ->first();
 
+        // Jika monitoring proyek tidak ditemukan, cek apakah proyek disetujui ada
+        if (!$monitoringProyek && $idProyekDisetujui) {
+            // Buat entri monitoring proyek baru
+            $monitoringProyek = MonitoringProyek::create([
+                'id_proyek_disetujui' => $idProyekDisetujui,
+                'status' => 'Belum Direview'
+            ]);
+
+            // Refresh dengan relasi
+            $monitoringProyek = MonitoringProyek::with([
+                'penjadwalan',
+                'timProyek.pekerja',
+                'Proyek_disetujui.pengajuanProposal.tempatProyek.kategoriProyek',
+                'Proyek_disetujui.pengajuanProposal.tempatProyek.customer'
+            ])
+            ->where('id_proyek_disetujui', $idProyekDisetujui)
+            ->first();
+        }
+
         return view('monitoring_proyek.index', compact('monitoringProyek'));
     }
 
     public function edit($id)
     {
-        // Temukan entri penjadwalan berdasarkan ID
+        // Find the penjadwalan record
         $penjadwalan = Penjadwalan::findOrFail($id);
 
-        // Ambil data monitoring proyek yang terkait dengan proyek yang sedang diedit
-        $monitoringProyek = MonitoringProyek::where('id_proyek_disetujui', $penjadwalan->id_proyek_disetujui)->first();
+        // Get the associated monitoring_proyek record
+        $monitoring_proyek = MonitoringProyek::where('id_proyek_disetujui', $penjadwalan->id_proyek_disetujui)->first();
 
-        return view('monitoring_proyek.edit', compact('penjadwalan', 'monitoringProyek'));
+        return view('monitoring_proyek.edit', compact('penjadwalan', 'monitoring_proyek'));
     }
 
     public function update(Request $request, $id)
@@ -44,19 +63,19 @@ class MonitoringProyekController extends Controller
             'keterangan' => 'required|string',
         ]);
 
-        // Temukan entri penjadwalan berdasarkan ID
+        // Find the penjadwalan record
         $penjadwalan = Penjadwalan::findOrFail($id);
         $penjadwalan->keterangan = $request->keterangan;
         $penjadwalan->save();
 
-        // Perbarui status_review di monitoring_proyek
-        $monitoringProyek = MonitoringProyek::where('id_proyek_disetujui', $penjadwalan->id_proyek_disetujui)->first();
-        if ($monitoringProyek) {
-            $monitoringProyek->status_review = 'Sudah Direview';
-            $monitoringProyek->save();
+        // Update the monitoring_proyek status
+        $monitoring_proyek = MonitoringProyek::where('id_proyek_disetujui', $penjadwalan->id_proyek_disetujui)->first();
+        if ($monitoring_proyek) {
+            $monitoring_proyek->status = 'Sudah Direview';
+            $monitoring_proyek->save();
         }
 
-        return redirect()->route('monitoring_proyek.index')->with('success', 'Data proyek berhasil diperbarui!');
+        return redirect()->route('monitoring_proyek.index', ['id_proyek_disetujui' => $monitoring_proyek->id_proyek_disetujui])->with('success', 'Data proyek berhasil diperbarui!');
     }
 
     public function reset($id)
@@ -66,14 +85,14 @@ class MonitoringProyekController extends Controller
         $penjadwalan->keterangan = '';
         $penjadwalan->save();
 
-        // Reset status_review di monitoring_proyek
+        // Reset status di monitoring_proyek
         $monitoringProyek = MonitoringProyek::where('id_proyek_disetujui', $penjadwalan->id_proyek_disetujui)->first();
         if ($monitoringProyek) {
-            $monitoringProyek->status_review = 'Belum Direview';
+            $monitoringProyek->status = 'Belum Direview';
             $monitoringProyek->save();
         }
 
-        return redirect()->route('monitoring_proyek.index')->with('success', 'Data proyek berhasil direset!');
+        return redirect()->route('monitoring_proyek.index', ['id_proyek_disetujui' => $penjadwalan->id_proyek_disetujui])->with('success', 'Data proyek berhasil direset!');
     }
 
     public function uploadFoto(Request $request, $id)

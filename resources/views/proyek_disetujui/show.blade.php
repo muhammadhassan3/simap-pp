@@ -16,7 +16,7 @@
                         </tr>
                         <tr>
                             <th class="bg-light">Tempat Proyek</th>
-                            <td>{{ $proyek->pengajuan_proposal->tempat_proyek->nama }}</td>
+                            <td>{{ $proyek->pengajuan_proposal->tempat_proyek->nama_tempat }}</td>
                         </tr>
                         <tr>
                             <th class="bg-light">Harga Proyek</th>

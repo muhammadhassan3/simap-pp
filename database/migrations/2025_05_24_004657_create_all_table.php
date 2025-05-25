@@ -80,7 +80,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_proyek_disetujui')->nullable();
             $table->unsignedBigInteger('id_penjadwalan')->nullable();
             $table->enum('status', ['Sudah Direview', 'Belum Direview'])->default('Belum Direview');
-            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
         Schema::create('kategori_proyek', function (Blueprint $table) {
@@ -116,6 +115,7 @@ return new class extends Migration
             $table->foreignId('id_tim_project')->nullable()
                 ->constrained('tim_project')
                 ->cascadeOnDelete(); // Jika tim proyek dihapus, jadwalnya juga ikut terhapus
+            $table->string('keterangan')->nullable();
             $table->timestamps();
 
             // Foreign key ke tabel proyek_disetujui
@@ -124,11 +124,14 @@ return new class extends Migration
                 ->on('proyek_disetujui')
                 ->onDelete('cascade');
         });
-        Schema::create('pelaksanaan_proyek', function (Blueprint $table) {
+         Schema::create('pelaksanaan_proyek', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tim_proyek');
+            $table->unsignedBigInteger('id_penjadwalan');
+            $table->date('tanggal_pelaksanaan');
+            $table->text('nama_pelaksanaan')->nullable();
             $table->string('foto')->nullable();
-            $table->text('deskripsi_pengerjaan')->nullable();
+            $table->text('status')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
         Schema::table('monitoring_proyek', function (Blueprint $table) {
