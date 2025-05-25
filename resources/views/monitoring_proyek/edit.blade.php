@@ -1,12 +1,7 @@
-@extends('layouts.app')
-
-@section('content')
-
-<!-- Garis Pembatas -->
-<hr class="mt-0 mb-2">
-
-<!-- Judul Halaman -->
-<h3 class="fw-bold mb-3">Edit Monitoring Proyek</h3>
+<x-layout>
+    <div class="mb-3">
+        <h3 class="font-weight-bold text-md">Edit Monitoring Proyek</h3>
+    </div>
 
 <form action="{{ route('monitoring_proyek.update', $penjadwalan->id) }}" method="POST">
     @csrf
@@ -21,7 +16,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary" onclick="return confirm('Apakah anda yakin ingin menyimpan data ?')">Simpan</button>
-    <a href="{{ route('monitoring_proyek.index') }}" class="btn btn-secondary">Kembali</a>
+    <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $monitoring_proyek->id_proyek_disetujui]) }}" class="btn btn-secondary">Kembali</a>
 </form>
 
-@endsection
+</x-layout>

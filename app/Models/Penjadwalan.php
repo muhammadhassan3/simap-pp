@@ -17,16 +17,16 @@ class Penjadwalan extends Model
     {
         return $this->belongsTo(MonitoringProyek::class, 'id_proyek_disetujui');
     }
-    public function timProject()
+    public function supervisor()
     {
-        return $this->belongsTo(TimProyek::class, 'id_tim_project');
+        return $this->belongsTo(TimProyek::class, 'id_tim_project', 'id');
     }
     public function proyekDisetujui()
     {
         return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
     }
 
-    public function PelaksanaanProyek(): HasMany
+    public function pelaksanaanProyek(): HasMany
     {
         return $this->hasMany(PelaksanaanProyek::class, 'id_penjadwalan');
     }

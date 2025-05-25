@@ -37,12 +37,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($timProyek->unique('proyek_disetujui') as $tim)
+                        @foreach ($timProyek->unique('id_project_disetujui') as $tim)
                         <tr>
-                            <td>{{ $tim->proyek_disetujui->pengajuan_proposal->tempat_proyek->nama }}</td>
-                            <td>{{ $tim->proyek_disetujui->pengajuan_proposal->nama_proyek }}</td>
+                            <td>
+                                @if($tim->proyekDisetujui && $tim->proyekDisetujui->pengajuan_proposal && $tim->proyekDisetujui->pengajuan_proposal->tempat_proyek)
+                                    {{ $tim->proyekDisetujui->pengajuan_proposal->tempat_proyek->nama_tempat }}
+                                @else
+                                    Data tidak tersedia
+                                @endif
+                            </td>
+                            <td>
+                                @if($tim->proyekDisetujui && $tim->proyekDisetujui->pengajuan_proposal)
+                                    {{ $tim->proyekDisetujui->pengajuan_proposal->nama_proyek }}
+                                @else
+                                    Data tidak tersedia
+                                @endif
+                            </td>
                             <td class="text-center">
-                                <a href="{{ route('tim-proyek.detail', $tim->proyek_disetujui->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                @if($tim->proyekDisetujui)
+                                    <a href="{{ route('tim-proyek.detail', $tim->proyekDisetujui->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                @else
+                                    <button class="btn btn-secondary btn-sm" disabled>Detail</button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
