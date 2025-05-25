@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penjualan');
             $table->unsignedBigInteger('id_produk');
             $table->integer('qty');
-            $table->integer('unit');
+            $table->string('unit');
             $table->bigInteger('harga_satuan');
             $table->bigInteger('total_harga');
             $table->foreign('id_penjualan')->references('id')->on('penjualan')->onDelete('cascade');
