@@ -50,16 +50,16 @@
 
                     <div class="form-group">
                         <label for="nama_tempat" class="text-dark font-weight-bold">Nama Tempat Proyek</label>
-                        <select id="nama_tempat" name="nama_tempat" class="form-control bg-light" required>
+                        <select id="id_tempat_proyek" name="id_tempat_proyek" class="form-control bg-light" required>
                             <option value="" selected>---PILIH TEMPAT---</option>
                             @foreach ($tempatProyek as $tp)
                                 <option value="{{ $tp->id }}"
-                                    {{ old('nama_tempat') == $tp->id ? 'selected' : '' }}>
+                                    {{ old('id_tempat_proyek') == $tp->id ? 'selected' : '' }}>
                                     {{ $tp->nama_tempat }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('nama_tempat')
+                        @error('id_tempat_proyek')
                         <p class="text-danger text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>

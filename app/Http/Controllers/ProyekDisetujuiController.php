@@ -9,16 +9,16 @@ class ProyekDisetujuiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = ProyekDisetujui::with(['PengajuanProposal.tempat_proyek'])
-            ->whereHas('PengajuanProposal', function ($q) {
+        $query = ProyekDisetujui::with(['pengajuanProposal.tempatproyek'])
+            ->whereHas('pengajuanProposal', function ($q) {
                 $q->where('status_proposal', 'Disetujui'); // Hanya ambil yang disetujui
             });
 
         if ($request->has('search')) {
             $search = $request->search;
-            $query->whereHas('PengajuanProposal', function ($q) use ($search) {
+            $query->whereHas('pengajuanProposal', function ($q) use ($search) {
                 $q->where('nama_proyek', 'like', "%$search%")
-                    ->orWhereHas('tempat_proyek', function ($q2) use ($search) {
+                    ->orWhereHas('tempatProyek', function ($q2) use ($search) {
                         $q2->where('nama', 'like', "%$search%");
                     });
             })
