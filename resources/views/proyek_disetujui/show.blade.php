@@ -1,6 +1,4 @@
-@extends('component.layout')
-
-@section('content')
+<x-layout>
     <div class="container mt-4">
         <div class="card shadow-lg p-4">
             <a href="{{ route('proyekdisetujui.index') }}" class="text-dark text-decoration-none">
@@ -18,7 +16,7 @@
                         </tr>
                         <tr>
                             <th class="bg-light">Tempat Proyek</th>
-                            <td>{{ $proyek->pengajuan_proposal->tempat_proyek->nama }}</td>
+                            <td>{{ $proyek->pengajuan_proposal->tempat_proyek->nama_tempat }}</td>
                         </tr>
                         <tr>
                             <th class="bg-light">Harga Proyek</th>
@@ -54,4 +52,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-layout>

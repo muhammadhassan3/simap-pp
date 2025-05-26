@@ -10,7 +10,7 @@ class MonitoringProyek extends Model
     use HasFactory;
 
     protected $table = 'monitoring_proyek';
-    protected $fillable = ['id_proyek_disetujui', 'status_review'];
+    protected $fillable = ['id_proyek_disetujui', 'id_penjadwalan', 'status', 'keterangan'];
 
     // Relasi ke tabel Penjadwalan
     public function penjadwalan()
@@ -21,11 +21,18 @@ class MonitoringProyek extends Model
     // Relasi ke tabel TimProyek
     public function timProyek()
     {
-        return $this->hasMany(TimProyek::class, 'id_proyek_disetujui', 'id_proyek_disetujui');
+        return $this->hasMany(TimProyek::class, 'id_project_disetujui', 'id_proyek_disetujui');
     }
 
     public function Proyek_disetujui()
     {
         return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
+        return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
+    }
+
+    // Add alias for consistent naming
+    public function proyekDisetujui()
+    {
+        return $this->Proyek_disetujui();
     }
 }

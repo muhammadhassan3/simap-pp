@@ -9,6 +9,8 @@ class PelaksanaanProyek extends Model
 {
     protected $table = 'pelaksanaan_proyek';
 
+    public $timestamps = true;
+
     protected $fillable = [
         'id',
         'id_penjadwalan',

@@ -31,11 +31,11 @@ class PengajuanProposalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_tempat' => 'required|exists:tempat_proyek,id_tempat_proyek',
+            'id_tempat_proyek' => 'required|exists:tempat_proyek,id',
             'nama_proyek' => 'required|string|max:100',
             'tanggal_pengajuan' => 'required|date',
             'harga_proyek' => 'required|string',
-            'file_proposal' => 'required|file|mimes:pdf,docx,jpeg,jpg,png,svg,webp|max:1048576',
+            'file_proposal' => 'required|file|mimes:pdf,docx|max:1048576',
             'keterangan_proposal' => 'required|string',
         ]);
 
@@ -51,12 +51,13 @@ class PengajuanProposalController extends Controller
         }
 
         PengajuanProposal::create([
-            'id_tempat_proyek' => $request->nama_tempat,
+            'id_tempat_proyek' => $request->id_tempat_proyek,
             'nama_proyek' => $request->nama_proyek,
             'tanggal_pengajuan' => $request->tanggal_pengajuan,
-            'harga_proyek' => $harga_proyek,
+            'harga' => $harga_proyek,
             'file_proposal' => $fileName,
-            'keterangan_proposal' => $request->keterangan_proposal,
+            'keterangan' => $request->keterangan_proposal,
+            'status_proposal' => 'pending', // default jika perlu
         ]);
 
         return redirect()->route('pengajuan_proposal.index')->with('message', 'Data Pengajuan Proposal berhasil disimpan!');
@@ -70,47 +71,47 @@ class PengajuanProposalController extends Controller
         return view('pengajuan_proposal.edit', compact('proposal', 'tempatProyek'));
     }
 
-    public function update(Request $request, $id_pengajuan_proposal)
-    {
-        $proposal = PengajuanProposal::findOrFail($id_pengajuan_proposal);
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'id_tempat_proyek' => 'required|exists:tempat_proyek,id',
+        'nama_proyek' => 'required|string|max:100',
+        'tanggal_pengajuan' => 'required|date',
+        'harga_proyek' => 'required|string',
+        'keterangan_proposal' => 'required|string',
+        'file_proposal' => 'nullable|file|mimes:pdf,docx|max:1048576',
+    ]);
 
-        $request->validate([
-            'nama_tempat' => 'required|exists:tempat_proyek,id_tempat_proyek',
-            'nama_proyek' => 'required|string|max:100',
-            'tanggal_pengajuan' => 'required|date',
-            'harga_proyek' => 'required|string',
-            'file_proposal' => 'nullable|file|mimes:pdf,docx,jpeg,jpg,png,svg,webp|max:1048576',
-            'keterangan_proposal' => 'required|string',
-        ]);
+    $proposal = PengajuanProposal::findOrFail($id);
 
-        $harga_proyek = floatval(str_replace('.', '', $request->harga_proyek));
+    $harga_proyek = floatval(str_replace('.', '', $request->harga_proyek));
+    $fileName = $proposal->file_proposal;
 
-        $fileName = $proposal->file_proposal;
-
-        if ($request->hasFile('file_proposal')) {
-            if ($fileName) {
-                $oldFilePath = public_path('proposal/' . $fileName);
-                if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath);
-                }
+    // Jika ada file baru diupload
+    if ($request->hasFile('file_proposal')) {
+        // Hapus file lama jika ada
+        if ($fileName) {
+            $oldFilePath = public_path('proposal/' . $fileName);
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
             }
-
-            $file = $request->file('file_proposal');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('proposal/'), $fileName);
         }
-
-        $proposal->update([
-            'id_tempat_proyek' => $request->nama_tempat,
-            'nama_proyek' => $request->nama_proyek,
-            'tanggal_pengajuan' => $request->tanggal_pengajuan,
-            'harga_proyek' => $harga_proyek,
-            'file_proposal' => $fileName,
-            'keterangan_proposal' => $request->keterangan_proposal,
-        ]);
-
-        return redirect()->route('pengajuan_proposal.index')->with('message', 'Data Pengajuan Proposal berhasil diperbarui!');
+        $file = $request->file('file_proposal');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('proposal/'), $fileName);
     }
+
+    $proposal->update([
+        'id_tempat_proyek' => $request->id_tempat_proyek,
+        'nama_proyek' => $request->nama_proyek,
+        'tanggal_pengajuan' => $request->tanggal_pengajuan,
+        'harga' => floatval(str_replace('.', '', $request->harga_proyek)),
+        'file_proposal' => $fileName,
+        'keterangan' => $request->keterangan_proposal,
+    ]);
+
+    return redirect()->route('pengajuan_proposal.index')->with('message', 'Berhasil diupdate!');
+}
 
     // public function updateStatus($id_pengajuan_proposal, $status)
     // {
@@ -136,4 +137,21 @@ class PengajuanProposalController extends Controller
 
         return redirect()->back()->with('message', 'Status berhasil diperbarui!');
     }
+
+    public function destroy($id)
+{
+    $proposal = PengajuanProposal::findOrFail($id);
+
+    // Hapus file proposal jika ada
+    if ($proposal->file_proposal) {
+        $filePath = public_path('proposal/' . $proposal->file_proposal);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
+
+    $proposal->delete();
+
+    return redirect()->route('pengajuan_proposal.index')->with('message', 'Proposal berhasil dihapus!');
+}
 }

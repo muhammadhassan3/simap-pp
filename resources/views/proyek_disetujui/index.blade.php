@@ -26,23 +26,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($proyek as $index => $proyek)
+                    @foreach ($proyek as $key => $item)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $proyek->pengajuanProposal->nama_proyek }}</td>
-                            <td>{{ $proyek->pengajuanProposal->tempatProyek->nama_tempat }}</td>
-                            <td>Rp {{ number_format($proyek->pengajuanProposal->harga, 0, ',', '.') }}</td>
-                            <td>{{ $proyek->status }}</td>
-                            <td>{{ $proyek->tanggal_mulai }}</td>
-                            <td>{{ $proyek->tanggal_selesai }}</td>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->pengajuanProposal->nama_proyek }}</td>
+                            <td>{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}</td>
+                            <td>Rp {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
+                            <td>{{ $item->status }}</td>
+                            <td>{{ $item->tanggal_mulai }}</td>
+                            <td>{{ $item->tanggal_selesai }}</td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="{{ route('proyek.detail', $proyek->id) }}" class="btn btn-sm text-white"
-                                        style="background-color: #007BFF;" style="background-color: #DEAA00;">
+                                    <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $item->id]) }}"
+                                        class="btn btn-sm text-white" style="background-color: #007BFF;">
                                         <i class="bi bi-eye-fill text-white"></i>
                                     </a>
-                                    <a href="{{ route('proyekdisetujui.edit', $proyek->id) }}" class="btn btn-sm text-white"
-                                        style="background-color: #DEAA00;">
+                                    <a href="{{ route('proyekdisetujui.show', $item->id) }}"
+                                        class="btn btn-sm text-white" style="background-color: #17a2b8;">
+                                        <i class="bi bi-info-circle-fill text-white"></i>
+                                    </a>
+                                    <a href="{{ route('proyekdisetujui.edit', $item->id) }}"
+                                        class="btn btn-sm text-white" style="background-color: #DEAA00;">
                                         <i class="bi bi-pencil-fill text-white"></i>
                                     </a>
                                 </div>

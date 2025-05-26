@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PenjadwalanProyekModel;
-use App\Models\ProyekDisetujuiModel;
-use App\Models\TimProjectModel;
+use App\Models\Penjadwalan;
+use App\Models\ProyekDisetujui;
+use App\Models\TimProyek;
 use Illuminate\Http\Request;
 
 class PenjadwalanProyekController extends Controller
 {
     public function index()
     {
-        $penjadwalanProyek = PenjadwalanProyekModel::with('proyekDisetujui.pengajuanProposal', 'supervisor')->get();
+        $penjadwalanProyek = Penjadwalan::with([
+            'proyekDisetujui.pengajuanProposal',
+            'supervisor.pekerja'
+        ])->get();
         return view('penjadwalan_proyek.penjadwalan_proyek', compact('penjadwalanProyek'));
     }
 
     public function create()
     {
-        $proyekDisetujui = ProyekDisetujuiModel::with('pengajuanProposal', 'timProject.pekerja')->get();
+        $proyekDisetujui = ProyekDisetujui::with([
+            'pengajuanProposal',
+            'timProyek.pekerja'
+        ])->get();
         return view('penjadwalan_proyek.tambahjadwal_proyek', compact('proyekDisetujui'));
     }
 
@@ -28,19 +34,18 @@ class PenjadwalanProyekController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'pekerjaan' => 'required|string',
-            'status' => 'required|string'
+            'status' => 'required|in:tersedia,sedang dikerjakan,batal,selesai'
         ]);
 
-        // Ambil supervisor dari TimProjectModel
-        $supervisor = TimProjectModel::where('id_proyek_disetujui', $request->id_proyek_disetujui)
+        // Get the supervisor from TimProyek
+        $supervisor = TimProyek::where('id_project_disetujui', $request->id_proyek_disetujui)
             ->where('peran', 'Supervisor')
-            ->with('pekerja') // Pastikan relasi pekerja dipanggil
             ->first();
 
-        // Simpan ke dalam database
-        PenjadwalanProyekModel::create([
+        // Save to database
+        Penjadwalan::create([
             'id_proyek_disetujui' => $request->id_proyek_disetujui,
-            'id_tim_project' => $supervisor ? $supervisor->id : null, // Cek apakah ada supervisor
+            'id_tim_project' => $supervisor ? $supervisor->id : null,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
             'pekerjaan' => $request->pekerjaan,
@@ -52,56 +57,48 @@ class PenjadwalanProyekController extends Controller
 
     public function edit($id)
     {
-        $jadwal = PenjadwalanProyekModel::with('proyekDisetujui.pengajuanProposal', 'supervisor')->findOrFail($id);
-        $proyekDisetujui = ProyekDisetujuiModel::with('pengajuanProposal', 'timProject.pekerja')->get();
-        return view('penjadwalan_proyek.editjadwal_proyek', compact('jadwal', 'proyekDisetujui'));
+        $jadwal = Penjadwalan::with([
+            'proyekDisetujui.pengajuanProposal',
+            'supervisor.pekerja'
+        ])->findOrFail($id);
+        return view('penjadwalan_proyek.editjadwal_proyek', compact('jadwal'));
     }
 
     public function update(Request $request, $id)
     {
-        // Validasi input
+        // Validasi input dengan enum untuk status
         $request->validate([
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'pekerjaan' => 'required|string',
-            'status' => 'required|string'
+            'status' => 'required|in:tersedia,sedang dikerjakan,batal,selesai'
         ]);
 
-        $jadwal = PenjadwalanProyekModel::findOrFail($id);
+        $jadwal = Penjadwalan::findOrFail($id);
 
-        // Ambil supervisor terbaru jika proyek diubah
-        if ($request->has('id_proyek_disetujui')) {
-            $supervisor = TimProjectModel::where('id_proyek_disetujui', $request->id_proyek_disetujui)
-                ->where('peran', 'Supervisor')
-                ->with('pekerja')
-                ->first();
-
-            $request->merge([
-                'id_tim_project' => $supervisor ? $supervisor->id : null,
-
-            ]);
-        }
-
-        $jadwal->update($request->all());
+        // Update jadwal
+        $jadwal->tanggal_mulai = $request->tanggal_mulai;
+        $jadwal->tanggal_selesai = $request->tanggal_selesai;
+        $jadwal->pekerjaan = $request->pekerjaan;
+        $jadwal->status = $request->status;
+        $jadwal->save();
 
         return redirect('/penjadwalan_proyek')->with('success', 'Jadwal proyek berhasil diperbarui');
     }
 
     public function delete($id)
     {
-        PenjadwalanProyekModel::findOrFail($id)->delete();
+        Penjadwalan::findOrFail($id)->delete();
         return redirect('/penjadwalan_proyek')->with('success', 'Jadwal proyek berhasil dihapus');
     }
 
     public function getSupervisor($id)
     {
-        $supervisor = TimProjectModel::where('id_proyek_disetujui', $id)
-            ->where('peran', 'Supervisor')
-            ->with('pekerja') // Ambil nama pekerja
+        $supervisor = TimProyek::with('pekerja')
+            ->where('id_project_disetujui', $id)
+            ->where('peran', 'supervisor')
             ->first();
 
-        return response()->json([
-            'nama_supervisor' => $supervisor ? $supervisor->pekerja->nama : null
-        ]);
+        return response()->json(['supervisor' => $supervisor]);
     }
 }

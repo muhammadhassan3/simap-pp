@@ -20,7 +20,7 @@ class ProyekDisetujui extends Model
 
     public function pengajuanProposal()
     {
-        return $this->belongsTo(PengajuanProposal::class, 'id_pengajuan_proposal');
+        return $this->belongsTo(PengajuanProposal::class, 'id_pengajuan_proposal', 'id');
     }
 
     // Alias for pengajuanProposal to support snake_case usage in controller
@@ -36,7 +36,13 @@ class ProyekDisetujui extends Model
 
     public function Monitoring_proyek()
     {
-        return $this->hasMany(MonitoringProyek::class, 'id_proyek_disetujui');
+        return $this->hasOne(MonitoringProyek::class, 'id_proyek_disetujui');
+    }
+    
+    // Add alias for case sensitivity issues
+    public function monitoringProyek()
+    {
+        return $this->Monitoring_proyek();
     }
 
     public function Penjadwalan(): HasMany

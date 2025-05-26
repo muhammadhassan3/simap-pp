@@ -1,10 +1,8 @@
-@extends('component.layout')
-
-@section('content')
+<x-layout>
     <div class="container mt-4">
         <div class="card p-4">
             <a href="{{ route('proyekdisetujui.index') }}" class="text-dark d-flex align-items-center">
-                <h4><i class="bi bi-arrow-left me-2"></i> <span>Edit Status</span> </h4>
+                <h4><i class="bi bi-arrow-left me-2"></i> <span>Edit Status</span></h4>
             </a>
 
 
@@ -15,19 +13,20 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Proyek</label>
                     <input type="text" class="form-control" value="{{ $proyek->pengajuan_proposal->nama_proyek }}"
-                        disabled>
+                           disabled>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Tempat Proyek</label>
-                    <input type="text" class="form-control" value="{{ $proyek->pengajuan_proposal->tempat_proyek->nama }}"
-                        disabled>
+                    <input type="text" class="form-control"
+                           value="{{ $proyek->pengajuan_proposal->tempat_proyek->nama_tempat }}"
+                           disabled>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Harga Proyek</label>
                     <input type="text" class="form-control" value="{{ $proyek->pengajuan_proposal->harga }}"
-                        disabled>
+                           disabled>
                 </div>
 
                 <div class="mb-3">
@@ -44,13 +43,14 @@
                 <div class="mb-3">
                     <label class="form-label">Tanggal Mulai</label>
                     <input type="date" name="tanggal_mulai" class="form-control" value="{{ $proyek->tanggal_mulai }}"
-                        >
+                    >
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Tanggal Selesai</label>
-                    <input type="date" name="tanggal_selesai" class="form-control" value="{{ $proyek->tanggal_selesai }}"
-                        >
+                    <input type="date" name="tanggal_selesai" class="form-control"
+                           value="{{ $proyek->tanggal_selesai }}"
+                    >
                 </div>
 
                 <div class="d-grid">
@@ -59,4 +59,4 @@
             </form>
         </div>
     </div>
-@endsection
+</x-layout>

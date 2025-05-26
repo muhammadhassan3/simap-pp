@@ -3,6 +3,7 @@
     <div class="w-full p-3 bg-white" style="border-radius: 20px;">
         <!-- Button Kembali -->
         <div>
+            <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $penjadwalan->id_proyek_disetujui]) }}" class="btn btn-outline-secondary">
             <a href="{{ route('proyek.detail', $penjadwalan->proyekDisetujui->id) }}" class="btn btn-outline-secondary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -26,6 +27,7 @@
             <div class="col-12 col-md-4">
                 <div class="p-3 text-white shadow rounded" style="background: #007ADE;">
                     <h6 class="fw-bold text-white mb-1">Nama Proyek</h6>
+                    <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
                     <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
                 </div>
             </div>

@@ -21,4 +21,9 @@ class Customer extends Model
     {
         return $this->hasMany(Marketing::class);
     }
+
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class, 'id_customer');
+    }
 }
