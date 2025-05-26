@@ -19,8 +19,12 @@ class EvaluasiProyekController extends Controller
             ->join('pengajuan_proposal', 'proyek_disetujui.id_pengajuan_proposal', '=', 'pengajuan_proposal.id')
             ->select(
                 'evaluasi_proyek.id',
+                'pengajuan_proposal.harga',
+                'proyek_disetujui.id as id_proyek',
                 'pengajuan_proposal.nama_proyek',
                 'proyek_disetujui.status',
+                'proyek_disetujui.tanggal_mulai',
+                'proyek_disetujui.tanggal_selesai',
                 'evaluasi_proyek.keterangan'
             )
             ->where('proyek_disetujui.status', 'Selesai')
@@ -30,6 +34,13 @@ class EvaluasiProyekController extends Controller
             ->orderBy('evaluasi_proyek.id', 'desc') // Urutan dari yang terbaru
             ->get();
 
+        // Hitung durasi proyek (selisih tanggal selesai - tanggal mulai)
+        $proyekSelesai->transform(function ($item) {
+            $tanggalMulai = \Carbon\Carbon::parse($item->tanggal_mulai);
+            $tanggalSelesai = \Carbon\Carbon::parse($item->tanggal_selesai);
+            $item->durasi = $tanggalMulai->diffInDays($tanggalSelesai); // Menghitung selisih hari
+            return $item;
+        });
 
         return view('evaluasi_proyek.evaluasi_proyek', compact('proyekSelesai'));
     }

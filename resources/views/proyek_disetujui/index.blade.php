@@ -1,65 +1,70 @@
 <x-layout>
-    <div class="mb-3">
-        <h3 class="font-weight-bold text-md">Proyek Disetujui</h3>
-    </div>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0" style="background: white">
+                <div style="font-size: 16px; margin-bottom: 18px" class="fw-bold">Proyek Disetujui</div>
+                <!-- Form Search -->
+                <div class="d-flex justify-content-end mb-2">
+                    <input type="text" id="searchInput" class="search-box" placeholder="Cari Proyek..."
+                        onkeyup="searchTable()"
+                        style="width: 250px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
 
-    <!-- Form Search -->
-    <div class="d-flex justify-content-end mb-4">
-        <input type="text" id="searchInput" class="search-box" placeholder="Cari Proyek..." onkeyup="searchTable()"
-            style="width: 250px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
+                </div>
 
-    </div>
+                {{-- DATA --}}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle border rounded shadow-sm">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Proyek</th>
+                                <th>Tempat Proyek</th>
+                                <th>Harga Proyek</th>
+                                <th>Status</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
+                                <th width="50">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($proyek as $key => $item)
+                                <tr>
+                                    <td class="text-center">{{ $key + 1 }}</td>
+                                    <td>{{ $item->pengajuanProposal->nama_proyek }}</td>
+                                    <td>{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}</td>
+                                    <td class="text-end">Rp {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->status }}</td>
+                                    <td class="text-center">{{ $item->tanggal_mulai }}</td>
+                                    <td class="text-center">{{ $item->tanggal_selesai }}</td>
+                                    <td class="px-4 py-2 text-center">
+                                        <div class="d-flex gap-1">
+                                            @if ($item->status != 'Batal')
+                                                <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $item->id]) }}"
+                                                    class="btn text-white" style="background-color: #007BFF;">
+                                                    <i class="bi bi-eye-fill text-white"></i>
+                                                </a>
+                                            @endif
+                                            <a href="{{ route('proyekdisetujui.show', $item->id) }}"
+                                                class="btn text-white" style="background-color: #17a2b8;">
+                                                <i class="bi bi-info-circle-fill text-white"></i>
+                                            </a>
+                                            <a href="{{ route('proyekdisetujui.edit', $item->id) }}"
+                                                class="btn text-white" style="background-color: #DEAA00;">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                        </div>
+                                    </td>
 
-    <div class="card">
-        <div class="table-responsive">
-            <table class="table mb-0 text-center">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>NO</th>
-                        <th>NAMA PROYEK</th>
-                        <th>TEMPAT PROYEK</th>
-                        <th>HARGA PROYEK</th>
-                        <th>STATUS</th>
-                        <th>TANGGAL MULAI</th>
-                        <th>TANGGAL SELESAI</th>
-                        <th width="50">AKSI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($proyek as $key => $item)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $item->pengajuanProposal->nama_proyek }}</td>
-                            <td>{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}</td>
-                            <td>Rp {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td>{{ $item->tanggal_mulai }}</td>
-                            <td>{{ $item->tanggal_selesai }}</td>
-                            <td class="px-4 py-2 text-center">
-                                <div class="d-flex gap-1">
-                                    @if ($item->status != 'Batal')
-                                        <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $item->id]) }}"
-                                            class="btn text-white" style="background-color: #007BFF;">
-                                            <i class="bi bi-eye-fill text-white"></i>
-                                        </a>
-                                    @endif
-                                    <a href="{{ route('proyekdisetujui.show', $item->id) }}" class="btn text-white"
-                                        style="background-color: #17a2b8;">
-                                        <i class="bi bi-info-circle-fill text-white"></i>
-                                    </a>
-                                    <a href="{{ route('proyekdisetujui.edit', $item->id) }}" class="btn text-white"
-                                        style="background-color: #DEAA00;">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                </div>
-                            </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
+
 </x-layout>
 
 <script>

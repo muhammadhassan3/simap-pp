@@ -27,4 +27,9 @@ class TempatProyek extends Model
     {
         return $this->hasMany(PengajuanProposal::class, 'id_tempat_proyek');
     }
+
+    public function sewaAlat()
+    {
+        return $this->hasMany(sewaAlat::class, 'id', 'id_proyek');
+    }
 }

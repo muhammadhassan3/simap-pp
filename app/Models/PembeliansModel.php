@@ -20,11 +20,11 @@ class PembeliansModel extends Model
 
     public function proyekDisetujui()
     {
-        return $this->belongsTo(ProyekDisetujuiModel::class, 'id_proyek_disetujui', "id");
+        return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui', "id");
     }
 
     public function detail()
     {
-        return $this->belongsTo(ProyekDisetujuiModel::class, 'id_pengajuan_proposal');
+        return $this->belongsTo(ProyekDisetujui::class, 'id_pengajuan_proposal');
     }
 }

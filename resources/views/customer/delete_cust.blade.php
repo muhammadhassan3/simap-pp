@@ -10,14 +10,15 @@
                 <p class="text-wrap">Apakah anda yakin akan menghapus Customer ini? <strong>Customer yang dihapus tidak
                         dapat dikembalikan lagi.</strong></p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tidak, kembali</button>
-                <form id="formHapusCustomer" method="POST">
+            <div class="modal-footer border-top-0 d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="margin-top: -12px;">
+                    Tidak, kembali
+                </button>
+                <form style="margin: 0;" id="formHapusCustomer" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Ya, hapus</button>
                 </form>
-
             </div>
         </div>
     </div>

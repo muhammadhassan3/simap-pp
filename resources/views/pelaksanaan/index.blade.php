@@ -27,7 +27,6 @@
                 <div class="p-3 text-white shadow rounded" style="background: #007ADE;">
                     <h6 class="fw-bold text-white mb-1">Nama Proyek</h6>
                     <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
-                    <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">
@@ -86,7 +85,7 @@
         <div class="mt-1">
             <div class="table-responsive">
                 <table class="table table-hover align-middle border rounded shadow-sm">
-                    <thead class="table-light text-center">
+                    <thead class="table-secondary">
                         <tr>
                             <th class="text-center">No</th>
                             <th class="text-center">Tanggal</th>
