@@ -35,19 +35,21 @@
                             <td>{{ $item->status }}</td>
                             <td>{{ $item->tanggal_mulai }}</td>
                             <td>{{ $item->tanggal_selesai }}</td>
-                            <td>
+                            <td class="px-4 py-2 text-center">
                                 <div class="d-flex gap-1">
-                                    <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $item->id]) }}" class="btn btn-sm text-white"
-                                        style="background-color: #007BFF;">
-                                        <i class="bi bi-eye-fill text-white"></i>
-                                    </a>
-                                    <a href="{{ route('proyekdisetujui.show', $item->id) }}" class="btn btn-sm text-white"
+                                    @if ($item->status != 'Batal')
+                                        <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $item->id]) }}"
+                                            class="btn text-white" style="background-color: #007BFF;">
+                                            <i class="bi bi-eye-fill text-white"></i>
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('proyekdisetujui.show', $item->id) }}" class="btn text-white"
                                         style="background-color: #17a2b8;">
                                         <i class="bi bi-info-circle-fill text-white"></i>
                                     </a>
-                                    <a href="{{ route('proyekdisetujui.edit', $item->id) }}" class="btn btn-sm text-white"
+                                    <a href="{{ route('proyekdisetujui.edit', $item->id) }}" class="btn text-white"
                                         style="background-color: #DEAA00;">
-                                        <i class="bi bi-pencil-fill text-white"></i>
+                                        <i class="fas fa-pen"></i>
                                     </a>
                                 </div>
                             </td>

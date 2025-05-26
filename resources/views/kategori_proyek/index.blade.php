@@ -1,6 +1,12 @@
 <x-layout>
     <div class="card shadow-sm p-4 mx-auto" style="max-width: 1200px; background-color: #FFFFFF">
-        <h3 class="mb-3 text-center">Kategori Proyek</h3>
+        <div class="d-flex align-items-center mb-3">
+            <a href="{{ route('show-tempat-proyek') }}" class="text-dark me-2">
+                <i class="bi bi-arrow-left fs-4"></i>
+            </a>
+            <h3 class="text-start">Kategori Proyek</h3>
+        </div>
+
         <div class="row mb-3 pt-4">
             <div class="col-md-3">
                 <!-- Tombol Tambah -->
@@ -33,7 +39,7 @@
                         <th>AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-start">
                     @foreach ($kategoris as $index => $item)
                         <tr>
                             <td>{{ $index + 1 }}</td> <!-- Gunakan index biasa -->

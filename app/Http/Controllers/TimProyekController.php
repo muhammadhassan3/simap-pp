@@ -48,7 +48,7 @@ class TimProyekController extends Controller
         $tim = TimProyek::findOrFail($id);
         $tim->update($request->all());
 
-        return redirect()->route('tim-proyek.index')->with('success', 'Data tim berhasil diperbarui');
+        return redirect()->route('tim-proyek.detail', $tim->id_project_disetujui)->with('success', 'Data tim berhasil diperbarui');
     }
 
     public function detail(Request $request, $id)  // Pastikan $id ada di sini
@@ -60,6 +60,8 @@ class TimProyekController extends Controller
                     $q->whereRaw('LOWER(nama) LIKE ?', ["%" . strtolower($search) . "%"]);
                 });
             })->get();
+
+        $id = $tim->first()->id_project_disetujui;
 
         return view('timproject.detail', compact('tim', 'id')); // Pastikan $id dikirim ke view
     }
@@ -89,7 +91,7 @@ class TimProyekController extends Controller
 
 
         // Redirect dengan pesan sukses
-        return redirect()->route('tim-proyek.index')->with('success', 'Tim proyek berhasil ditambahkan.');
+        return redirect()->route('tim-proyek.detail', $TimProject->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
     }
 
     public function create()

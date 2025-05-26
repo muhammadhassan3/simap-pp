@@ -15,9 +15,10 @@ class User extends Authenticatable
     protected $table = 'users'; // Ubah nama tabel menjadi 'user'
 
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
     ];
 
     protected $hidden = [

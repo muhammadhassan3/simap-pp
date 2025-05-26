@@ -50,7 +50,7 @@
             <!-- Tombol Simpan & Batal -->
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary me-2">Simpan</button>
-                <a href="{{ route('tim-proyek.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('tim-proyek.detail', $tim->id_project_disetujui) }}" class="btn btn-secondary">Batal</a>
             </div>
         </form>
     </div>

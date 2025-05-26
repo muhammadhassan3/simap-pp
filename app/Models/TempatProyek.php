@@ -11,7 +11,7 @@ class TempatProyek extends Model
     use HasFactory;
 
     protected $table = 'tempat_proyek';
-    protected $fillable = ['nama', 'alamat', 'foto', 'id_kategori_proyek', 'id_customer'];
+    protected $fillable = ['nama_tempat', 'alamat', 'foto', 'id_kategori_proyek', 'id_customer'];
 
     public function kategoriProyek()
     {

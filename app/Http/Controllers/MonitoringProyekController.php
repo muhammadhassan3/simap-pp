@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Models\MonitoringProyek;
 use App\Models\Penjadwalan;
+use Illuminate\Http\Request;
+use App\Models\ProyekDisetujui;
+use App\Models\MonitoringProyek;
+use Illuminate\Support\Facades\Storage;
 
 class MonitoringProyekController extends Controller
 {
@@ -16,13 +17,14 @@ class MonitoringProyekController extends Controller
 
         // Ambil data monitoring proyek berdasarkan id_proyek_disetujui
         $monitoringProyek = MonitoringProyek::with([
-            'penjadwalan',
-            'timProyek.pekerja',
-            'Proyek_disetujui.pengajuanProposal.tempatProyek.kategoriProyek',
-            'Proyek_disetujui.pengajuanProposal.tempatProyek.customer'
-        ])
+                    'penjadwalan',
+                    'timProyek.pekerja',
+                    'Proyek_disetujui.pengajuanProposal.tempatProyek.kategoriProyek',
+                    'Proyek_disetujui.pengajuanProposal.tempatProyek.customer'
+                ])
             ->where('id_proyek_disetujui', $idProyekDisetujui)
             ->first();
+        
 
         // Jika monitoring proyek tidak ditemukan, cek apakah proyek disetujui ada
         if (!$monitoringProyek && $idProyekDisetujui) {
@@ -34,16 +36,18 @@ class MonitoringProyekController extends Controller
 
             // Refresh dengan relasi
             $monitoringProyek = MonitoringProyek::with([
-                'penjadwalan',
-                'timProyek.pekerja',
-                'Proyek_disetujui.pengajuanProposal.tempatProyek.kategoriProyek',
-                'Proyek_disetujui.pengajuanProposal.tempatProyek.customer'
-            ])
+                                    'penjadwalan',
+                                    'timProyek.pekerja',
+                                    'Proyek_disetujui.pengajuanProposal.tempatProyek.kategoriProyek',
+                                    'Proyek_disetujui.pengajuanProposal.tempatProyek.customer'
+                                ])
             ->where('id_proyek_disetujui', $idProyekDisetujui)
             ->first();
         }
 
-        return view('monitoring_proyek.index', compact('monitoringProyek'));
+        return view('monitoring_proyek.index', [
+            'monitoringProyek' => $monitoringProyek,
+        ]);
     }
 
     public function edit($id)
@@ -82,7 +86,7 @@ class MonitoringProyekController extends Controller
     {
         // Temukan entri penjadwalan berdasarkan ID
         $penjadwalan = Penjadwalan::findOrFail($id);
-        $penjadwalan->keterangan = '';
+        $penjadwalan->keterangan = null;
         $penjadwalan->save();
 
         // Reset status di monitoring_proyek

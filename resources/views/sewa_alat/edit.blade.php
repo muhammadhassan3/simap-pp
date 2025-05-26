@@ -74,7 +74,7 @@
                     <option value="" disabled>Pilih Perusahaan</option>
                     @foreach($customers as $customer)
                         <option value="{{ $customer->id }}" {{ $sewa_alat->customer_id == $customer->id ? 'selected' : '' }}>
-                            {{ $customer->nama }}
+                            {{ $customer->nama_customer }}
                         </option>
                     @endforeach
                 </select>
@@ -93,7 +93,7 @@
                     <option value="" disabled>Pilih Proyek</option>
                     @foreach($tempatProyek as $proyek)
                         <option value="{{ $proyek->id }}" {{ $sewa_alat->id_proyek == $proyek->id ? 'selected' : '' }}>
-                            {{ $proyek->nama }}
+                            {{ $proyek->nama_tempat }}
                         </option>
                     @endforeach
                 </select>

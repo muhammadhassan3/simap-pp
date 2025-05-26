@@ -3,6 +3,7 @@
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DokumenPenyelesaianProyekController;
 use App\Http\Controllers\EvaluasiProyekController;
@@ -204,10 +205,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 // Logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Dashboard (Harus login dulu)
-Route::get('/dashboard', function () {
-    $user = Auth::user();
-    return view('auth.dashboard', ['user' => $user]);
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'DashboardAdmin'])->name('dashboard');
 Route::get('/profilemanagement', [AuthController::class, "profile"])->name("profile");
 Route::post('/profilemanagement', [AuthController::class, "updateProfile"])->name("updateprofile");
 Route::post('/profilemanagement/editPassword', [AuthController::class, "updatePassword"])->name("updatepassword");

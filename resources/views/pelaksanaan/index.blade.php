@@ -27,6 +27,7 @@
                 <div class="p-3 text-white shadow rounded" style="background: #007ADE;">
                     <h6 class="fw-bold text-white mb-1">Nama Proyek</h6>
                     <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
+                    <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">
@@ -174,24 +175,6 @@
                 </table>
             </div>
         </div>
-
-        @if (isset($data->id))
-            <div class="d-flex justify-content-end">
-                <!-- Tombol Finish Pelaksanaan -->
-                <button class="btn btn-success btn-sm" style="padding-inline: 1rem"
-                    onclick="confirmFinish({{ $data->id }}, '{{ $data->id_penjadwalan }}')">
-                    Selesaikan Pelaksanaan
-                </button>
-
-                <!-- Form Finish Pelaksanaan -->
-                <form id="finish-form-{{ $data->id }}"
-                    action="{{ route('pelaksanaan.finish', ['id' => $data->id_penjadwalan]) }}" method="POST"
-                    style="display: none;">
-                    @csrf
-                    @method('PUT')
-                </form>
-            </div>
-        @endif
 
 
     </div>

@@ -13,14 +13,14 @@ class SewaAlatController extends Controller
     public function index()
     {
         // Mengambil semua data sewa alat beserta relasi customer dan tempat proyek
-        $sewaAlat = SewaAlat::with(['customer', 'tempatProyek'])->get(); // Periksa nama relasi
+        $sewaAlat = SewaAlat::with(['Customer', 'TempatProyek'])->get(); // Periksa nama relasi
         // dd($sewaAlat->toArray());
         return view('sewa_alat.index', compact('sewaAlat')); // Pastikan nama view sesuai
     }
 
     public function create()
     {
-        $customers = Customer::all();
+        $customers = Customer::get();
         $tempatProyek = TempatProyek::all();
         return view('sewa_alat.create', compact('customers', 'tempatProyek'));
     }

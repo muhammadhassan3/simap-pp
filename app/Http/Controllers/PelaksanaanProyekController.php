@@ -145,43 +145,6 @@ class PelaksanaanProyekController extends Controller
         return redirect()->route('pelaksanaan.index', $id)->with('success', 'Pelaksanaan telah dikonfirmasi.');
     }
 
-    public function finish($id)
-    {
-        // Ambil data penjadwalan berdasarkan ID
-        $penjadwalan = Penjadwalan::where('id', $id)->first();
-
-        // Cek apakah penjadwalan ditemukan
-        if (!$penjadwalan) {
-            return redirect()->back()->with('error', 'Penjadwalan tidak ditemukan.');
-        }
-
-        // Ambil tanggal pelaksanaan terakhir berdasarkan ID penjadwalan
-        $tanggalPelaksanaanTerakhir = PelaksanaanProyek::where('id_penjadwalan', $id)
-            ->orderBy('tanggal_pelaksanaan', 'desc')
-            ->first()
-            ->tanggal_pelaksanaan ?? null;
-
-        // Cek apakah ada tanggal pelaksanaan terakhir
-        if (!$tanggalPelaksanaanTerakhir) {
-            return redirect()->back()->with('error', 'Data pelaksanaan tidak ditemukan.');
-        }
-
-        // Bandingkan tanggal selesai penjadwalan dengan tanggal pelaksanaan terakhir
-        if ($penjadwalan->tanggal_selesai < $tanggalPelaksanaanTerakhir) {
-            $penjadwalan->status = 'Failure';
-        } elseif ($penjadwalan->tanggal_selesai == $tanggalPelaksanaanTerakhir) {
-            $penjadwalan->status = 'On Target';
-        } else {
-            $penjadwalan->status = 'By Hand';
-        }
-
-        $id_proyek = $penjadwalan->id_proyek_disetujui;
-
-        // Simpan perubahan status
-        $penjadwalan->save();
-
-        return redirect()->route('proyek.detail', $id_proyek)->with('success', 'Pelaksanaan berhasil diselesaikan.');
-    }
 
     public function destroy($id)
     {

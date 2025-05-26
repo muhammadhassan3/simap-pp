@@ -21,7 +21,6 @@
             <tr>
                 <th class="col-md-1">No</th>
                 <th class="col-md-1">Username</th>
-                <th class="col-md-3">Password</th>
                 <th class="col-md-4">Email</th>
                 <th class="col-md-2">Role</th>
                 <th class="col-md-2">Aksi</th>
@@ -33,7 +32,6 @@
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $item->username }}</td>
-                    <td>{{ $item->password }}</td>
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->role }}</td>
                     <td>

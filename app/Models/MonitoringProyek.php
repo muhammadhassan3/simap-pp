@@ -28,10 +28,4 @@ class MonitoringProyek extends Model
     {
         return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
     }
-
-    // Add alias for consistent naming
-    public function proyekDisetujui()
-    {
-        return $this->Proyek_disetujui();
-    }
 }

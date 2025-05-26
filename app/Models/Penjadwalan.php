@@ -11,7 +11,15 @@ class Penjadwalan extends Model
     use HasFactory;
 
     protected $table = 'penjadwalan';
-    protected $fillable = ['id_proyek_disetujui', 'tanggal_mulai', 'tanggal_selesai', 'pekerjaan', 'status', 'keterangan', 'id_tim_project',];
+    protected $fillable = [
+        'id_proyek_disetujui', 
+        'tanggal_mulai', 
+        'tanggal_selesai', 
+        'pekerjaan', 
+        'status', 
+        'keterangan', 
+        'id_tim_project',
+    ];
 
     public function monitoringProyek()
     {

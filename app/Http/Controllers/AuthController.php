@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aktor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +24,16 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if ($credentials) {
             $request->session()->regenerate();
             $user = User::where('email', $request->email)->first();
-            Auth::login($user);
+            if($user == null){
+                $aktor = Aktor::where('email', $request->email)->first();
+                Auth::login($aktor);
+            }else{
+
+                Auth::login($user);
+            }
             return redirect('dashboard');
         }
 

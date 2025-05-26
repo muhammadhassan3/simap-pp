@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Aktor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class AktorController extends Controller
@@ -16,12 +18,12 @@ class AktorController extends Controller
         $katakunci = $request->katakunci;
         $jumlahbaris = 10;
         if(strlen($katakunci)){
-            $data = Aktor::where('username','like',"%$katakunci%")
+            $data = User::where('username','like',"%$katakunci%")
             ->orWhere('role','like',"%$katakunci%")
             ->orderBy('username', 'asc')
             ->paginate($jumlahbaris);
         }else{
-            $data = Aktor::orderBy('username','asc')->paginate($jumlahbaris);
+            $data = User::orderBy('username','asc')->paginate($jumlahbaris);
         }
         return view('aktor.index')->with('data', $data);
     }
@@ -52,11 +54,11 @@ class AktorController extends Controller
         ]);
         $data = [
             'username'=>$request->username,
-            'password'=>$request->password,
+            'password'=> Hash::make($request->password),
             'email'=>$request->email,
             'role'=>$request->role,
         ];
-        Aktor::create($data);
+        User::create($data);
         return redirect()->to('aktor')->with('success', 'Berhasil menambahkan data');
     }
 
@@ -73,7 +75,7 @@ class AktorController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Aktor::where('username',$id)->first();
+        $data = User::where('username',$id)->first();
         return view('aktor.edit')->with('data', $data);
     }
 
@@ -84,22 +86,29 @@ class AktorController extends Controller
     {
         $request->validate([
             'username'=>'required',
-            'password'=>'required',
             'email'=>'required',
             'role'=>'required',
         ],[
             'username.required'=>'Username tidak boleh kosong',
-            'password.required'=>'Password tidak boleh kosong',
             'email.required'=>'Email tidak boleh kosong',
             'role.required'=>'Role tidak boleh kosong',
         ]);
-        $data = [
-            'username'=>$request->username,
-            'password'=>$request->password,
-            'email'=>$request->email,
-            'role'=>$request->role,
-        ];
-        Aktor::where('username',$id)->update($data);
+        if (!$request->password){
+            $data = [
+                'username'=>$request->username,
+                'password'=> Hash::make($request->password),
+                'email'=>$request->email,
+                'role'=>$request->role,
+            ];
+        }else{
+            $data = [
+                'username' => $request->username,
+                'email' => $request->email,
+                'role' => $request->role,
+            ];
+        }
+
+        User::where('username',$id)->update($data);
         return redirect()->to('aktor')->with('success', 'Berhasil melakukan update data');
     }
 
@@ -108,7 +117,7 @@ class AktorController extends Controller
      */
     public function destroy(string $id)
     {
-        Aktor::where('username',$id)->delete();
+        User::where('username',$id)->delete();
         return redirect()->to('aktor')->with('success', 'Berhasil melakukan delete data');
     }
 }
