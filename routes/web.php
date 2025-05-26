@@ -3,6 +3,7 @@
 use App\Http\Controllers\AktorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\DokumenPenyelesaianProyekController;
 use App\Http\Controllers\EvaluasiProyekController;
@@ -63,13 +64,15 @@ Route::put('/proyekdisetujui/{id}', [ProyekDisetujuiController::class, 'update']
 Route::get('/proyekdisetujui/{id}/show', [ProyekDisetujuiController::class, 'show'])->name('proyekdisetujui.show');
 
 //Fiqhi
-Route::get('/', [MarketingController::class, 'index'])->name('market.index');
-Route::get('create', [MarketingController::class, 'create'])->name('market.create');
-Route::post('store', [MarketingController::class, 'store'])->name('market.store');
-Route::post('store', [MarketingController::class, 'store'])->name('market.store');
-Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
-Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
-Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');
+Route::prefix('marketing')->group(function () {
+    Route::get('/', [MarketingController::class, 'index'])->name('market.index');
+    Route::get('create', [MarketingController::class, 'create'])->name('market.create');
+    Route::post('store', [MarketingController::class, 'store'])->name('market.store');
+    Route::post('store', [MarketingController::class, 'store'])->name('market.store');
+    Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
+    Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
+    Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');
+});
 
 //Hanny
 Route::get('/sewa-alat', [SewaAlatController::class, 'index']);
@@ -81,7 +84,7 @@ Route::put('/sewa_alat/{id}', [SewaAlatController::class, 'update'])->name('sewa
 
 //Ilham
 // Route untuk mengarahkan ke tampilan index pada controller monitoring_proyek
-Route::get('/monitoring_proyek', [MonitoringProyekController::class, 'index']);
+Route::get('/monitoring_proyek', [MonitoringProyekController::class, 'index'])->name('monitoring_proyek.index');
 // upload foto
 Route::post('/monitoring/upload-foto/{id}', [MonitoringProyekController::class, 'uploadFoto'])->name('monitoring.uploadFoto');
 Route::resource('monitoring_proyek', MonitoringProyekController::class);
@@ -92,13 +95,22 @@ Route::put('/monitoring_proyek/{id}', [MonitoringProyekController::class, 'updat
 Route::get('monitoring_proyek/reset/{id}', [MonitoringProyekController::class, 'reset'])->name('monitoring_proyek.reset');
 
 //Nisa
-Route::get('/penjadwalan_proyek', [PenjadwalanProyekController::class, 'index']);
-Route::get('/penjadwalan_proyek/tambah', [PenjadwalanProyekController::class, 'create']);
-Route::post('/penjadwalan_proyek/store', [PenjadwalanProyekController::class, 'store']);
-Route::get('/penjadwalan_proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit']);
-Route::put('/penjadwalan_proyek/update/{id}', [PenjadwalanProyekController::class, 'update']);
-Route::delete('/penjadwalan_proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete']);
-Route::get('/getSupervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor']);
+Route::get('/penjadwalan_proyek', [PenjadwalanProyekController::class, 'index'])->name('penjadwalan_proyek.index');
+Route::get('/penjadwalan_proyek/tambah', [PenjadwalanProyekController::class, 'create'])->name('penjadwalan_proyek.create');
+Route::post('/penjadwalan_proyek/store', [PenjadwalanProyekController::class, 'store'])->name('penjadwalan_proyek.store');
+Route::get('/penjadwalan_proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit'])->name('penjadwalan_proyek.edit');
+Route::put('/penjadwalan_proyek/update/{id}', [PenjadwalanProyekController::class, 'update'])->name('penjadwalan_proyek.update');
+Route::delete('/penjadwalan_proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete'])->name('penjadwalan_proyek.delete');
+Route::get('/getSupervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor'])->name('penjadwalan_proyek.getSupervisor');
+Route::get('/get-supervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor']);
+
+Route::get('/penjadwalan-proyek', [PenjadwalanProyekController::class, 'index'])->name('penjadwalan-proyek.index');
+Route::get('/penjadwalan-proyek/tambah', [PenjadwalanProyekController::class, 'create'])->name('penjadwalan-proyek.create');
+Route::post('/penjadwalan-proyek/store', [PenjadwalanProyekController::class, 'store'])->name('penjadwalan-proyek.store');
+Route::get('/penjadwalan-proyek/edit/{id}', [PenjadwalanProyekController::class, 'edit'])->name('penjadwalan-proyek.edit');
+Route::put('/penjadwalan-proyek/update/{id}', [PenjadwalanProyekController::class, 'update'])->name('penjadwalan-proyek.update');
+Route::delete('/penjadwalan-proyek/delete/{id}', [PenjadwalanProyekController::class, 'delete'])->name('penjadwalan-proyek.delete');
+Route::get('/supervisor/{id}', [PenjadwalanProyekController::class, 'getSupervisor'])->name('supervisor.get');
 
 //Restu
 // Route utama evaluasi proyek
@@ -114,29 +126,20 @@ Route::get('/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
 Route::get('/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
 
 //Safinka
-Route::prefix('pengajuan_proposal')->group(function () {
-    Route::get('/', [PengajuanProposalController::class, 'index'])->name('pengajuan_proposal.index');
-    Route::get('/create', [PengajuanProposalController::class, 'create'])->name('pengajuan_proposal.create');
-    Route::post('/', [PengajuanProposalController::class, 'store'])->name('pengajuan_proposal.store');
-    Route::get('/{id}/edit', [PengajuanProposalController::class, 'edit'])->name('pengajuan_proposal.edit');
-    Route::put('/{id_pengajuan_proposal}', [PengajuanProposalController::class, 'update'])->name('pengajuan_proposal.update');
-    Route::delete('/{id}', [PengajuanProposalController::class, 'destroy'])->name('pengajuan_proposal.destroy');
-    Route::put('/proposal/update-status/{id_pengajuan_proposal}/{status}', [PengajuanProposalController::class, 'updateStatus'])
-        ->name('proposal.updateStatus');
-});
+Route::resource('pengajuan_proposal', PengajuanProposalController::class);
 
 //Alfiah
 Route::resource('/produk', ProdukController::class);
 
 //Davin
-Route::get('/tim_proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
-Route::get('/tim_proyek/{id}', [TimProyekController::class, 'detail'])->name('tim-proyek.detail');
+Route::get('/tim-proyek', [TimProyekController::class, 'index'])->name('tim-proyek.index');
+Route::get('/tim-proyek/{id}', [TimProyekController::class, 'detail'])->where(['id' => '[0-9]+'])->name('tim-proyek.detail');
 Route::get('/tim-proyek/{id}/edit', [TimProyekController::class, 'edit'])->name('tim-proyek.edit');
 Route::put('/tim-proyek/{id}', [TimProyekController::class, 'update'])->name('tim-proyek.update');
 Route::delete('/tim-proyek/{id}', [TimProyekController::class, 'destroy'])->name('tim-proyek.destroy');
 Route::get('/tim-proyek/create', [TimProyekController::class, 'create'])->name('tim-proyek.create');
 Route::post('/tim-proyek', [TimProyekController::class, 'store'])->name('tim-proyek.store');
-Route::get('/tim_proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
+Route::get('/tim-proyek/{id}/search', [TimProyekController::class, 'detail'])->name('tim-proyek.search');
 
 //Dea
 Route::resource('kategori_proyek', KategoriProyekController::class)->parameters([
@@ -155,8 +158,9 @@ Route::delete('/dokumen/{id}', [DokumenPenyelesaianProyekController::class, 'des
 Route::get('/detail-penjualan/{id}', [DetailPenjualanController::class, 'show'])->name('detail-penjualan.show');
 Route::get('/detail_penjualan/{id}/{detail_id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
 Route::get('detail_penjualan/{id}', [PenjualanController::class, 'show'])->name('detail_penjualan.show');
+
 //Resource route untuk penjualan (semua CRUD)
-Route::resource('penjualan', PenjualanController::class);
+Route::resource('/penjualan', PenjualanController::class);
 
 //Syam
 Route::resource('/pekerja', PekerjaController::class);
@@ -201,10 +205,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 // Logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Dashboard (Harus login dulu)
-Route::get('/dashboard', function () {
-    $user = Auth::user();
-    return view('auth.dashboard', ['user' => $user]);
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'DashboardAdmin'])->name('dashboard');
 Route::get('/profilemanagement', [AuthController::class, "profile"])->name("profile");
 Route::post('/profilemanagement', [AuthController::class, "updateProfile"])->name("updateprofile");
 Route::post('/profilemanagement/editPassword', [AuthController::class, "updatePassword"])->name("updatepassword");
