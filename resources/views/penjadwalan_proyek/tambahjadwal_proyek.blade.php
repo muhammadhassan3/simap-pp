@@ -16,7 +16,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-4">
-                        <a href="/penjadwalan_proyek" class="text-dark me-2">
+                        <a href="{{ url()->previous() }}" class="text-dark me-2">
                             <i class="bi bi-arrow-left fs-4"></i>
                         </a>
                         <h4 class="mb-0">Tambah Jadwal</h4>
@@ -131,7 +131,7 @@
             function formatDate(dateString) {
                 if (!dateString) return '';
                 const date = new Date(dateString);
-                return date.toLocaleDateString('id-ID');
+                return date.toLocaleDateString('en-EN');
             }
 
             function validateTanggalKegiatan() {

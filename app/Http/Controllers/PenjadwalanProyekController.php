@@ -9,13 +9,17 @@ use Illuminate\Http\Request;
 
 class PenjadwalanProyekController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $penjadwalanProyek = Penjadwalan::with([
             'proyekDisetujui.pengajuanProposal',
             'supervisor.pekerja'
-        ])->get();
-        return view('penjadwalan_proyek.penjadwalan_proyek', compact('penjadwalanProyek'));
+        ])->where('id_proyek_disetujui', $request['id_proyek_disetujui'])
+        ->get();
+        return view('penjadwalan_proyek.penjadwalan_proyek', [
+            'penjadwalanProyek' => $penjadwalanProyek,
+            'id_proyek_disetujui' => $request['id_proyek_disetujui']
+        ]);
     }
 
     public function create()

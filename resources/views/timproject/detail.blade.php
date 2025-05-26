@@ -1,14 +1,26 @@
 <x-layout>
     <div class="container mt-4">
+        <a href="{{ route('monitoring_proyek.index',['id_proyek_disetujui' => $id]) }}" class="btn btn-outline-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8" />
+            </svg>
+            Kembali
+        </a>
         <h2 class="mb-3">Detail Tim Proyek</h2>
 
-        <!-- Form Pencarian -->
-        <form action="{{ route('tim-proyek.detail', ['id' => $id]) }}" method="GET" class="mb-3">
-            <div class="input-group">
-                <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama pekerja..." style="height: 40px;">
-                <button type="submit" class="btn btn-primary" style="height: 40px;">Cari</button>
-            </div>
-        </form>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{{ route('tim-proyek.create') }}" class="btn btn-primary">+ Tambah Tim Proyek</a>
+            <!-- Form Pencarian -->
+            <form action="{{ route('tim-proyek.detail', ['id' => $id]) }}" method="GET">
+                <div class="input-group">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama pekerja..." style="height: 40px;">
+                    <button type="submit" class="btn btn-primary" style="height: 40px;">Cari</button>
+                </div>
+            </form>
+        </div>
+
         
 
         

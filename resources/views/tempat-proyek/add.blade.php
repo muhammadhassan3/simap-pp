@@ -20,6 +20,10 @@
             }, 3000); // Alert hilang setelah 3 detik
         </script>
     @endif
+    <a href="{{ route('show-tempat-proyek') }}" class="d-flex gap-2 text-dark me-2">
+        <i class="bi bi-arrow-left fs-4"></i>
+        <p class="text-start">Kembali</p>
+    </a>
     <form action="{{route("save-tempat-proyek")}}" enctype="multipart/form-data" method="post">
         @csrf
         <div class="mb-3 flex-row d-flex">

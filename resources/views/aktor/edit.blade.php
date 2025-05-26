@@ -15,7 +15,7 @@
             <div class="mb-3 row">
                 <label for="password" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10 position-relative">
-                    <input type="text" class="form-control" name="password" id="password" value="{{ $data->password }}">
+                    <input type="text" class="form-control" name="password" id="password">
                     <span id="togglePassword"
                           class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer">
                     </span>

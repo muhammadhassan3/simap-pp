@@ -27,12 +27,5 @@ class MonitoringProyek extends Model
     public function Proyek_disetujui()
     {
         return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
-        return $this->belongsTo(ProyekDisetujui::class, 'id_proyek_disetujui');
-    }
-
-    // Add alias for consistent naming
-    public function proyekDisetujui()
-    {
-        return $this->Proyek_disetujui();
     }
 }

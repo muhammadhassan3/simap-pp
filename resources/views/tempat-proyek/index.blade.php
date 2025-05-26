@@ -8,6 +8,11 @@
                      onclick="window.location.href='{{route('add-tempat-proyek')}}'">
                     + Tambah Tempat Proyek
                 </div>
+                <div class="rounded d-inline-flex flex-row p-2 flex-wrap btn mb-3"
+                     style="background: #007ADE; color: white; font-size: 12px;"
+                     onclick="window.location.href='{{route('kategori_proyek.index')}}'">
+                    Daftar Kategori Proyek
+                </div>
                 <div class="d-flex flex-row w-25 mb-1 items-center justify-content-between">
                     <div class="me-2">
                         <input type="text" name="search" id="search" class="form-control" placeholder="Cari Tempat Proyek">
@@ -103,9 +108,9 @@
                     Apakah anda yakin akan menghapus Tempat Proyek ini? Tempat Proyek yang dihapus tidak dapat
                     dikembalikan lagi.
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer align-items-center">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <form method="post" id="deleteForm" action="{{route('delete-tempat-proyek')}}">
+                    <form style="margin: 0;" method="post" id="deleteForm" action="{{route('delete-tempat-proyek')}}">
                         @csrf
                         <input type="text" name="id" value="" id="id" hidden>
                         <button type="submit" class="btn btn-danger">Delete</button>

@@ -18,6 +18,6 @@ class Pekerja extends Model
 
     public function timProyek()
     {
-        return $this->hasMany(TimProyek::class, 'id_pekerja');
+        return $this->hasMany(TimProyek::class, 'id');
     }
 }

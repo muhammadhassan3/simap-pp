@@ -4,7 +4,6 @@
         <!-- Button Kembali -->
         <div>
             <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $penjadwalan->id_proyek_disetujui]) }}" class="btn btn-outline-secondary">
-            <a href="{{ route('proyek.detail', $penjadwalan->proyekDisetujui->id) }}" class="btn btn-outline-secondary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -176,24 +175,6 @@
                 </table>
             </div>
         </div>
-
-        @if (isset($data->id))
-            <div class="d-flex justify-content-end">
-                <!-- Tombol Finish Pelaksanaan -->
-                <button class="btn btn-success btn-sm" style="padding-inline: 1rem"
-                    onclick="confirmFinish({{ $data->id }}, '{{ $data->id_penjadwalan }}')">
-                    Selesaikan Pelaksanaan
-                </button>
-
-                <!-- Form Finish Pelaksanaan -->
-                <form id="finish-form-{{ $data->id }}"
-                    action="{{ route('pelaksanaan.finish', ['id' => $data->id_penjadwalan]) }}" method="POST"
-                    style="display: none;">
-                    @csrf
-                    @method('PUT')
-                </form>
-            </div>
-        @endif
 
 
     </div>
