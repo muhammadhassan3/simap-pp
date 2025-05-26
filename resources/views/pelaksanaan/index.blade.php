@@ -27,7 +27,6 @@
                 <div class="p-3 text-white shadow rounded" style="background: #007ADE;">
                     <h6 class="fw-bold text-white mb-1">Nama Proyek</h6>
                     <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
-                    <p class="small mb-0">{{ $penjadwalan->proyekDisetujui->pengajuanProposal->nama_proyek }}</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">

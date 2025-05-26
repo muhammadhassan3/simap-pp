@@ -21,8 +21,7 @@ class LaporanProyekController
         ->get();
 
         // $data = ProyekDisetujui::
-        
-        // Mengirimkan data pembelian ke view 'laporan'
+    
         return view('recap_proyek.laporan', ["pembelian" => $pembelian]);
 
         
