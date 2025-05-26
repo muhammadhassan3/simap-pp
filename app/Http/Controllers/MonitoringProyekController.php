@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SewaAlat;
 use App\Models\Penjadwalan;
 use Illuminate\Http\Request;
 use App\Models\ProyekDisetujui;
@@ -24,6 +25,10 @@ class MonitoringProyekController extends Controller
                 ])
             ->where('id_proyek_disetujui', $idProyekDisetujui)
             ->first();
+
+        $sewaAlat = SewaAlat::with(['Customer', 'TempatProyek'])
+        ->where('id_proyek', $idProyekDisetujui)
+        ->get(); // Periksa nama relasi
         
 
         // Jika monitoring proyek tidak ditemukan, cek apakah proyek disetujui ada
@@ -47,6 +52,7 @@ class MonitoringProyekController extends Controller
 
         return view('monitoring_proyek.index', [
             'monitoringProyek' => $monitoringProyek,
+            'sewaAlat' => $sewaAlat,
         ]);
     }
 

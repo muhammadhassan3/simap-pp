@@ -39,7 +39,6 @@ Route::get("/tempat-proyek/{id}/edit", [TempatProyekController::class, "edit"])-
 Route::post("/tempat-proyek/delete", [TempatProyekController::class, "delete"])->name("delete-tempat-proyek");
 Route::post("/tempat-proyek/save", [TempatProyekController::class, "save"])->name("save-tempat-proyek");
 
-
 //Husna
 Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
 Route::get('/customer/create', [CustomerController::class, 'create'])->name('customer.create');
@@ -47,7 +46,6 @@ Route::post('/customer/store', [CustomerController::class, 'store'])->name('cust
 Route::get('/customer/{id}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
 Route::put('/customer/{id}/update', [CustomerController::class, 'update'])->name('customer.update');
 Route::delete('/customer/{id}/delete', [CustomerController::class, 'destroy'])->name('customer.delete');
-
 
 //Alin
 Route::get('/pengawas-proyek', [PengawasProyekController::class, 'index'])->name('pengawas-proyek.index');
@@ -121,9 +119,9 @@ Route::put('/evaluasi/{id}', [EvaluasiProyekController::class, 'update'])->name(
 Route::get('/evaluasi/tambah-dari-proyek', [EvaluasiProyekController::class, 'tambahEvaluasiDariProyek']);
 
 //Rizal
-Route::get('/laporan',[LaporanProyekController::class, "show"]);
-Route::get('/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
-Route::get('/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
+Route::get('/evaluasi/laporan',[LaporanProyekController::class, "show"])->name('laporan-proyek');
+Route::get('/evaluasi/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
+Route::get('/evaluasi/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
 
 //Safinka
 Route::resource('pengajuan_proposal', PengajuanProposalController::class);

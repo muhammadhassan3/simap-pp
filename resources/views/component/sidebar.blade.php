@@ -78,6 +78,16 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('evaluasi.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <img style="width: 16px;"
+                            src="https://img.icons8.com/?size=100&id=59777&format=png&color=000000" alt="">
+                    </div>
+                    <span class="nav-link-text ms-1">Evaluasi</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link  " href="{{ route('produk.index') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">

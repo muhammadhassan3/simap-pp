@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SewaAlat;
 use App\Models\Customer;
+use App\Models\ProyekDisetujui;
 use App\Models\TempatProyek;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class SewaAlatController extends Controller
     public function create()
     {
         $customers = Customer::get();
-        $tempatProyek = TempatProyek::all();
+        $tempatProyek = ProyekDisetujui::all();
         return view('sewa_alat.create', compact('customers', 'tempatProyek'));
     }
 

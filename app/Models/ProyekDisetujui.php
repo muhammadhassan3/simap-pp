@@ -23,6 +23,11 @@ class ProyekDisetujui extends Model
         return $this->belongsTo(PengajuanProposal::class, 'id_pengajuan_proposal', 'id');
     }
 
+    public function evaluasiProyek()
+    {
+        return $this->belongsTo(EvaluasiProyek::class, 'id_pengajuan_proposal', 'id');
+    }
+
     // Alias for pengajuanProposal to support snake_case usage in controller
     public function pengajuan_proposal()
     {

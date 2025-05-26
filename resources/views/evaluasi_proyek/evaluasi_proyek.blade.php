@@ -31,6 +31,9 @@
                         <a href="{{ route('evaluasi.edit', $proyek->id) }}" class="btn btn-success">
                             <i class="fas fa-pencil"></i> Evaluasi
                         </a>
+                        <a href="{{ route('laporan-proyek', ['id_proyek' => $proyek->id_proyek]) }}" class="btn btn-warning">
+                            <i class="fas fa-pencil"></i> Laporan
+                        </a>
                     </td>
                 </tr>
                 @endforeach

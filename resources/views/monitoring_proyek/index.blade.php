@@ -84,6 +84,7 @@
             </a>
         @endif
     </div>
+
     <!-- Garis Pembatas -->
     <hr class="mt-0 mb-0">
     <div class="table-responsive">
@@ -188,6 +189,55 @@
                             <td>{{ $item->pekerja->nama ?? '-' }}</td>
                             <td>{{ $item->peran ?? '-' }}</td>
                         </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada data tim proyek.</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Sewa Alat -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h5 class="fw-normal">Sewa Alat</h5>
+        @if ($monitoringProyek && $monitoringProyek->Proyek_disetujui)
+            <a href="{{ route('sewa_alat.index') }}"
+                class="btn btn-primary btn-sm mb-2">
+                <i class="bi bi-plus-circle"></i> Tambah Alat
+            </a>
+        @endif
+    </div>
+    <!-- Garis Pembatas -->
+    <hr class="mt-0 mb-0">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="timProyekTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Alat</th>
+                    <th>Harga Sewa</th>
+                    <th>Nama Perusahaan</th>
+                    <th>Durasi</th>
+                    <th>Qty</th>
+                    <th>Nama Proyek</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($sewaAlat)
+                    @foreach ($sewaAlat as $index => $item)
+                    <tr>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->nama_alat }}</td>
+                        <td>Rp. {{ number_format($item->harga_sewa, 0, ',', '.') }}/jam</td>
+                        <td>{{ $item->customer->nama_customer }}</td>
+                        <td>{{ $item->durasi }} menit</td>
+                        <td>{{ $item->qty }}</td>
+                        <td>{{ $item->tempatProyek ? $item->tempatProyek->nama_tempat : 'Tidak Diketahui' }}</td>
+                        <td>{{ $item->detail }}</td>
+                    </tr>
                     @endforeach
                 @else
                     <tr>

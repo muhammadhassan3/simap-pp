@@ -19,6 +19,7 @@ class EvaluasiProyekController extends Controller
             ->join('pengajuan_proposal', 'proyek_disetujui.id_pengajuan_proposal', '=', 'pengajuan_proposal.id')
             ->select(
                 'evaluasi_proyek.id',
+                'proyek_disetujui.id as id_proyek',
                 'pengajuan_proposal.nama_proyek',
                 'proyek_disetujui.status',
                 'evaluasi_proyek.keterangan'

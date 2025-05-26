@@ -50,7 +50,7 @@ class PembelianController extends Controller
             $detailPembelian->qty = $request->qty[$i];
             $detailPembelian->satuan = $request->satuan[$i];
             $detailPembelian->harga_satuan = $request->harga_satuan[$i];
-            $detailPembelian->total_harga = $request->total_harga[$i];
+            $detailPembelian->total_harga = intval($request->satuan[$i]) * intval($request->harga_satuan[$i]);
             $detailPembelian->save();
         }
 
