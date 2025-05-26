@@ -11,7 +11,7 @@ class LaporanProdukController
     public function show()
     {
         $detailpenjualan = DetailPenjualan::with(['penjualan.customer', 'produk'])->get()->map(function ($item) {
-                return ['tanggal' => $item->penjualan->tanggal_penjualan, 'customer' => $item->penjualan->customer->nama_customer, 'produk' => $item->produk->nama_produk, 'qty' => $item->qty, 'harga' => $item->harga_satuan, 'total' => $item->total_harga, 'jenis_pembayaran' => $item->penjualan->jenis_pembayaran];
+                return ['tanggal' => $item->penjualan->tanggal_penjualan, 'customer' => $item->penjualan->customer->nama_customer, 'produk' => $item->produk->nama, 'qty' => $item->qty, 'harga' => $item->harga_satuan, 'total' => $item->total_harga, 'jenis_pembayaran' => $item->penjualan->jenis_pembayaran];
             });
 
         $totalKeseluruhan = $detailpenjualan->sum('total');

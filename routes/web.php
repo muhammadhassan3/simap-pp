@@ -66,7 +66,6 @@ Route::prefix('marketing')->group(function () {
     Route::get('/', [MarketingController::class, 'index'])->name('market.index');
     Route::get('create', [MarketingController::class, 'create'])->name('market.create');
     Route::post('store', [MarketingController::class, 'store'])->name('market.store');
-    Route::post('store', [MarketingController::class, 'store'])->name('market.store');
     Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
     Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
     Route::delete('/{market}', [MarketingController::class, 'destroy'])->name('market.delete');

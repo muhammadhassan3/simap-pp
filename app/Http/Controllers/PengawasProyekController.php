@@ -11,7 +11,7 @@ class PengawasProyekController extends Controller
     {
         if($request->has('search')){
             $searchTerm = $request['search'];
-            $data = TimProyek::with(['proyekDisetujui', 'pekerja', 'proposal'])
+            $data = TimProyek::with(['proyekDisetujui'])
                 ->where('peran', 'Pengawas')
                 ->whereHas('proyekDisetujui.pengajuanProposal', function ($query) use ($searchTerm) {
                     $query->where('nama_proyek', 'like', "%$searchTerm%");
@@ -26,7 +26,7 @@ class PengawasProyekController extends Controller
                     ];
                 });
         }else{
-            $data = TimProyek::with(['proyekDisetujui', 'pekerja'])
+            $data = TimProyek::with(['proyekDisetujui'])
                 ->where('peran', 'Pengawas') // Hanya mengambil pengawas
                 ->get()
                 ->map(function ($tim) {

@@ -9,7 +9,7 @@
                         <input type="text" name="search" id="search" class="form-control" placeholder="Cari Tempat Proyek">
                     </div>
                     <div >
-                        <button type="button" class="btn" onclick="onSearch()">Cari</button>
+                        <button type="button" class="btn btn-primary" onclick="onSearch()">Cari</button>
                     </div>
                 </div>
 
@@ -31,7 +31,7 @@
                             <td class="text-center">{{ $item['peran'] }}</td>
                             <td class="text-center">{{ $item['nama_pekerja'] }}</td>
                             <td class="text-center">
-                                <a href="{{ route('pengawas-proyek.edit', $item['id']) }}" class="btn btn-sm" style="background-color: #DEAA00;">
+                                <a href="{{ route('pengawas-proyek.edit', $item['id']) }}" class="btn" style="background-color: #DEAA00;">
                                     <i class="bi bi-pencil-fill text-white"></i>
                                 </a>
                             </td>

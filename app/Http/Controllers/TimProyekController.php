@@ -56,10 +56,10 @@ class TimProyekController extends Controller
         $search = $request->input('search');
 
         $tim = TimProyek::where('id_project_disetujui', $id)->when($search, function ($query) use ($search) {
-                $query->whereHas('pekerja', function ($q) use ($search) {
-                    $q->whereRaw('LOWER(nama) LIKE ?', ["%" . strtolower($search) . "%"]);
-                });
-            })->get();
+            $query->whereHas('pekerja', function ($q) use ($search) {
+                $q->whereRaw('LOWER(nama) LIKE ?', ["%" . strtolower($search) . "%"]);
+            });
+        })->get();
 
         $id = $tim->first()->id_project_disetujui;
 
@@ -78,21 +78,35 @@ class TimProyekController extends Controller
     public function store(Request $request)
     {
         // Validasi input
-        $request->validate(['id_project_disetujui' => 'required', 'id_pekerja' => 'required', 'peran' => 'required', 'keahlian' => 'required',]);
+        $request->validate([
+            'id_project_disetujui' => 'required',
+            'id_pekerja' => 'required',
+            'peran' => 'required',
+            'keahlian' => 'required',
+        ]);
 
-        $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)->where('id_project_disetujui', $request->id_project_disetujui)->first();
+        // Cari apakah sudah ada data dengan pekerja dan proyek yang sama
+        $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)
+            ->where('id_project_disetujui', $request->id_project_disetujui)
+            ->first();
+
         if (!$TimProject) {
-            TimProyek::create(['id_project_disetujui' => $request->id_project_disetujui, 'id_pekerja' => $request->id_pekerja, 'peran' => $request->peran, 'keahlian' => $request->keahlian,]);
-
+            // Simpan data baru dan assign hasilnya ke $TimProject
+            $TimProject = TimProyek::create([
+                'id_project_disetujui' => $request->id_project_disetujui,
+                'id_pekerja' => $request->id_pekerja,
+                'peran' => $request->peran,
+                'keahlian' => $request->keahlian,
+            ]);
         } else {
             return redirect()->route('tim-proyek.create')->with('error', 'Pekerja telah dipilih sebelumnya.');
         }
-        // Simpan ke database
 
-
-        // Redirect dengan pesan sukses
-        return redirect()->route('tim-proyek.detail', $TimProject->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
+        // Sekarang $TimProject pasti ada, bisa akses properti dengan aman
+        return redirect()->route('tim-proyek.detail', $TimProject->id_project_disetujui)
+            ->with('success', 'Tim proyek berhasil ditambahkan.');
     }
+
 
     public function create()
     {
@@ -100,5 +114,4 @@ class TimProyekController extends Controller
         $pekerja = Pekerja::all();
         return view('timproject.create', ['proyek_disetujui' => $proyek_disetujui, 'pekerja' => $pekerja]);
     }
-
 }

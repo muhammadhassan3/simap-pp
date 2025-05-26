@@ -29,11 +29,11 @@
                             <input type="number" class="form-control harga_satuan" name="harga_satuan[]"
                                 placeholder="Harga Satuan" required>
                         </div>
-                        {{-- <div class="form-group me-2">
-                            <input type="text" id="total_harga" class="form-control" name="total_harga[]"
+                        <div class="form-group me-2">
+                            <input type="text" id="total_harga" class="form-control total_harga" name="total_harga[]"
                                 placeholder="Total Harga" readonly>
-                        </div> --}}
-                        <button class="btn btn-danger btn-sm remove-detail" wire:click="kurang">
+                        </div>
+                        <button class="btn btn-danger remove-detail" wire:click="kurang">
                             <i class="bi bi-x"></i>
                         </button>
                     </div>
