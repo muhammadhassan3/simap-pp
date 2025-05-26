@@ -33,7 +33,7 @@
                             <input type="text" id="total_harga" class="form-control" name="total_harga[]"
                                 placeholder="Total Harga" readonly>
                         </div> --}}
-                        <button class="btn btn-danger btn-sm remove-detail">
+                        <button class="btn btn-danger btn-sm remove-detail" wire:click="kurang">
                             <i class="bi bi-x"></i>
                         </button>
                     </div>

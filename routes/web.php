@@ -179,7 +179,7 @@ Route::get('proyek/{id}', [MonitoringProyekController::class, 'index'])->name('p
 //Route::put('proyek/{id}/update', [MonitoringProyekController::class, 'updateKeterangan'])->name('proyek.update.keterangan');
 
 //Anas
-Route::get('/laporan', [LaporanProdukController::class, "show"]);
+Route::get('/laporan', [LaporanProdukController::class, "show"])->name('laporan-produk');
 Route::get('/cetak', [LaporanProdukController::class, "convert"]);
 
 //Rista

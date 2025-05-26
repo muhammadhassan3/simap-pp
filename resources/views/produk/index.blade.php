@@ -40,9 +40,14 @@
                             class="form-control form-control-sm bg-light border border-primary-subtle px-3 shadow-sm"
                             placeholder="Cari Produk..." value="{{ request('search') }}">
                     </form>
-                    <a href="{{ route('produk.create') }}" class="btn btn-primary px-3">
-                        <i class="bi bi-plus-lg"></i> Tambah Produk
-                    </a>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('laporan-produk') }}" class="btn btn-primary px-3">
+                            Laporan Produk
+                        </a>
+                        <a href="{{ route('produk.create') }}" class="btn btn-primary px-3">
+                            <i class="bi bi-plus-lg"></i> Tambah Produk
+                        </a>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered text-center align-middle table-hover">
