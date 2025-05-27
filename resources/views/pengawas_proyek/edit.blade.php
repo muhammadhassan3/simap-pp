@@ -2,30 +2,44 @@
     <div class="container d-flex justify-content-center">
         <div class="card shadow w-50">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Edit Pengawas Proyek</h2>
+                <h4 class="card-title text-center mb-4">Edit Pengawas Proyek</h4>
 
-                <!-- Form Edit -->
                 <form action="{{ route('pengawas-proyek.update', $pengawas->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-
                     <div class="mb-3">
-                        <label for="nama_proyek" class="form-label">Nama Proyek</label>
-                        <input type="text" class="form-control" id="nama_proyek" name="nama_proyek"
-                               value="{{ $pengawas->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada' }}"
-                               required>
+                        <label for="id_project_disetujui" class="form-label">Nama Proyek</label>
+                        <select class="form-select" id="id_project_disetujui" name="id_project_disetujui" required>
+                            <option value="">-- Pilih Proyek --</option>
+                            @foreach ($proyekDisetujui as $proyek)
+                                <option value="{{ $proyek->id }}"
+                                    {{ $pengawas->id_project_disetujui == $proyek->id ? 'selected' : '' }}>
+                                    {{ $proyek->pengajuanProposal->nama_proyek ?? 'Tanpa Nama' }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-
                     <div class="mb-3">
                         <label for="peran" class="form-label">Peran</label>
                         <input type="text" class="form-control" id="peran" name="peran"
-                               value="{{ $pengawas['peran'] }}" required>
+                               value="{{ $pengawas->peran }}" required>
                     </div>
-
                     <div class="mb-3">
-                        <label for="nama_pekerja" class="form-label">Nama Pekerja</label>
-                        <input type="text" class="form-control" id="nama_pekerja" name="nama_pekerja"
-                               value="{{ $pengawas->pekerja->nama ?? 'Tidak Ada' }}" required>
+                        <label for="id_pekerja" class="form-label">Nama Pekerja</label>
+                        <select class="form-select" id="id_pekerja" name="id_pekerja" required>
+                            <option value="">-- Pilih Pekerja --</option>
+                            @foreach ($pekerja as $p)
+                                <option value="{{ $p->id }}"
+                                    {{ $pengawas->id_pekerja == $p->id ? 'selected' : '' }}>
+                                    {{ $p->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="keahlian" class="form-label">Keahlihan</label>
+                        <input type="text" class="form-control" id="keahlian" name="keahlian"
+                               value="{{ $pengawas->keahlian }}" required>
                     </div>
 
                     <div class="d-flex justify-content-between">

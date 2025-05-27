@@ -44,13 +44,16 @@ class PembelianController extends Controller
 
         //Simpan Detail Pembelian
         for ($i = 0; $i < sizeof($request->nama_produk); $i++) {
+            $qty = intval($request->qty[$i]);
+            $harga_satuan = intval($request->harga_satuan[$i]);
+
             $detailPembelian = new DetailPembelianModel();
             $detailPembelian->id_pembelian = $pembelian->id;
             $detailPembelian->nama_produk = $request->nama_produk[$i];
-            $detailPembelian->qty = $request->qty[$i];
-            $detailPembelian->satuan = $request->satuan[$i];
-            $detailPembelian->harga_satuan = $request->harga_satuan[$i];
-            $detailPembelian->total_harga = intval($request->satuan[$i]) * intval($request->harga_satuan[$i]);
+            $detailPembelian->qty = $qty;
+            $detailPembelian->satuan = $request->satuan[$i]; // ini tetap string
+            $detailPembelian->harga_satuan = $harga_satuan;
+            $detailPembelian->total_harga = $qty * $harga_satuan;
             $detailPembelian->save();
         }
 

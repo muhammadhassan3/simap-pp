@@ -14,69 +14,82 @@ class LaporanDetail extends Controller
 {
     public function detail($id)
     {
-        $penyewaan = SewaAlat::where('id_proyek', $id)->get();
-        $pembelian = Pembelian::where('id_proyek_disetujui', $id)->get();
-
-        // Ambil semua pembelian dan relasi detailnya sekaligus
-        $pembelian = Pembelian::with('detail_pembelians')
-            ->where('id_proyek_disetujui', $id)
+        // sewa alat (tetap)
+        $penyewaan = SewaAlat::with('tempatProyek.pengajuanProposal')
+            ->where('id_proyek', $id)
             ->get();
 
+        // semua baris detail pembelian untuk proyek ini
+        $detailPembelian = DetailPembelian::with([
+            'pembelian.proyek_disetujui.pengajuanProposal.tempatProyek'
+        ])
+            ->whereHas('pembelian', fn($q) => $q->where('id_proyek_disetujui', $id))
+            ->get();
+
+        // total keseluruhan
+        $totalPembelian = $detailPembelian->sum('total_harga');
+
         return view('recap_proyek.detail', [
-            "penyewaan" => $penyewaan,
-            "pembelian" => $pembelian,
-            "id_proyek" => $id
+            'penyewaan'       => $penyewaan,
+            'detailPembelian' => $detailPembelian,
+            'totalPembelian'  => $totalPembelian,
+            'id_proyek'       => $id,
         ]);
-        
     }
+
+
 
     function convert($id)
     {
-        $phpWord = new TemplateProcessor('template_laporan.docx');
+        $phpWord = new TemplateProcessor('template_laporan_rizal.docx');
 
-        $penyewaan = SewaAlat::where('id_proyek', $id)->get();
-        $pembelian = Pembelian::where('id_proyek_disetujui', $id)->first();
-        $detailPembelian = DetailPembelian::where("id_pembelian", $pembelian->id)->get();
-
-        // Set template values
-        $phpWord->setValue('total', $pembelian->detail_pembelians->sum('total_harga'));
+        // Ambil semua pembelian terkait proyek
+        $pembelianList = Pembelian::where('id_proyek_disetujui', $id)->get();
 
         $values = [];
-        foreach ($detailPembelian as $index => $detail) {
-            $values[$index] = [
-                'no' => $index + 1,
-                'nama_proyek' => $pembelian->proyek_disetujui->pengajuan_proposal->nama_proyek,
-                'alamat' => $pembelian->proyek_disetujui->pengajuan_proposal->tempat_proyek->alamat,
-                'tanggal' => $pembelian->tanggal,
-                'nama_barang' => $detail->nama_barang,
-                'total_harga' => $detail->total_harga,
+        $no = 1; // nomor urut untuk cloneRow
 
-            ];
-        }
-        $values2 = [];
-        foreach ($penyewaan as $index => $sewa) {
-            $values2[$index] = [
-                'nomor' => $index + 1,
-                'nama_proyek' => $sewa->proyek_disetujui->pengajuan_proposal->nama_proyek,
-                'alamat' => $sewa->proyek_disetujui->pengajuan_proposal->tempat_proyek->alamat,
-                'nama_alat' => $sewa->nama_alat,
-                'total_harga_sewa' => $sewa->total_harga_sewa,
+        $totalKeseluruhan = 0;
 
-            ];
+        foreach ($pembelianList as $pembelian) {
+            foreach ($pembelian->detail_pembelians as $detail) {
+                $values[] = [
+                    'no' => $no++,
+                    'tanggal' => $pembelian->tanggal ?? '',
+                    'customer' => $pembelian->proyek_disetujui->pengajuanProposal->tempatProyek->customer->nama_customer ?? '',
+                    'produk' => $detail->nama_barang,
+                    'qty' => $detail->qty,
+                    'harga' => number_format($detail->harga, 2, ',', '.'),
+                    'total' => number_format($detail->total_harga, 2, ',', '.'),
+                    'jenis_pembayaran' => $pembelian->jenis_pembayaran ?? '',
+                ];
+
+                $totalKeseluruhan += $detail->total_harga;
+            }
         }
 
-        $phpWord->cloneRowAndSetValues('no', $values);
-        $phpWord->cloneRowAndSetValues('nomor', $values2);
+        if (count($values) > 0) {
+            $phpWord->cloneRowAndSetValues('no', $values);
+        } else {
+            $phpWord->setValue('no', '');
+            $phpWord->setValue('tanggal', '');
+            $phpWord->setValue('customer', '');
+            $phpWord->setValue('produk', '');
+            $phpWord->setValue('qty', '');
+            $phpWord->setValue('harga', '');
+            $phpWord->setValue('total', '');
+            $phpWord->setValue('jenis_pembayaran', '');
+        }
 
-        // Output ke browser
+        $phpWord->setValue('total_keseluruhan', number_format($totalKeseluruhan, 2, ',', '.'));
+
         $phpWord->saveAs('Laporan.docx');
 
         $content = file_get_contents('Laporan.docx');
 
         return response($content, 200, [
-            'Content-Type' => 'application/docx',
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'Content-Disposition' => 'inline; filename=Laporan.docx',
-
         ]);
     }
 }

@@ -20,48 +20,62 @@
             }, 3000); // Alert hilang setelah 3 detik
         </script>
     @endif
-    <a href="{{ route('show-tempat-proyek') }}" class="d-flex gap-2 text-dark me-2">
-        <i class="bi bi-arrow-left fs-4"></i>
-        <p class="text-start">Kembali</p>
-    </a>
-    <form action="{{route("save-tempat-proyek")}}" enctype="multipart/form-data" method="post">
-        @csrf
-        <div class="mb-3 flex-row d-flex">
-            <label for="namaTempat" class="col-sm-2 col-form-label">Nama Tempat</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="namaTempat" name="nama_tempat">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0" style="background: white">
+                <!-- Button Kembali -->
+                <div>
+                    <a href="{{ route('show-tempat-proyek') }}" class="btn btn-outline-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8" />
+                        </svg>
+                        Kembali
+                    </a>
+                </div>
+                
+                <form action="{{route("save-tempat-proyek")}}" enctype="multipart/form-data" method="post">
+                    @csrf
+                    <div class="mb-3 flex-row d-flex">
+                        <label for="namaTempat" class="col-sm-2 col-form-label">Nama Tempat</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="namaTempat" name="nama_tempat">
+                        </div>
+                    </div>
+                    <div class="mb-3 flex-row d-flex">
+                        <label for="alamat" class="col-sm-2 col-form-label">Alamat Tempat</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" class="form-control" id="alamat" name="alamat"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 flex-row d-flex">
+                        <label for="customer" class="col-sm-2 col-form-label">Customer</label>
+                        <select name="id_customer" class="form-select" aria-label="Default select example">
+                            <option value="-1" disabled selected>Pilih</option>
+                            @foreach($customer as $item)
+                                <option value="{{$item->id}}">{{$item->nama_customer}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3 flex-row d-flex">
+                        <div class="me-3 w-50">
+                            <label for="foto" class="col col-form-label">Foto</label>
+                            <input type="file" name="foto" id="foto" class="form-control">
+                        </div>
+                        <div class="w-100">
+                            <label for="kategoriProyek" class="col col-form-label">kategori Proyek</label>
+                            <select name="id_kategori_proyek" class="form-select" aria-label="Default select example">
+                                <option value="-1" disabled selected>Pilih</option>
+                                @foreach($kategoriProyek as $item)
+                                    <option value="{{$item->id}}">{{$item->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <input type="submit" value="Tambah Tempat Proyek" class="btn btn-primary w-100">
+                </form>
             </div>
         </div>
-        <div class="mb-3 flex-row d-flex">
-            <label for="alamat" class="col-sm-2 col-form-label">Alamat Tempat</label>
-            <div class="col-sm-10">
-                <textarea type="text" class="form-control" id="alamat" name="alamat"></textarea>
-            </div>
-        </div>
-        <div class="mb-3 flex-row d-flex">
-            <label for="customer" class="col-sm-2 col-form-label">Customer</label>
-            <select name="id_customer" class="form-select" aria-label="Default select example">
-                <option value="-1" disabled selected>Pilih</option>
-                @foreach($customer as $item)
-                    <option value="{{$item->id}}">{{$item->nama_customer}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mb-3 flex-row d-flex">
-            <div class="me-3 w-50">
-                <label for="foto" class="col col-form-label">Foto</label>
-                <input type="file" name="foto" id="foto" class="form-control">
-            </div>
-            <div class="w-100">
-                <label for="kategoriProyek" class="col col-form-label">kategori Proyek</label>
-                <select name="id_kategori_proyek" class="form-select" aria-label="Default select example">
-                    <option value="-1" disabled selected>Pilih</option>
-                    @foreach($kategoriProyek as $item)
-                        <option value="{{$item->id}}">{{$item->nama}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <input type="submit" value="Tambah Tempat Proyek" class="btn btn-primary w-100">
-    </form>
+    </div>
 </x-layout>

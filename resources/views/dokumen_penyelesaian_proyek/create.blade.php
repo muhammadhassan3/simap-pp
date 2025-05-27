@@ -50,7 +50,7 @@
 
                 <!-- Tombol Aksi -->
                 <div>
-                    <button type="submit" class="btn btn-info btn-lg w-100"></i> Tambah Dokumen</button>
+                    <button type="submit" class="btn btn-primary btn-lg w-100"></i> Tambah Dokumen</button>
                     <a href="{{ route('dokumen.index') }}"></i></a>
                 </div>
             </form>

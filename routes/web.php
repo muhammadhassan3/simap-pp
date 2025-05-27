@@ -49,8 +49,11 @@ Route::delete('/customer/{id}/delete', [CustomerController::class, 'destroy'])->
 
 //Alin
 Route::get('/pengawas-proyek', [PengawasProyekController::class, 'index'])->name('pengawas-proyek.index');
+Route::get('/pengawas-proyek/create', [PengawasProyekController::class, 'create'])->name('pengawas-proyek.create');
+Route::post('/pengawas-proyek/store', [PengawasProyekController::class, 'store'])->name('pengawas-proyek.store');
 Route::get('/pengawas-proyek/{id}/edit', [PengawasProyekController::class, 'edit'])->name('pengawas-proyek.edit');
 Route::put('/pengawas-proyek/{id}', [PengawasProyekController::class, 'update'])->name('pengawas-proyek.update');
+Route::delete('/pengawas-proyek/{id}/delete', [PengawasProyekController::class, 'destroy'])->name('pengawas-proyek.delete');
 
 //Arisa
 Route::resource('aktor', AktorController::class);
@@ -65,7 +68,6 @@ Route::get('/proyekdisetujui/{id}/show', [ProyekDisetujuiController::class, 'sho
 Route::prefix('marketing')->group(function () {
     Route::get('/', [MarketingController::class, 'index'])->name('market.index');
     Route::get('create', [MarketingController::class, 'create'])->name('market.create');
-    Route::post('store', [MarketingController::class, 'store'])->name('market.store');
     Route::post('store', [MarketingController::class, 'store'])->name('market.store');
     Route::get('{market}/edit', [MarketingController::class, 'edit'])->name('market.edit');
     Route::put('/{market}', [MarketingController::class, 'update'])->name('market.update');
@@ -121,9 +123,10 @@ Route::get('/evaluasi/tambah-dari-proyek', [EvaluasiProyekController::class, 'ta
 //Rizal
 Route::get('/evaluasi/laporan',[LaporanProyekController::class, "show"])->name('laporan-proyek');
 Route::get('/evaluasi/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
-Route::get('/evaluasi/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
+Route::get('/evaluasi/convert/{id}', [LaporanProyekController::class, 'convert'])->name('convert');
 
 //Safinka
+Route::put('/pengajuan_proposal/update-status/{id}', [PengajuanProposalController::class, 'updateStatus'])->name('proposal.updateStatus');
 Route::resource('pengajuan_proposal', PengajuanProposalController::class);
 
 //Alfiah

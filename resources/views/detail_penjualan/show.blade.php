@@ -38,7 +38,7 @@
                                 $grandTotal += $totalHarga;
                             @endphp
                             <tr>
-                                <td>{{ $detail->produk->nama_produk }}</td>
+                                <td>{{ $detail->produk->nama }}</td>
                                 <td>{{ $qty }}</td>
                                 <td>{{ $unit }}</td>
                                 <td>Rp{{ number_format($hargaPerKg, 0) }}</td>

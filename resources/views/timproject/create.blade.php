@@ -54,19 +54,20 @@
                     <option value="supervisor">Supervisor</option>
                     <option value="pengawas">Pengawas</option>
                 </select>
+        
+                    <!-- Input Keahlian -->
+                    <div class="mb-3">
+                        <label class="form-label">Keahlian</label>
+                        <input type="text" name="keahlian" class="form-control" placeholder="Masukkan Keahlian">
+                    </div>
+        
+                    <!-- Tombol Simpan dan Batal -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="" class="btn btn-secondary me-2">Batal</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
-
-            <!-- Input Keahlian -->
-            <div class="mb-3">
-                <label class="form-label">Keahlian</label>
-                <input type="text" name="keahlian" class="form-control" placeholder="Masukkan Keahlian">
-            </div>
-
-            <!-- Tombol Simpan dan Batal -->
-            <div class="d-flex justify-content-end mt-3">
-                <a href="{{ route('tim-proyek.detail', $proyek_disetujui) }}" class="btn btn-secondary me-2">Batal</a>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-        </form>
+        </div>
     </div>
 </x-layout>

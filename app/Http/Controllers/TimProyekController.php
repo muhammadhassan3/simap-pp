@@ -63,10 +63,10 @@ class TimProyekController extends Controller
         }
 
         $tim = TimProyek::where('id_project_disetujui', $id)->when($search, function ($query) use ($search) {
-                $query->whereHas('pekerja', function ($q) use ($search) {
-                    $q->whereRaw('LOWER(nama) LIKE ?', ["%" . strtolower($search) . "%"]);
-                });
-            })->get();
+            $query->whereHas('pekerja', function ($q) use ($search) {
+                $q->whereRaw('LOWER(nama) LIKE ?', ["%" . strtolower($search) . "%"]);
+            });
+        })->get();
 
         // Hapus assignment yang bisa menyebabkan error
         // $id = $tim->first()->id_project_disetujui;
@@ -92,9 +92,18 @@ class TimProyekController extends Controller
     public function store(Request $request)
     {
         // Validasi input
-        $request->validate(['id_project_disetujui' => 'required', 'id_pekerja' => 'required', 'peran' => 'required', 'keahlian' => 'required',]);
+        $request->validate([
+            'id_project_disetujui' => 'required',
+            'id_pekerja' => 'required',
+            'peran' => 'required',
+            'keahlian' => 'required',
+        ]);
 
-        $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)->where('id_project_disetujui', $request->id_project_disetujui)->first();
+        // Cari apakah sudah ada data dengan pekerja dan proyek yang sama
+        $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)
+            ->where('id_project_disetujui', $request->id_project_disetujui)
+            ->first();
+
         if (!$TimProject) {
             $newTim = TimProyek::create([
                 'id_project_disetujui' => $request->id_project_disetujui,
@@ -102,7 +111,6 @@ class TimProyekController extends Controller
                 'peran' => $request->peran,
                 'keahlian' => $request->keahlian,
             ]);
-
             // Redirect dengan pesan sukses menggunakan ID dari objek yang baru dibuat
             return redirect()->route('tim-proyek.detail', $request->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
         } else {
@@ -122,5 +130,4 @@ class TimProyekController extends Controller
         'selected_project_id' => $selected_project_id
     ]);
 }
-
 }

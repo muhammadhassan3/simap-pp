@@ -85,7 +85,7 @@
         <div class="mt-1">
             <div class="table-responsive">
                 <table class="table table-hover align-middle border rounded shadow-sm">
-                    <thead class="table-light text-center">
+                    <thead class="table-secondary">
                         <tr>
                             <th class="text-center">No</th>
                             <th class="text-center">Tanggal</th>

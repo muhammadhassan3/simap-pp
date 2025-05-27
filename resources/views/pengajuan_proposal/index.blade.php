@@ -1,21 +1,20 @@
 <x-layout>
 
-    <div class="container mt-5">
-        <h4 class="mb-4">Pengajuan Proposal</h4>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex gap-2">
-                <a href="{{ route('pengajuan_proposal.create') }}" class="btn btn-info">+ Tambah Proposal</a>
-                <a href="{{ route('proyekdisetujui.index') }}" class="btn btn-info">Lihat Proyek Disetujui</a>
-                
-            </div>
-            <input type="text" class="form-control w-25" placeholder="Cari proposal..." id="searchInput">
-        </div>
-
+    <div class="col-12">
         <div class="card mb-4">
-            <div class="card-body">
+            <div class="card-header pb-0" style="background: white">
+                <h4 class="mb-4">Pengajuan Proposal</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-2 m-0">
+                        <a href="{{ route('pengajuan_proposal.create') }}" class="btn btn-primary">+ Tambah Proposal</a>
+                        <a href="{{ route('proyekdisetujui.index') }}" class="btn btn-primary">Lihat Proyek Disetujui</a>
+                    </div>
+                    <input type="text" class="form-control w-25 mb-3" placeholder="Cari proposal..." id="searchInput">
+                </div>
+
                 <div class="table-responsive">
-                    <table class="table w-100">
-                        <thead>
+                    <table class="table table-hover align-middle border rounded shadow-sm">
+                        <thead class="table-secondary">
                             <tr>
                                 <th scope="col" class="px-4 py-2 text-center">No.</th>
                                 <th scope="col" class="px-4 py-2 text-center">Nama Proyek</th>
@@ -32,8 +31,8 @@
                             @foreach ($proposal as $index => $p)
                                 <tr class="hover:bg-[#FFFFEC]">
                                     <td class="px-4 py-2 text-center">{{ $index + 1 }}</td>
-                                    <td class="px-4 py-2 text-center">{{ $p->nama_proyek }}</td>
-                                    <td class="px-4 py-2 text-center">{{ $p->tempat_proyek->nama_tempat ?? '-' }}</td>
+                                    <td class="px-4 py-2 text-start">{{ $p->nama_proyek }}</td>
+                                    <td class="px-4 py-2 text-start">{{ $p->tempat_proyek->nama_tempat ?? '-' }}</td>
                                     <td class="px-4 py-2 text-center">
                                         {{ \Carbon\Carbon::parse($p->tanggal_pengajuan)->format('d/m/Y') }}</td>
                                     <td class="px-4 py-2 text-center">
@@ -45,11 +44,28 @@
                                             <i class="fas fa-file-alt"></i>
                                         </a>
                                     </td>
-                                    <td class="px-4 py-2 text-center">{{ $p->keterangan ?? '-' }}</td>
-                                    <td class="px-4 py-2 text-center">
+                                    <td class="px-4 py-2 text-start">{{ $p->keterangan ?? '-' }}</td>
+                                    <td class="px-4 py-2 text-start">
                                         {{ $p->status_proposal ? ucfirst($p->status_proposal) : '-' }}
                                     </td>
-                                    <td class="px-4 py-2 text-center">
+                                    <td class="px-4 py-2 text-start">
+                                        @if ($p->status_proposal == 'Pending')
+                                            <form action="{{ route('proposal.updateStatus',$p->id) }}?status=Disetujui" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-success" title="Proposal Disetujui">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('proposal.updateStatus', $p->id) }}?status=Ditolak" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-danger" title="Proposal Ditolak">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                         <a href="{{ route('pengajuan_proposal.edit', $p->id) }}"
                                             class="btn btn-warning text-black" title="Edit Proposal">
                                             <i class="fas fa-pen"></i>
@@ -105,5 +121,3 @@
         });
     </script>
 </x-layout>
-
-</html>

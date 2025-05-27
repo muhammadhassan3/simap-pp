@@ -1,133 +1,139 @@
 <x-layout>
 
         <!-- Konten Utama -->
-        <div class="content container-fluid">
-            <h1>Daftar Marketing</h1>
-
-            <a href="{{ route('market.create') }}" class="btn btn-primary">
-                + Tambah Marketing
-            </a>
-
-            <!-- Notifikasi -->
-            @if (session('success'))
-                <div class="alert alert-success position-fixed top-0 end-0 m-3" id="alert">
-                    {{ session('success') }}
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0" style="background: white">
+                    <h1>Daftar Marketing</h1>
+        
+                    <a href="{{ route('market.create') }}" class="btn btn-primary">
+                        + Tambah Marketing
+                    </a>
+        
+                    <!-- Notifikasi -->
+                    @if (session('success'))
+                        <div class="alert alert-success position-fixed top-0 end-0 m-3" id="alert">
+                            {{ session('success') }}
+                        </div>
+                        <script>
+                            setTimeout(() => document.getElementById('alert').style.display = 'none', 3000);
+                        </script>
+                    @endif
+        
+                    {{-- Fitur Search --}}
+                    <form action="{{ route('market.index') }}" method="GET">
+                        <div class="row mb-3 mt-3 d-flex align-items-end gap-2">
+        
+                            <!-- Input Nama Produk -->
+                            <div class="col mb-3">
+                                <input type="text" name="produk" class="form-control" list="productList"
+                                    placeholder="Cari Produk..." value="{{ request('produk') }}">
+                                <datalist id="productList">
+                                    @foreach ($produks as $p)
+                                        <option value="{{ $p }}">
+                                    @endforeach
+                                </datalist>
+                            </div>
+        
+                            <!-- Input Nama Customer -->
+                            <div class="col mb-3">
+                                <input type="text" name="customer" class="form-control" list="customerList"
+                                    placeholder="Cari Customer..." value="{{ request('customer') }}">
+                                <datalist id="customerList">
+                                    @foreach ($customers as $c)
+                                        <option value="{{ $c->nama }}">
+                                    @endforeach
+                                </datalist>
+                            </div>
+        
+                            <!-- Input Jenis Pembayaran -->
+                            <div class="col mb-3">
+                                <select name="jenis_pembayaran" class="form-control">
+                                    <option value="">Semua</option>
+                                    <option value="Tunai" {{ request('jenis_pembayaran') == 'Tunai' ? 'selected' : '' }}>Tunai
+                                    </option>
+                                    <option value="DP" {{ request('jenis_pembayaran') == 'DP' ? 'selected' : '' }}>
+                                        DP</option>
+                                </select>
+                            </div>
+        
+                            <!-- Input Tanggal Pembelian -->
+                            <div class="col mb-3">
+                                <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}"
+                                    onclick="this.showPicker()">
+                            </div>
+        
+                            <!-- Tombol Cari & Clear -->
+                            <div class="col d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">🔍 Cari</button>
+                                <a href="{{ route('market.index') }}" class="btn btn-secondary">❌ Clear</a>
+                            </div>
+                        </div>
+                    </form>
+        
+        
+                    <!-- Tabel Marketing -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border rounded shadow-sm">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Customer</th>
+                                    <th>Nama Produk</th>
+                                    <th>Tanggal Pembelian</th>
+                                    <th>Tujuan Pembelian</th>
+                                    <th>Jenis Pembayaran</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($marketings as $key => $marketing)
+                                    <tr>
+                                        <td class="text-center">{{ ($marketings->currentPage() - 1) * $marketings->perPage() + $loop->iteration }}</td>
+                                        <td>{{ $marketing->customer->nama_customer ?? '-' }}</td>
+                                        <td>{{ $marketing->produk->nama }}</td>
+                                        <td>{{ $marketing->tanggal_pembelian }}</td>
+                                        <td class="text-truncate" style="max-width: 200px;">{{ $marketing->tujuan_pembelian }}</td>
+                                        <td>{{ $marketing->jenis_pembayaran }} @if ($marketing->keterangan_pembayaran)
+                                                ({{ $marketing->keterangan_pembayaran }})
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <!-- Tombol untuk membuka modal -->
+                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#detailModal{{ $marketing->id }}">
+                                                🔍
+                                            </button>
+                                            {{-- tombol edit --}}
+                                            <a href="{{ route('market.edit', $marketing->id) }}"
+                                                class="btn btn-sm btn-warning">✏️</a>
+                                            {{-- tombol delete --}}
+                                            <form id="deleteForm-{{ $marketing->id }}"
+                                                action="{{ route('market.delete', $marketing->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-sm btn-danger"
+                                                    onclick="confirmDelete('{{ $marketing->id }}', '{{ $marketing->customer->nama }}')">🗑️</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="10" class="text-center">Data belum tersedia.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        {{ $marketings->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
-                <script>
-                    setTimeout(() => document.getElementById('alert').style.display = 'none', 3000);
-                </script>
-            @endif
-
-            {{-- Fitur Search --}}
-            <form action="{{ route('market.index') }}" method="GET">
-                <div class="row mb-3 mt-3 d-flex align-items-end gap-2">
-
-                    <!-- Input Nama Produk -->
-                    <div class="col">
-                        <input type="text" name="produk" class="form-control" list="productList"
-                            placeholder="Cari Produk..." value="{{ request('produk') }}">
-                        <datalist id="productList">
-                            @foreach ($produks as $p)
-                                <option value="{{ $p }}">
-                            @endforeach
-                        </datalist>
-                    </div>
-
-                    <!-- Input Nama Customer -->
-                    <div class="col">
-                        <input type="text" name="customer" class="form-control" list="customerList"
-                            placeholder="Cari Customer..." value="{{ request('customer') }}">
-                        <datalist id="customerList">
-                            @foreach ($customers as $c)
-                                <option value="{{ $c->nama }}">
-                            @endforeach
-                        </datalist>
-                    </div>
-
-                    <!-- Input Jenis Pembayaran -->
-                    <div class="col">
-                        <select name="jenis_pembayaran" class="form-control">
-                            <option value="">Semua</option>
-                            <option value="Tunai" {{ request('jenis_pembayaran') == 'Tunai' ? 'selected' : '' }}>Tunai
-                            </option>
-                            <option value="DP" {{ request('jenis_pembayaran') == 'DP' ? 'selected' : '' }}>
-                                DP</option>
-                        </select>
-                    </div>
-
-                    <!-- Input Tanggal Pembelian -->
-                    <div class="col">
-                        <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}"
-                            onclick="this.showPicker()">
-                    </div>
-
-                    <!-- Tombol Cari & Clear -->
-                    <div class="col d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">🔍 Cari</button>
-                        <a href="{{ route('market.index') }}" class="btn btn-secondary">❌ Clear</a>
-                    </div>
-                </div>
-            </form>
-
-
-            <!-- Tabel Marketing -->
-            <table class="table mt-3">
-                <thead class="table-primary">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Customer</th>
-                        <th>Nama Produk</th>
-                        <th>Tanggal Pembelian</th>
-                        <th>Tujuan Pembelian</th>
-                        <th>Jenis Pembayaran</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($marketings as $key => $marketing)
-                        <tr>
-                            <td>{{ ($marketings->currentPage() - 1) * $marketings->perPage() + $loop->iteration }}</td>
-                            <td>{{ $marketing->customer->nama ?? '-' }}</td>
-                            <td>{{ $marketing->produk->nama }}</td>
-                            <td>{{ formatTanggalIndo($marketing->tanggal_pembelian) }}</td>
-                            <td class="text-truncate" style="max-width: 200px;">{{ $marketing->tujuan_pembelian }}</td>
-                            <td>{{ $marketing->jenis_pembayaran }} @if ($marketing->keterangan_pembayaran)
-                                    ({{ $marketing->keterangan_pembayaran }})
-                                @endif
-                            </td>
-                            <td>
-                                <!-- Tombol untuk membuka modal -->
-                                <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#detailModal{{ $marketing->id }}">
-                                    🔍
-                                </button>
-                                {{-- tombol edit --}}
-                                <a href="{{ route('market.edit', $marketing->id) }}"
-                                    class="btn btn-sm btn-warning">✏️</a>
-                                {{-- tombol delete --}}
-                                <form id="deleteForm-{{ $marketing->id }}"
-                                    action="{{ route('market.delete', $marketing->id) }}" method="POST"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-sm btn-danger"
-                                        onclick="confirmDelete('{{ $marketing->id }}', '{{ $marketing->customer->nama }}')">🗑️</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" class="text-center">Data belum tersedia.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-center">
-                {{ $marketings->links('pagination::bootstrap-4') }}
             </div>
-
         </div>
-    </div>
+
     {{-- modal untuk menampilkan fungsi detail / show --}}
     @foreach ($marketings as $marketing)
         <!-- Modal lihat detail marketing -->
@@ -174,7 +180,7 @@
                                 <p><strong>Keterangan Pembayaran:</strong>
                                     {{ $marketing->keterangan_pembayaran ?? '-' }}</p>
                                 <p><strong>Tanggal Pembelian:</strong>
-                                    {{ formatTanggalIndo($marketing->tanggal_pembayaran) }}
+                                    {{ $marketing->tanggal_pembayaran }}
                                 </p>
                             </div>
                         </div>
@@ -187,6 +193,8 @@
         </div>
     @endforeach
     <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var successToast = document.getElementById('successToast');

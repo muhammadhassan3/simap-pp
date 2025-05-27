@@ -1,20 +1,19 @@
 <x-layout>
 
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0" style="background: white">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="w-50">
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <div class="card p-4">
                 <a href="{{ route('pengajuan_proposal.index') }}" class="text-dark font-weight-bold mb-4">
                     <i class="fas fa-arrow-left"></i> Tambah Proposal
                 </a>
@@ -45,7 +44,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="tanggal_pengajuan" class="text-dark font-weight-bold">Tanggal Pengajuan</label>
+                            <label for="tanggal_pengajuan" class="text-dark font-weight-bold">Tanggal
+                                Pengajuan</label>
                             <input type="date" class="form-control bg-light" id="tanggal_pengajuan"
                                 name="tanggal_pengajuan" required>
                         </div>
@@ -68,9 +68,11 @@
                     </div>
                     <button type="submit" class="btn btn-info w-100">Tambah Proposal</button>
                 </form>
+
             </div>
         </div>
     </div>
+
 
     <!-- Link ke JS Bootstrap (opsional) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
