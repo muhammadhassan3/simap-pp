@@ -1,9 +1,4 @@
 <x-layout>
-    @if (session('alert'))
-        <script>
-            alert("{{ session('alert') }}");
-        </script>
-    @endif
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
@@ -121,6 +116,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('alert'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('alert') }}"
+            });
+        </script>
+    @endif
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
