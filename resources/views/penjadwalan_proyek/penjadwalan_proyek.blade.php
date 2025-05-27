@@ -33,35 +33,35 @@
                         <thead>
                         <tr>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 No
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Nama Proyek
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Supervisor
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Tanggal Mulai
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Tanggal Selesai
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Pekerjaan
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Status
                             </th>
                             <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
                                 Aksi
                             </th>
                         </tr>
@@ -69,20 +69,20 @@
                         <tbody id="jadwalTableBody">
                         @foreach ($penjadwalanProyek as $jadwal)
                             <tr>
-                                <td class="text-center text-xs text-secondary mb-0">{{ $loop->iteration }}</td>
-                                <td class="text-center text-xs text-secondary mb-0">
+                                <td class="text-center text-xs  mb-0">{{ $loop->iteration }}</td>
+                                <td class="text-center text-xs  mb-0">
                                     {{ $jadwal->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Diketahui' }}
                                 </td>
-                                <td class="text-center text-xs text-secondary mb-0">
+                                <td class="text-center text-xs  mb-0">
                                     {{ $supervisor }}
                                 </td>
-                                <td class="text-center text-x text-secondary mb-0">
+                                <td class="text-center text-xs  mb-0">
                                     {{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
-                                <td class="text-center text-xs text-secondary mb-0">
+                                <td class="text-center text-xs  mb-0">
                                     {{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
-                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->pekerjaan }}</td>
-                                <td class="text-center text-xs text-secondary mb-0" style="text-transform: capitalize;">{{ $jadwal->status }}</td>
-                                <td class="text-center text-xs text-secondary mb-0">
+                                <td class="text-center text-xs  mb-0">{{ $jadwal->pekerjaan }}</td>
+                                <td class="text-center text-xs  mb-0" style="text-transform: capitalize;">{{ $jadwal->status }}</td>
+                                <td class="text-center text-xs  mb-0">
                                     <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}?id_proyek_disetujui={{$id_proyek_disetujui}}"
                                        class="btn btn-warning">
                                         <i class="bi bi-pencil"></i>
@@ -102,7 +102,7 @@
                         @endforeach
                         <!-- Baris untuk "Data tidak ditemukan" -->
                         <tr id="noDataRow" style="display: none;">
-                            <td colspan="8" class="text-center text-secondary">Data tidak ditemukan</td>
+                            <td colspan="8" class="text-center ">Data tidak ditemukan</td>
                         </tr>
                         </tbody>
                     </table>
