@@ -14,10 +14,15 @@
 
                 <div
                     class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3 gap-2">
-                    <!-- Tombol Tambah Penjualan -->
-                    <a href="{{ route('penjualan.create') }}" class="btn btn-success shadow-sm mt-3">
-                        <i class="bi bi-plus-circle-fill"></i> Tambah Penjualan
-                    </a>
+                    <div class="d-flex gap-2 mt-3">
+                        <!-- Tombol Tambah Penjualan -->
+                        <a href="{{ route('penjualan.create') }}" class="btn btn-success shadow-sm ">
+                            <i class="bi bi-plus-circle-fill"></i> Tambah Penjualan
+                        </a>
+                        <a href="{{ route('laporan-produk') }}" class="btn btn-primary px-3">
+                            Laporan Penjualan Produk
+                        </a>
+                    </div>
 
                     <!-- Form Pencarian -->
                     <form action="{{ route('penjualan.index') }}" method="GET"
@@ -56,14 +61,14 @@
                                             @foreach ($item->detailPenjualan->take(3) as $detail)
                                                 <li>{{ $detail->produk->nama }}</li>
                                             @endforeach
-    
+
                                             @if ($item->detailPenjualan->count() > 3)
                                                 <li><em>dan {{ $item->detailPenjualan->count() - 3 }}
                                                         lainnya...</em></li>
                                             @endif
                                         </ol>
                                     </td>
-    
+
                                     <td>{{ date('d-m-Y', strtotime($item->tanggal_penjualan)) }}</td>
                                     <td>{{ $item->jenis_pembayaran }}</td>
                                     <td>Rp{{ number_format($item->total_harga, 0, ',', '.') }}</td>
@@ -73,12 +78,12 @@
                                                 class="btn btn-primary py-2 px-3">
                                                 <i class="fas fa-eye "></i> Detail
                                             </a>
-    
+
                                             <a href="{{ route('penjualan.edit', $item->id) }}"
                                                 class="btn btn-warning  py-2 px-3">
                                                 <i class="fas fa-edit "></i> Edit
                                             </a>
-    
+
                                             <form action="{{ route('penjualan.destroy', $item->id) }}" method="POST"
                                                 class="form-hapus">
                                                 @csrf
@@ -87,7 +92,7 @@
                                                     <i class="fas fa-trash "></i> Hapus</button>
                                             </form>
                                         </div>
-    
+
                                     </td>
                                 </tr>
                             @empty
@@ -100,7 +105,7 @@
                                 document.querySelectorAll('.btn-hapus').forEach(function(button) {
                                     button.addEventListener('click', function(e) {
                                         const form = this.closest('.form-hapus');
-    
+
                                         Swal.fire({
                                             title: 'Yakin hapus?',
                                             text: 'Data tidak bisa dikembalikan setelah dihapus!',
@@ -118,7 +123,7 @@
                                     });
                                 });
                             </script>
-    
+
                         </tbody>
                     </table>
 

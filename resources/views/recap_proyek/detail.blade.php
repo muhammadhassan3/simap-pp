@@ -57,28 +57,24 @@
                         </thead>
                         <tbody id="projectTable1">
                             <!-- Loop through pembelian data -->
-                            @foreach ($pembelian as $item)
-                                <tr>
-                                    <td>{{ $item->proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}
+                            @foreach ($detailPembelian as $item)
+                                <tr class="border-b">
+                                    <td>{{ $item->pembelian->proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}
                                     </td>
-                                    <td>{{ $item->proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? 'Tidak Ada Alamat' }}
+                                    <td>{{ $item->pembelian->proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? 'Tidak Ada Alamat' }}
                                     </td>
-                                    <td>{{ $item->tanggal ?? 'Tanggal Tidak Tersedia' }}</td>
-                                    <td class="text-start">
-                                        @forelse ($item->detail_pembelians as $detail)
-                                            • {{ $detail->nama_produk }}<br>
-                                        @empty
-                                            Tidak Ada Nama Barang
-                                        @endforelse
+                                    <td>{{ \Carbon\Carbon::parse($item->pembelian->tanggal)->format('d-m-Y') }}</td>
+                                    <td>{{ $item->nama_produk }}</td>
+                                    <td class="text-right">
+                                        {{ number_format($item->total_harga, 0, ',', '.') }}
                                     </td>
-                                    <td class="total-pembelian">{{ $item->total_pembelian ?? 0 }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <!-- Total Pembelian row -->
                     <div class="text-end mt-3">
-                        <strong>Total Pembelian: </strong><span id="totalPembelian"></span>
+                        <strong>Total Pembelian: </strong><span>{{ number_format($totalPembelian, 0, ',', '.') }}</span>
                     </div>
                 </div>
 

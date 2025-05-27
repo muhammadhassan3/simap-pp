@@ -14,29 +14,34 @@ class LaporanDetail extends Controller
 {
     public function detail($id)
     {
-        // sewa alat
+        // sewa alat (tetap)
         $penyewaan = SewaAlat::with('tempatProyek.pengajuanProposal')
             ->where('id_proyek', $id)
             ->get();
 
-        // pembelian + detail + total harga per pembelian
-        $pembelian = Pembelian::with(['detail_pembelians', 'proyek_disetujui.pengajuanProposal.tempatProyek'])
-            ->withSum('detail_pembelians as total_pembelian', 'total_harga')
-            ->where('id_proyek_disetujui', $id)
+        // semua baris detail pembelian untuk proyek ini
+        $detailPembelian = DetailPembelian::with([
+            'pembelian.proyek_disetujui.pengajuanProposal.tempatProyek'
+        ])
+            ->whereHas('pembelian', fn($q) => $q->where('id_proyek_disetujui', $id))
             ->get();
 
+        // total keseluruhan
+        $totalPembelian = $detailPembelian->sum('total_harga');
 
         return view('recap_proyek.detail', [
-            'penyewaan'          => $penyewaan,
-            'pembelian'          => $pembelian,
-            'id_proyek'          => $id,
+            'penyewaan'       => $penyewaan,
+            'detailPembelian' => $detailPembelian,
+            'totalPembelian'  => $totalPembelian,
+            'id_proyek'       => $id,
         ]);
     }
 
 
+
     function convert($id)
     {
-        $phpWord = new TemplateProcessor('template_laporan.docx');
+        $phpWord = new TemplateProcessor('template_laporan_rizal.docx');
 
         // Ambil semua pembelian terkait proyek
         $pembelianList = Pembelian::where('id_proyek_disetujui', $id)->get();
@@ -52,11 +57,11 @@ class LaporanDetail extends Controller
                     'no' => $no++,
                     'tanggal' => $pembelian->tanggal ?? '',
                     'customer' => $pembelian->proyek_disetujui->pengajuanProposal->tempatProyek->customer->nama_customer ?? '',
-                    'produk' => $detail->nama_produk,
+                    'produk' => $detail->nama_barang,
                     'qty' => $detail->qty,
                     'harga' => number_format($detail->harga, 2, ',', '.'),
                     'total' => number_format($detail->total_harga, 2, ',', '.'),
-                    'no_nota' => $pembelian->no_nota ?? '',
+                    'jenis_pembayaran' => $pembelian->jenis_pembayaran ?? '',
                 ];
 
                 $totalKeseluruhan += $detail->total_harga;
