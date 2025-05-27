@@ -50,12 +50,12 @@
 
                         <div class="mb-3">
                             <label class="form-label">Supervisor</label>
-                            <input type="text" class="form-control" value="{{ $jadwal->supervisor->pekerja->nama ?? 'Tidak Diketahui' }}" disabled>
+                            <input type="text" class="form-control" value="{{ $timProyek->pekerja->nama ?: "Tidak Tersedia" }}" disabled>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">No HP Supervisor</label>
-                            <input type="text" class="form-control" value="{{ $jadwal->supervisor->pekerja->no_hp ?? 'No HP Tidak Ditemukan' }}" disabled>
+                            <input type="text" class="form-control" value="{{ $timProyek->pekerja->no_hp ?? 'No HP Tidak Ditemukan' }}" disabled>
                         </div>
 
                         <div class="mb-3">
