@@ -17,7 +17,7 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Tombol Tambah Jadwal (Kiri) -->
-                    <a class="btn btn-primary d-flex align-items-center px-3 mb-3" href="/penjadwalan_proyek/tambah">
+                    <a class="btn btn-primary d-flex align-items-center px-3 mb-3" href="{{route('penjadwalan_proyek.create', ['id_proyek_disetujui'=>$id_proyek_disetujui])}}">
                         <i class="bi bi-plus-lg me-2"></i> Tambah Jadwal
                     </a>
 
