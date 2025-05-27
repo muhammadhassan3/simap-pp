@@ -39,15 +39,15 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="tanggal_mulai_display" class="form-label">Tanggal Mulai Proyek</label>
-                            <input placeholder="mm/dd/yyyy" type="text" class="form-control" id="tanggal_mulai_display"
-                                   disabled readonly
-                                   @if($idProyekDisetujui) value="{{$proyekDisetujui->tanggal_mulai}}" @endif>
+                            <input type="date" class="form-control" id="tanggal_mulai_display" name="tanggal_mulai_display"
+                                @if($idProyekDisetujui) value="{{ \Carbon\Carbon::parse($proyekDisetujui->tanggal_mulai)->format('Y-m-d') }}" @endif
+                                disabled readonly>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="tanggal_selesai_display" class="form-label">Tanggal Selesai Proyek</label>
-                            <input placeholder="mm/dd/yyyy" type="text" class="form-control"
-                                   id="tanggal_selesai_display" disabled readonly
-                                   @if($idProyekDisetujui) value="{{$proyekDisetujui->tanggal_selesai}}" @endif>
+                            <input type="date" class="form-control" id="tanggal_selesai_display" name="tanggal_selesai_display"
+                                @if($idProyekDisetujui) value="{{ \Carbon\Carbon::parse($proyekDisetujui->tanggal_selesai)->format('Y-m-d') }}" @endif
+                                disabled readonly>
                         </div>
                     </div>
 
