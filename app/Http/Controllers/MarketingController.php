@@ -61,11 +61,12 @@ class MarketingController extends Controller
         $request->validate([
             'produk_id' => 'required',
             'customer_id' => 'required',
-            'tujuan_pembelian' => 'required|string|min:10',
+            'tujuan_pembelian' => 'required|string',
             'jenis_pembayaran' => 'required',
             'keterangan_pembayaran' => 'nullable|string',
             'tanggal_pembelian' => 'required|date',
         ]);
+//        dd();
         // Simpan data ke database
         Marketing::create([
             'produk_id' => $request->produk_id,
