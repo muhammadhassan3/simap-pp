@@ -139,7 +139,7 @@
         </div>
         <h2>Data Sewa Alat Berat</h2>
         <div class="top-bar">
-            <a href="/sewa_alat/create" class="add-button">+ Tambah Alat Berat</a>
+            <a href="/sewa_alat/create?id_proyek_disetujui={{$id_proyek_disetujui}}" class="add-button">+ Tambah Alat Berat</a>
             <input type="text" id="searchInput" class="search-box" placeholder="Cari..." onkeyup="searchTable()">
         </div>
         <table>
@@ -151,7 +151,6 @@
                     <th>Nama Perusahaan</th>
                     <th>Durasi</th>
                     <th>Qty</th>
-                    <th>Nama Tempat Proyek</th>
                     <th>Detail</th>
                     <th>Aksi</th>
                 </tr>
@@ -165,10 +164,9 @@
                         <td>{{ $alat->customer->nama_customer }}</td>
                         <td>{{ $alat->durasi }} menit</td>
                         <td>{{ $alat->qty }}</td>
-                        <td>{{ $alat->tempatProyek ? $alat->tempatProyek->nama_tempat : 'Tidak Diketahui' }}</td>
                         <td>{{ $alat->detail }}</td>
                         <td class="action-buttons">
-                            <a href="/sewa_alat/{{ $alat->id }}/edit" class="edit-button">
+                            <a href="/sewa_alat/{{ $alat->id }}/edit?id_proyek_disetujui={{$id_proyek_disetujui}}" class="edit-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path
                                         d="M14.1 4.22l5.66 5.66-9.19 9.19-5.66-5.66 9.19-9.19M15.5 3c-.4 0-.8.15-1.06.44L3.44 14.5a1.5 1.5 0 000 2.12l4.95 4.95c.29.29.67.44 1.06.44s.78-.15 1.06-.44L20.56 9.5a1.5 1.5 0 000-2.12l-4.95-4.95A1.5 1.5 0 0015.5 3z">

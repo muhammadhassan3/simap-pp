@@ -107,7 +107,7 @@ class AuthController extends Controller
             'currentpassword' => ['required'],
             'newpassword' => ['required'],
         ]);
-        if($request->password != $request->newpassword_confirmation){
+        if($request->newpassword != $request->newpassword_confirmation){
             return back()->withErrors(['newpassword' => 'Password baru tidak sama dengan konfirmasi password baru.']);
         }
 

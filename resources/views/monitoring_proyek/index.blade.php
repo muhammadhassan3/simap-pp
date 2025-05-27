@@ -74,7 +74,7 @@
         @if ($monitoringProyek && $monitoringProyek->Proyek_disetujui)
             <a href="{{ route('penjadwalan_proyek.index', ['id_proyek_disetujui' => $monitoringProyek->id_proyek_disetujui]) }}"
                 class="btn btn-primary btn-sm mb-2">
-                <i class="bi bi-plus-circle"></i> Tambah Timeline
+                <i class="bi bi-plus-circle"></i> Lihat seluruh jadwal
             </a>
         @endif
     </div>
@@ -155,7 +155,7 @@
         @if ($monitoringProyek && $monitoringProyek->Proyek_disetujui)
             <a href="{{ route('tim-proyek.detail', ['id' => $monitoringProyek->id_proyek_disetujui]) }}"
                 class="btn btn-primary btn-sm mb-2">
-                <i class="bi bi-plus-circle"></i> Tambah Tim
+                <i class="bi bi-plus-circle"></i> Detail Tim
             </a>
         @endif
     </div>
@@ -190,7 +190,7 @@
         @if ($monitoringProyek && $monitoringProyek->Proyek_disetujui)
             <a href="{{ route('sewa_alat.index', ['id_proyek_disetujui' => $monitoringProyek->id_proyek_disetujui]) }}"
                 class="btn btn-primary btn-sm mb-2">
-                <i class="bi bi-plus-circle"></i> Tambah Alat
+                <i class="bi bi-plus-circle"></i> Lihat Penyewaan
             </a>
         @endif
     </div>
@@ -206,7 +206,6 @@
                     <th>Nama Perusahaan</th>
                     <th>Durasi</th>
                     <th>Qty</th>
-                    <th>Nama Tempat Proyek</th>
                     <th>Detail</th>
                 </tr>
             </thead>
@@ -220,7 +219,6 @@
                         <td>{{ $item->customer->nama_customer ?? '-' }}</td>
                         <td>{{ $item->durasi }} menit</td>
                         <td>{{ $item->qty }}</td>
-                        <td>{{ $item->tempatProyek ? $item->tempatProyek->nama_tempat : 'Tidak Diketahui' }}</td>
                         <td>{{ $item->detail }}</td>
                     </tr>
                     @endforeach
