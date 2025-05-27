@@ -107,7 +107,7 @@
                     <span class="nav-link-text ms-1">Produk</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('pekerja.index') }}">
                     <div
@@ -116,6 +116,17 @@
                             src="https://img.icons8.com/?size=100&id=102261&format=png&color=000000" alt="">
                     </div>
                     <span class="nav-link-text ms-1">Pekerja</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pengawas-proyek.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <img style="width: 16px;"
+                             src="https://img.icons8.com/?size=100&id=102261&format=png&color=000000" alt="">
+                    </div>
+                    <span class="nav-link-text ms-1">Pengawas</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -138,7 +149,7 @@
                     <span class="nav-link-text ms-1">Pembelian</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('market.index') }}">
                     <div
