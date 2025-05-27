@@ -26,20 +26,28 @@ class AuthController extends Controller
 
         if ($credentials) {
             $request->session()->regenerate();
+
             $user = User::where('email', $request->email)->first();
-            if($user == null){
-                $aktor = Aktor::where('email', $request->email)->first();
-                Auth::login($aktor);
-            }else{
 
+            if ($user && Hash::check($request->password, $user->password)) {
                 Auth::login($user);
+                $request->session()->regenerate();
+                return redirect('dashboard');
             }
-            return redirect('dashboard');
-        }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            $aktor = Aktor::where('email', $request->email)->first();
+
+            if ($aktor && Hash::check($request->password, $aktor->password)) {
+                Auth::login($aktor);
+                $request->session()->regenerate();
+                return redirect('dashboard');
+            }
+
+            // Jika tidak ada yang cocok
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])->onlyInput('email');
+        }
     }
 
     // Logout user
@@ -92,6 +100,7 @@ class AuthController extends Controller
             'currentpassword' => ['required'],
             'newpassword' => ['required', 'confirmed'],
         ]);
+        
         // Cek apakah password lama cocok dengan yang ada di database
         if (!Hash::check($request->currentpassword, $pengguna->password)) {
             return back()->withErrors(['currentpassword' => 'Password lama tidak sesuai.']);

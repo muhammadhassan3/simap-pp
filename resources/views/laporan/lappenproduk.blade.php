@@ -31,9 +31,9 @@
                     </div>
 
                     <!-- Tombol Tampilkan -->
-                    <div class="col-auto">
+                    <div class="col-auto" >
                         <button id="filter-btn" type="submit" name="tampilkan"
-                            class="btn btn-primary btn-sm mt-2 shadow-sm">
+                            class="btn btn-primary btn-sm shadow-sm" >
                             Tampilkan
                         </button>
                     </div>

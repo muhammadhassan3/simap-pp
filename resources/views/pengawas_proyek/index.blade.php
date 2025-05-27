@@ -27,23 +27,25 @@
                         </tr>
                     </thead>
                     <tbody id="dataTable">
-                        @foreach($data as $index => $item)
-                        <tr>
-                            <td class="text-center">{{ $index + 1 }}</td>
-                            <td class="text-center">{{ $item['nama_proyek'] }}</td>
-                            <td class="text-center">{{ $item['peran'] }}</td>
-                            <td class="text-center">{{ $item['nama_pekerja'] }}</td>
-                            <td class="text-center">{{ $item['keahlian'] }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('pengawas-proyek.edit', $item['id']) }}" class="btn btn-sm btn-warning me-1">
-                                    <i class="bi bi-pencil-fill text-white"></i>
-                                </a>
-                                <button class="btn btn-sm btn-danger" onclick="showDeleteModal(this)" data-url="{{ route('pengawas-proyek.delete', $item['id']) }}">
-                                    <i class="bi bi-trash-fill text-white"></i>
-                                </button>
-                                @include('pengawas_proyek.delete')
-                            </td>
-                        </tr>
+                        @foreach ($data as $index => $item)
+                            <tr>
+                                <td class="text-center">{{ $index + 1 }}</td>
+                                <td class="text-center">{{ $item['nama_proyek'] }}</td>
+                                <td class="text-center">{{ $item['peran'] }}</td>
+                                <td class="text-center">{{ $item['nama_pekerja'] }}</td>
+                                <td class="text-center">{{ $item['keahlian'] }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('pengawas-proyek.edit', $item['id']) }}"
+                                        class="btn btn-sm btn-warning me-1">
+                                        <i class="bi bi-pencil-fill text-white"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deletePengawas" data-id="{{ $item['id'] }}"
+                                        data-nama="{{ $item['nama_pekerja'] }}">
+                                        <i class="bi bi-trash-fill text-white"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -52,14 +54,60 @@
         </div>
     </div>
 
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deletePengawas" tabindex="-1" aria-labelledby="deletePengawasLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 15px;">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="deletePengawasLabel">Hapus Pekerja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="deletePengawasForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="delete_id" name="id">
+                        <p>Apakah Anda yakin ingin menghapus <span id="delete_nama" class="fw-bold"></span>?</p>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        style="border-radius: 10px; padding: 10px 24px;">Batal</button>
+                    <button type="button" id="confirmDeleteBtn" class="btn btn-danger"
+                        style="border-radius: 10px; padding: 10px 24px;">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.getElementById("searchInput").addEventListener("keyup", function () {
+        document.getElementById("searchInput").addEventListener("keyup", function() {
             let input = this.value.toLowerCase();
             let rows = document.querySelectorAll("#dataTable tr");
 
             rows.forEach(row => {
                 let text = row.innerText.toLowerCase();
                 row.style.display = text.includes(input) ? "" : "none";
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('button[data-bs-target="#deletePengawas"]');
+            const deleteForm = document.getElementById('deletePengawasForm');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const nama = this.getAttribute('data-nama');
+                    document.getElementById('delete_id').value = id;
+                    document.getElementById('delete_nama').innerText = nama;
+                    deleteForm.action = `/pengawas-proyek/${id}/delete`;
+                });
+            });
+
+            confirmDeleteBtn.addEventListener('click', function() {
+                deleteForm.submit();
             });
         });
     </script>

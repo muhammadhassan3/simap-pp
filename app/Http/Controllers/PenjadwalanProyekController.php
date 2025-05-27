@@ -11,8 +11,25 @@ class PenjadwalanProyekController extends Controller
 {
     public function index(Request $request)
     {
-        $penjadwalanProyek = Penjadwalan::with(['proyekDisetujui.pengajuanProposal', 'supervisor.pekerja'])->where('id_proyek_disetujui', $request['id_proyek_disetujui'])->get();
-        return view('penjadwalan_proyek.penjadwalan_proyek', ['penjadwalanProyek' => $penjadwalanProyek, 'id_proyek_disetujui' => $request['id_proyek_disetujui']]);
+        $penjadwalanProyek = Penjadwalan::with([
+            'proyekDisetujui.pengajuanProposal',
+            'supervisor.pekerja'
+        ])->where('id_proyek_disetujui', $request['id_proyek_disetujui'])
+        ->get();
+        return view('penjadwalan_proyek.penjadwalan_proyek', [
+            'penjadwalanProyek' => $penjadwalanProyek,
+            'id_proyek_disetujui' => $request['id_proyek_disetujui']
+        ]);
+    }
+
+    public function create(Request $request)
+    {
+        $proyekDisetujui = ProyekDisetujui::with([
+            'pengajuanProposal',
+            'timProyek.pekerja'
+        ])->get();
+        $id_proyek_disetujui = $request->query('id_proyek_disetujui');
+        return view('penjadwalan_proyek.tambahjadwal_proyek', compact('proyekDisetujui', 'id_proyek_disetujui'));
     }
 
     public function store(Request $request)
@@ -25,7 +42,7 @@ class PenjadwalanProyekController extends Controller
         // Save to database
         Penjadwalan::create(['id_proyek_disetujui' => $request->id_proyek_disetujui, 'id_tim_project' => $supervisor ? $supervisor->id : null, 'tanggal_mulai' => $request->tanggal_mulai, 'tanggal_selesai' => $request->tanggal_selesai, 'pekerjaan' => $request->pekerjaan, 'status' => $request->status,]);
 
-        return redirect('/penjadwalan_proyek')->with('success', 'Jadwal proyek berhasil ditambahkan');
+        return redirect()->route('penjadwalan_proyek.index', ['id_proyek_disetujui' => $request->id_proyek_disetujui])->with('success', 'Jadwal proyek berhasil ditambahkan');
     }
 
     public function create(Request $request)
@@ -57,13 +74,18 @@ class PenjadwalanProyekController extends Controller
         $jadwal->status = $request->status;
         $jadwal->save();
 
-        return redirect('/penjadwalan_proyek')->with('success', 'Jadwal proyek berhasil diperbarui');
+        return redirect()->route('penjadwalan_proyek.index', ['id_proyek_disetujui' => $jadwal->id_proyek_disetujui])
+            ->with('success', 'Jadwal proyek berhasil diperbarui');
     }
 
     public function delete($id)
     {
-        Penjadwalan::findOrFail($id)->delete();
-        return redirect('/penjadwalan_proyek')->with('success', 'Jadwal proyek berhasil dihapus');
+        $jadwal = Penjadwalan::findOrFail($id);
+        $id_proyek_disetujui = $jadwal->id_proyek_disetujui;
+        $jadwal->delete();
+        
+        return redirect()->route('penjadwalan_proyek.index', ['id_proyek_disetujui' => $id_proyek_disetujui])
+            ->with('success', 'Jadwal proyek berhasil dihapus');
     }
 
     public function getSupervisor($id)
