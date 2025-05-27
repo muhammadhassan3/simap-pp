@@ -34,7 +34,7 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 return redirect('dashboard');
             }
-            
+
             // Jika tidak ada yang cocok
             session()->flash('error', 'Email atau password salah.');
             return back()->withErrors([
@@ -105,16 +105,20 @@ class AuthController extends Controller
         // Validasi input
         $request->validate([
             'currentpassword' => ['required'],
-            'newpassword' => ['required', 'confirmed'],
+            'newpassword' => ['required'],
         ]);
-        
+        if($request->password != $request->newpassword_confirmation){
+            return back()->withErrors(['newpassword' => 'Password baru tidak sama dengan konfirmasi password baru.']);
+        }
+
         // Cek apakah password lama cocok dengan yang ada di database
         if (!Hash::check($request->currentpassword, $pengguna->password)) {
             return back()->withErrors(['currentpassword' => 'Password lama tidak sesuai.']);
         }
 
-        // Update password baru jika valid
-        $pengguna->password = Hash::make($request->newpassword);
+            // Update password baru jika valid
+            $pengguna->password = Hash::make($request->newpassword);
+
         $pengguna->save();
 
         return redirect()->back()->with('success', 'Password berhasil diperbarui!');
