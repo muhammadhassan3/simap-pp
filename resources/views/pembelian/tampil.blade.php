@@ -13,7 +13,7 @@
                     <form class="d-flex align-items-center gap-2 w-40" style="flex-grow: 1; max-width: 500px;">
 
                         <input type="search" id="searchProject" class="form-control"
-                            placeholder="Cari berdasarkan Tanggal atau Nama Proyek" aria-label="Search">
+                            placeholder="Cari" aria-label="Search">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="fas fa-search"></i>
