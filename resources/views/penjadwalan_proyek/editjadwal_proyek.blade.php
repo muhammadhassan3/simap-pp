@@ -50,12 +50,12 @@
 
                         <div class="mb-3">
                             <label class="form-label">Supervisor</label>
-                            <input type="text" class="form-control" value="{{ $jadwal->supervisor->pekerja->nama ?? 'Tidak Diketahui' }}" disabled>
+                            <input type="text" class="form-control" value="{{ $timProyek ? $timProyek->pekerja->nama : "Tidak Tersedia" }}" disabled>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">No HP Supervisor</label>
-                            <input type="text" class="form-control" value="{{ $jadwal->supervisor->pekerja->no_hp ?? 'No HP Tidak Ditemukan' }}" disabled>
+                            <input type="text" class="form-control" value="{{ $timProyek ? $timProyek->pekerja->no_hp : 'No HP Tidak Ditemukan' }}" disabled>
                         </div>
 
                         <div class="mb-3">
@@ -120,14 +120,14 @@
                         return false;
                     }
 
-                    if (mulai < pMulai || selesai > pSelesai) {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Tanggal harus berada dalam rentang waktu proyek",
-                            icon: "error"
-                        });
-                        return false;
-                    }
+                    // if (mulai < pMulai || selesai > pSelesai) {
+                    //     Swal.fire({
+                    //         title: "Error!",
+                    //         text: "Tanggal harus berada dalam rentang waktu proyek",
+                    //         icon: "error"
+                    //     });
+                    //     return false;
+                    // }
 
                     return true;
                 }

@@ -11,12 +11,13 @@ use Illuminate\Http\Request;
 class SewaAlatController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         // Mengambil semua data sewa alat beserta relasi customer dan tempat proyek
         $sewaAlat = SewaAlat::with(['Customer', 'TempatProyek'])->get(); // Periksa nama relasi
         // dd($sewaAlat->toArray());
-        return view('sewa_alat.index', compact('sewaAlat')); // Pastikan nama view sesuai
+        $id_proyek_disetujui = $request->query('id_proyek_disetujui');
+        return view('sewa_alat.index', compact('sewaAlat', 'id_proyek_disetujui')); // Pastikan nama view sesuai
     }
 
     public function create()

@@ -34,6 +34,13 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 return redirect('dashboard');
             }
+            
+            // Jika tidak ada yang cocok
+            session()->flash('error', 'Email atau password salah.');
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])->onlyInput('email');
+
 
             $aktor = Aktor::where('email', $request->email)->first();
 
@@ -86,7 +93,7 @@ class AuthController extends Controller
 
         $pengguna->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully!');
+        return redirect()->back()->with('success', 'Sukses mengupdate profil!');
     }
 
      // Update password hanya jika password lama benar
