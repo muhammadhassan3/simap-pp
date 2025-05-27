@@ -151,7 +151,6 @@
                     <th>Nama Perusahaan</th>
                     <th>Durasi</th>
                     <th>Qty</th>
-                    <th>Nama Tempat Proyek</th>
                     <th>Detail</th>
                     <th>Aksi</th>
                 </tr>
@@ -165,7 +164,6 @@
                         <td>{{ $alat->customer->nama_customer }}</td>
                         <td>{{ $alat->durasi }} menit</td>
                         <td>{{ $alat->qty }}</td>
-                        <td>{{ $alat->tempatProyek ? $alat->tempatProyek->nama_tempat : 'Tidak Diketahui' }}</td>
                         <td>{{ $alat->detail }}</td>
                         <td class="action-buttons">
                             <a href="/sewa_alat/{{ $alat->id }}/edit?id_proyek_disetujui={{$id_proyek_disetujui}}" class="edit-button">
