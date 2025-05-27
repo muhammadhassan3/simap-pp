@@ -206,7 +206,7 @@
                     <th>Nama Perusahaan</th>
                     <th>Durasi</th>
                     <th>Qty</th>
-                    <th>Nama Proyek</th>
+                    <th>Nama Tempat Proyek</th>
                     <th>Detail</th>
                 </tr>
             </thead>
