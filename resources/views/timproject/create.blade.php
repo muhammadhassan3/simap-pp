@@ -25,9 +25,11 @@
             <div class="mb-3">
                 <label class="form-label">Nama Proyek</label>
                 <select name="id_project_disetujui" class="form-control">
-                    <option value="" selected disabled>-- Pilih Nama Proyek --</option>
+                    <option value="" disabled {{ !isset($selected_project_id) ? 'selected' : '' }}>-- Pilih Nama Proyek --</option>
                     @foreach($proyek_disetujui as $proyek)
-                        <option value="{{ $proyek->id }}">{{ $proyek->pengajuan_proposal->nama_proyek }}</option>
+                        <option value="{{ $proyek->id }}" {{ isset($selected_project_id) && $selected_project_id == $proyek->id ? 'selected' : '' }}>
+                            {{ $proyek->pengajuan_proposal->nama_proyek }}
+                        </option>
                     @endforeach
                 </select>
             </div>

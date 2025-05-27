@@ -55,24 +55,38 @@ class TimProyekController extends Controller
     {
         $search = $request->input('search');
 
+        // Periksa dulu apakah proyek disetujui ada
+        $proyekDisetujui = ProyekDisetujui::find($id);
+
+        if (!$proyekDisetujui) {
+            return redirect()->back()->with('error', 'Proyek tidak ditemukan');
+        }
+
         $tim = TimProyek::where('id_project_disetujui', $id)->when($search, function ($query) use ($search) {
                 $query->whereHas('pekerja', function ($q) use ($search) {
                     $q->whereRaw('LOWER(nama) LIKE ?', ["%" . strtolower($search) . "%"]);
                 });
             })->get();
 
-        $id = $tim->first()->id_project_disetujui;
+        // Hapus assignment yang bisa menyebabkan error
+        // $id = $tim->first()->id_project_disetujui;
 
-        return view('timproject.detail', compact('tim', 'id')); // Pastikan $id dikirim ke view
+        // Ambil data pekerja yang belum masuk tim
+        $pekerja = Pekerja::whereDoesntHave('timProyek', function($query) use ($id) {
+            $query->where('id_project_disetujui', $id);
+        })->get();
+
+        return view('timproject.detail', compact('tim', 'id', 'pekerja', 'proyekDisetujui')); // Pastikan $id dikirim ke view
     }
 
 
     public function destroy($id)
     {
         $tim = TimProyek::findOrFail($id);
+        $id_project_disetujui = $tim->id_project_disetujui; // Store the project ID before deleting
         $tim->delete();
 
-        return redirect()->route('tim-proyek.index')->with('success', 'Tim proyek berhasil dihapus');
+        return redirect()->route('tim-proyek.detail', $id_project_disetujui)->with('success', 'Tim proyek berhasil dihapus');
     }
 
     public function store(Request $request)
@@ -82,23 +96,31 @@ class TimProyekController extends Controller
 
         $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)->where('id_project_disetujui', $request->id_project_disetujui)->first();
         if (!$TimProject) {
-            TimProyek::create(['id_project_disetujui' => $request->id_project_disetujui, 'id_pekerja' => $request->id_pekerja, 'peran' => $request->peran, 'keahlian' => $request->keahlian,]);
+            $newTim = TimProyek::create([
+                'id_project_disetujui' => $request->id_project_disetujui,
+                'id_pekerja' => $request->id_pekerja,
+                'peran' => $request->peran,
+                'keahlian' => $request->keahlian,
+            ]);
 
+            // Redirect dengan pesan sukses menggunakan ID dari objek yang baru dibuat
+            return redirect()->route('tim-proyek.detail', $request->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
         } else {
             return redirect()->route('tim-proyek.create')->with('error', 'Pekerja telah dipilih sebelumnya.');
         }
-        // Simpan ke database
-
-
-        // Redirect dengan pesan sukses
-        return redirect()->route('tim-proyek.detail', $TimProject->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
     }
 
-    public function create()
-    {
-        $proyek_disetujui = ProyekDisetujui::with('pengajuan_proposal')->get();
-        $pekerja = Pekerja::all();
-        return view('timproject.create', ['proyek_disetujui' => $proyek_disetujui, 'pekerja' => $pekerja]);
-    }
+    public function create(Request $request)
+{
+    $proyek_disetujui = ProyekDisetujui::with('pengajuan_proposal')->get();
+    $pekerja = Pekerja::all();
+    $selected_project_id = $request->query('id_project_disetujui');
+
+    return view('timproject.create', [
+        'proyek_disetujui' => $proyek_disetujui,
+        'pekerja' => $pekerja,
+        'selected_project_id' => $selected_project_id
+    ]);
+}
 
 }

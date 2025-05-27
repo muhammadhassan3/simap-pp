@@ -11,7 +11,7 @@
         <h2 class="mb-3">Detail Tim Proyek</h2>
 
         <div class="d-flex justify-content-between mb-3">
-            <a href="{{ route('tim-proyek.create') }}" class="btn btn-primary">+ Tambah Tim Proyek</a>
+            <a href="{{ route('tim-proyek.create', ['id_project_disetujui' => $id]) }}" class="btn btn-primary">+ Tambah Tim Proyek</a>
             <!-- Form Pencarian -->
             <form action="{{ route('tim-proyek.detail', ['id' => $id]) }}" method="GET">
                 <div class="input-group">
@@ -20,10 +20,6 @@
                 </div>
             </form>
         </div>
-
-        
-
-        
 
         <div class="card">
             <div class="card-body">
