@@ -14,7 +14,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="no_identitas" class="form-label">ID Perusahaan</label>
+                        <label for="no_identitas" class="form-label">No Identitas</label>
                         <input type="text" class="form-control bg-light" id="no_identitas" name="no_identitas" value="{{ $customers->no_identitas }}" required>
                     </div>
                     <div class="col-md-6">
