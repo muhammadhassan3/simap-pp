@@ -36,10 +36,10 @@
                                 <td class="text-center">{{ $item['keahlian'] }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('pengawas-proyek.edit', $item['id']) }}"
-                                        class="btn btn-sm btn-warning me-1">
+                                        class="btn btn-warning px-2 py-1">
                                         <i class="bi bi-pencil-fill text-white"></i>
                                     </a>
-                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    <button class="btn btn-danger px-2 py-1" data-bs-toggle="modal"
                                         data-bs-target="#deletePengawas" data-id="{{ $item['id'] }}"
                                         data-nama="{{ $item['nama_pekerja'] }}">
                                         <i class="bi bi-trash-fill text-white"></i>

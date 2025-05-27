@@ -11,6 +11,11 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
         }
+        .alert.fade {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
     </style>
 </head>
 <body>
@@ -54,6 +59,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Hilangkan alert setelah 4 detik
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.classList.add('fade');
+            setTimeout(() => alert.remove(), 500); // Hapus dari DOM setelah animasi fade
+        }
+    }, 2000); // 4000 ms = 4 detik
+</script>
+
 
 </body>
 </html>

@@ -93,7 +93,7 @@ class AktorController extends Controller
             'email.required'=>'Email tidak boleh kosong',
             'role.required'=>'Role tidak boleh kosong',
         ]);
-        if (!$request->password){
+        if ($request->password != null){
             $data = [
                 'username'=>$request->username,
                 'password'=> Hash::make($request->password),

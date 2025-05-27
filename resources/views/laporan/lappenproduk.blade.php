@@ -30,21 +30,24 @@
                             style="width: 200px; background-color: #f5f5f5; border: 1px solid #ccc; color: #333; border-radius: 5px;">
                     </div>
 
+                </div>
+
+                <div class="d-flex gap-2">
                     <!-- Tombol Tampilkan -->
-                    <div class="col-auto" >
+                    <div class="col-auto">
                         <button id="filter-btn" type="submit" name="tampilkan"
-                            class="btn btn-primary btn-sm shadow-sm" >
+                            class="btn btn-primary btn-sm shadow-sm">
                             Tampilkan
                         </button>
                     </div>
-                </div>
 
-
-                <div class="d-flex justify-content-end">
-                    <a id="cetak-laporan" href="#" class="btn btn-success btn-sm mb-3">
-                        <i class="bi bi-download me-1"></i> Cetak Laporan
-                    </a>
+                    <div class="d-flex justify-content-end">
+                        <a id="cetak-laporan" href="#" class="btn btn-success btn-sm mb-3">
+                            <i class="bi bi-download me-1"></i> Cetak Laporan
+                        </a>
+                    </div>
                 </div>
+                
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-hover align-middle border rounded shadow-sm">
                         <thead class="table-secondary">
@@ -89,11 +92,11 @@
                                 <tr>
                                     <td class="text-center">{{ $no++ }}</td>
                                     <td class="text-center">{{ $d['tanggal'] }}</td>
-                                    <td class="text-start">{{ $d['customer'] }}</td>
+                                    <td class="text-center">{{ $d['customer'] }}</td>
                                     <td class="text-center">{{ $d['produk'] }}</td>
                                     <td class="text-center">{{ $d['qty'] }}</td>
                                     <td class="text-end">Rp {{ number_format($d['harga'], 0, ',', '.') }}</td>
-                                    <td class="text-end">{{ number_format($d['total'], 0, ',', '.') }}</td>
+                                    <td class="text-end">Rp {{ number_format($d['total'], 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $d['jenis_pembayaran'] }}</td>
                                 </tr>
                             @endforeach

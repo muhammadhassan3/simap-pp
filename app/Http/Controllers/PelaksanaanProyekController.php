@@ -82,7 +82,7 @@ class PelaksanaanProyekController extends Controller
     public function edit($id, $kode)
     {
         $pelaksanaan = PelaksanaanProyek::where('id', $kode)->where('id_penjadwalan', $id)->firstOrFail();
-        return view('Pelaksanaan.edit', compact('pelaksanaan'));
+        return view('pelaksanaan.edit', compact('pelaksanaan'));
     }
 
     public function update(Request $request, $id, $kode)

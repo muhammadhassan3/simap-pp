@@ -4,11 +4,11 @@
             <div class="card-body">
                 <div>
                     <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $id_proyek_disetujui]) }}"
-                        class="btn btn-outline-secondary">
+                       class="btn btn-outline-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-arrow-left" viewBox="0 0 16 16">
+                             class="bi bi-arrow-left" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
-                                d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8" />
+                                  d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8"/>
                         </svg>
                         Kembali
                     </a>
@@ -17,7 +17,8 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Tombol Tambah Jadwal (Kiri) -->
-                    <a class="btn btn-primary d-flex align-items-center px-3 mb-3" href="{{route('penjadwalan_proyek.create', ['id_proyek_disetujui'=>$id_proyek_disetujui])}}">
+                    <a class="btn btn-primary d-flex align-items-center px-3 mb-3"
+                       href="{{route('penjadwalan_proyek.create', ['id_proyek_disetujui'=>$id_proyek_disetujui])}}">
                         <i class="bi bi-plus-lg me-2"></i> Tambah Jadwal
                     </a>
 
@@ -30,71 +31,79 @@
                 <div class="table-responsive">
                     <table class="table align-items-center mb-0" id="jadwalTable">
                         <thead>
-                            <tr>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    No
-                                </th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Nama Proyek</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Supervisor</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Tanggal Mulai</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Tanggal Selesai</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Pekerjaan</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Status</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Aksi</th>
-                            </tr>
+                        <tr>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                No
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Nama Proyek
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Supervisor
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Tanggal Mulai
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Tanggal Selesai
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Pekerjaan
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Status
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Aksi
+                            </th>
+                        </tr>
                         </thead>
                         <tbody id="jadwalTableBody">
-                            @foreach ($penjadwalanProyek as $jadwal)
-                                <tr>
-                                    <td class="text-center text-xs text-secondary mb-0">{{ $loop->iteration }}</td>
-                                    <td class="text-center text-xs text-secondary mb-0">
-                                        {{ $jadwal->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Diketahui' }}
-                                    </td>
-                                    <td class="text-center text-xs text-secondary mb-0">
-                                        {{ $jadwal->supervisor->pekerja->nama ?? ($jadwal->nama_supervisor ?? 'Tidak Diketahui') }}
-                                    </td>
-                                    <td class="text-center text-xs text-secondary mb-0">
-                                        {{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
-                                    <td class="text-center text-xs text-secondary mb-0">
-                                        {{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
-                                    <td class="text-start text-xs text-secondary mb-0">{{ $jadwal->pekerjaan }}</td>
-                                    <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->status }}</td>
-                                    <td class="text-center text-xs text-secondary mb-0">
-                                        <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}" class="btn btn-warning">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <form id="delete-form-{{ $jadwal->id }}"
-                                            action="/penjadwalan_proyek/delete/{{ $jadwal->id }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" class="btn btn-danger"
+                        @foreach ($penjadwalanProyek as $jadwal)
+                            <tr>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $loop->iteration }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">
+                                    {{ $jadwal->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Diketahui' }}
+                                </td>
+                                <td class="text-center text-xs text-secondary mb-0">
+                                    {{ $supervisor }}
+                                </td>
+                                <td class="text-center text-x text-secondary mb-0">
+                                    {{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">
+                                    {{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->pekerjaan }}</td>
+                                <td class="text-center text-xs text-secondary mb-0" style="text-transform: capitalize;">{{ $jadwal->status }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">
+                                    <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}?id_proyek_disetujui={{$id_proyek_disetujui}}"
+                                       class="btn btn-warning">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form id="delete-form-{{ $jadwal->id }}"
+                                          action="/penjadwalan_proyek/delete/{{ $jadwal->id }}" method="POST"
+                                          class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger"
                                                 onclick="hapusJadwal('{{ $jadwal->id }}')">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            <!-- Baris untuk "Data tidak ditemukan" -->
-                            <tr id="noDataRow" style="display: none;">
-                                <td colspan="8" class="text-center text-secondary">Data tidak ditemukan</td>
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
+                        @endforeach
+                        <!-- Baris untuk "Data tidak ditemukan" -->
+                        <tr id="noDataRow" style="display: none;">
+                            <td colspan="8" class="text-center text-secondary">Data tidak ditemukan</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -104,6 +113,19 @@
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Notifikasi Sukses -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session("success") }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
+    @endif
     <script>
         function hapusJadwal(id) {
             Swal.fire({
@@ -124,7 +146,7 @@
         }
 
         // Fitur Pencarian (Live Search)
-        document.getElementById("searchInput").addEventListener("keyup", function() {
+        document.getElementById("searchInput").addEventListener("keyup", function () {
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll("#jadwalTableBody tr:not(#noDataRow)");
             let noDataRow = document.getElementById("noDataRow");
