@@ -2,24 +2,27 @@
     <div class="container d-flex justify-content-center">
         <div class="card shadow w-100">
             <div class="card-body">
-                <br>
-
-                <div class="d-flex flex-row w-25 mb-1 items-center justify-content-between">
-                    <div class="me-2">
-                        <input type="text" name="search" id="search" class="form-control" placeholder="Cari Tempat Proyek">
+                <h4 class="card-title text-left mb-4">Pengawas Proyek</h4>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <a href="{{ route('pengawas-proyek.create') }}" class="btn btn-primary">
+                            + Tambah Pengawas Proyek
+                        </a>
                     </div>
-                    <div >
-                        <button type="button" class="btn btn-primary" onclick="onSearch()">Cari</button>
+
+                    <div class="input-group w-30">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari...">
                     </div>
                 </div>
 
                 <table class="table">
-                    <thead>
+                    <thead class="table-light">
                         <tr>
                             <th class="text-center">NO</th>
                             <th class="text-center">NAMA PROYEK</th>
                             <th class="text-center">PERAN</th>
                             <th class="text-center">NAMA PEKERJA</th>
+                            <th class="text-center">KEAHLIAN</th>
                             <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
@@ -30,22 +33,26 @@
                             <td class="text-center">{{ $item['nama_proyek'] }}</td>
                             <td class="text-center">{{ $item['peran'] }}</td>
                             <td class="text-center">{{ $item['nama_pekerja'] }}</td>
+                            <td class="text-center">{{ $item['keahlian'] }}</td>
                             <td class="text-center">
-                                <a href="{{ route('pengawas-proyek.edit', $item['id']) }}" class="btn" style="background-color: #DEAA00;">
+                                <a href="{{ route('pengawas-proyek.edit', $item['id']) }}" class="btn btn-sm btn-warning me-1">
                                     <i class="bi bi-pencil-fill text-white"></i>
                                 </a>
+                                <button class="btn btn-sm btn-danger" onclick="showDeleteModal(this)" data-url="{{ route('pengawas-proyek.delete', $item['id']) }}">
+                                    <i class="bi bi-trash-fill text-white"></i>
+                                </button>
+                                @include('pengawas_proyek.delete')
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
 
-
     <script>
-        // Fitur Pencarian
         document.getElementById("searchInput").addEventListener("keyup", function () {
             let input = this.value.toLowerCase();
             let rows = document.querySelectorAll("#dataTable tr");
@@ -57,18 +64,5 @@
         });
     </script>
 
-    <script>
-        function selectItem(id) {
-            document.getElementById("id").value = id
-        }
-
-        function onSearch(i) {
-            let query = document.getElementById("search").value
-            if (query.length > 0) {
-                window.location.href = "{{route('pengawas-proyek.index')}}?search=" + query
-            } else {
-            }
-        }
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </x-layout>
