@@ -17,11 +17,8 @@
                             class="w-100 d-flex justify-content-end">
                             <div class="input-group shadow-sm" style="max-width: 350px; height: 40px;">
                                 <input type="text" id="searchInput" name="search" class="form-control"
-                                    style="height: 40px; border-radius: 0.375rem 0 0 0.375rem !important;"
+                                    style="height: 40px; border-radius: 0.375rem 0.375rem 0.375rem 0.375rem !important;"
                                     placeholder="Cari kategori proyek ..." onkeyup="searchTable()">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="bi bi-search"></i>
-                                </button>
                             </div>
                         </form>
 

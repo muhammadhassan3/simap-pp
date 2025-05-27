@@ -63,7 +63,11 @@
 
                     <!-- Tombol Simpan dan Batal -->
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="{{route('tim-proyek.detail', $selected_project_id)}}" class="btn btn-secondary me-2">Batal</a>
+                        @if(isset($selected_project_id))
+                            <a href="{{ route('tim-proyek.detail', $selected_project_id) }}" class="btn btn-secondary me-2">Batal</a>
+                        @else
+                            <a href="{{ route('tim-proyek.index') }}" class="btn btn-secondary me-2">Batal</a>
+                        @endif
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
