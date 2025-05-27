@@ -120,14 +120,14 @@
                         return false;
                     }
 
-                    if (mulai < pMulai || selesai > pSelesai) {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Tanggal harus berada dalam rentang waktu proyek",
-                            icon: "error"
-                        });
-                        return false;
-                    }
+                    // if (mulai < pMulai || selesai > pSelesai) {
+                    //     Swal.fire({
+                    //         title: "Error!",
+                    //         text: "Tanggal harus berada dalam rentang waktu proyek",
+                    //         icon: "error"
+                    //     });
+                    //     return false;
+                    // }
 
                     return true;
                 }
