@@ -9,10 +9,10 @@
 
         <form action="{{ route('kategori_proyek.store') }}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="id" class="form-label">ID Kategori</label>
-                <input type="text" name="id" class="form-control bg-light" required>
-            </div>
+{{--            <div class="mb-3">--}}
+{{--                <label for="id" class="form-label">ID Kategori</label>--}}
+{{--                <input type="text" name="id" class="form-control bg-light" required>--}}
+{{--            </div>--}}
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Kategori</label>
                 <input type="text" name="nama" class="form-control bg-light" required>

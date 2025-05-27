@@ -23,7 +23,7 @@ class KategoriProyekController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|string|unique:kategori_proyek,id',
+            //'id' => 'required|string|unique:kategori_proyek,id',
             'nama' => 'required|string|max:255',
             'keterangan' => 'required|string|max:255',
         ]);
