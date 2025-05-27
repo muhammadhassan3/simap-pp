@@ -12,7 +12,8 @@ class PenjadwalanProyekController extends Controller
     public function index(Request $request)
     {
         $penjadwalanProyek = Penjadwalan::with(['proyekDisetujui.pengajuanProposal', 'supervisor.pekerja'])->where('id_proyek_disetujui', $request['id_proyek_disetujui'])->get();
-        return view('penjadwalan_proyek.penjadwalan_proyek', ['penjadwalanProyek' => $penjadwalanProyek, 'id_proyek_disetujui' => $request['id_proyek_disetujui']]);
+        $timProyek = TimProyek::with('pekerja')->where('id_project_disetujui', $request['id_proyek_disetujui'])->where('peran', 'supervisor')->first();
+        return view('penjadwalan_proyek.penjadwalan_proyek', ['penjadwalanProyek' => $penjadwalanProyek, 'id_proyek_disetujui' => $request['id_proyek_disetujui'], 'supervisor' => $timProyek ? $timProyek->pekerja->nama : 'Tidak Diketahui']);
     }
 
 //    public function create(Request $request)
@@ -57,10 +58,11 @@ class PenjadwalanProyekController extends Controller
         return view('penjadwalan_proyek.tambahjadwal_proyek', ['proyekDisetujui' => $proyekDisetujui, 'idProyekDisetujui' => $idProyekDisetujui, 'supervisor' => $supervisor]);
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $jadwal = Penjadwalan::with(['proyekDisetujui.pengajuanProposal', 'supervisor.pekerja'])->findOrFail($id);
-        return view('penjadwalan_proyek.editjadwal_proyek', compact('jadwal'));
+        $timProyek = TimProyek::with('pekerja')->where('id_project_disetujui', $request['id_proyek_disetujui'])->where('peran', 'supervisor')->first();
+        return view('penjadwalan_proyek.editjadwal_proyek', ['jadwal'=>$jadwal, 'timProyek' => $timProyek]);
     }
 
     public function update(Request $request, $id)
