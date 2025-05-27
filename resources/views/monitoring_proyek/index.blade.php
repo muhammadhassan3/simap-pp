@@ -45,12 +45,6 @@
                             style="font-weight: 600;">Customer</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->customer->nama_customer ?? '-' }}</span>
                         <span
                             style="font-weight: 600;">Alamat</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? '-' }}</span>
-                        <span
-                            style="font-weight: 600;">Kategori</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->kategoriProyek->nama ?? '-' }}</span>
-                        <span
-                            style="font-weight: 600;">Customer</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->customer->nama_customer ?? '-' }}</span>
-                        <span
-                            style="font-weight: 600;">Alamat</span><span>:</span><span>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? '-' }}</span>
                         <span style="font-weight: 600;">Jangka Waktu</span><span>:</span>
                         @if ($monitoringProyek->Proyek_disetujui->tanggal_mulai && $monitoringProyek->Proyek_disetujui->tanggal_selesai)
                             <span>{{ date('d-m-Y', strtotime($monitoringProyek->Proyek_disetujui->tanggal_mulai ?? '-')) }}
@@ -112,8 +106,7 @@
 
                             <td>{{ date('d-m-Y', strtotime($item->tanggal_selesai ?? '-')) }}</td>
 
-                            <td>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->tempatProyek->nama_tempat ?? 'Tidak Ada Nama Proyek' }}
-                            </td>
+                            <td>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}</td>
 
                             <td>{{ $item->pekerjaan ?? '-' }}</td>
 
@@ -149,10 +142,6 @@
                             </td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td colspan="9" class="text-center">Tidak ada data penjadwalan</td>
-                    </tr>
                 @endif
             </tbody>
         </table>
@@ -164,7 +153,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <h5 class="fw-normal">Tim Proyek</h5>
         @if ($monitoringProyek && $monitoringProyek->Proyek_disetujui)
-            <a href="{{ route('tim-proyek.detail', $monitoringProyek->id_proyek_disetujui) }}"
+            <a href="{{ route('tim-proyek.detail', ['id' => $monitoringProyek->id_proyek_disetujui]) }}"
                 class="btn btn-primary btn-sm mb-2">
                 <i class="bi bi-plus-circle"></i> Tambah Tim
             </a>
@@ -190,11 +179,7 @@
                             <td>{{ $item->peran ?? '-' }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td colspan="3" class="text-center">Tidak ada data tim proyek.</td>
-                    </tr>
-                @endif
+                 @endif
             </tbody>
         </table>
     </div>
@@ -203,7 +188,7 @@
     <div class="d-flex justify-content-between align-items-center mt-4">
         <h5 class="fw-normal">Sewa Alat</h5>
         @if ($monitoringProyek && $monitoringProyek->Proyek_disetujui)
-            <a href="{{ route('sewa_alat.index') }}"
+            <a href="{{ route('sewa_alat.index', ['id_proyek_disetujui' => $monitoringProyek->id_proyek_disetujui]) }}"
                 class="btn btn-primary btn-sm mb-2">
                 <i class="bi bi-plus-circle"></i> Tambah Alat
             </a>
@@ -212,7 +197,7 @@
     <!-- Garis Pembatas -->
     <hr class="mt-0 mb-0">
     <div class="table-responsive">
-        <table class="table table-bordered" id="timProyekTable" style="width:100%">
+        <table class="table table-bordered" id="sewaAlatTable" style="width:100%">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -226,23 +211,19 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($sewaAlat)
+                @if ($sewaAlat && $sewaAlat->isNotEmpty())
                     @foreach ($sewaAlat as $index => $item)
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->nama_alat }}</td>
                         <td>Rp. {{ number_format($item->harga_sewa, 0, ',', '.') }}/jam</td>
-                        <td>{{ $item->customer->nama_customer }}</td>
+                        <td>{{ $item->customer->nama_customer ?? '-' }}</td>
                         <td>{{ $item->durasi }} menit</td>
                         <td>{{ $item->qty }}</td>
                         <td>{{ $item->tempatProyek ? $item->tempatProyek->nama_tempat : 'Tidak Diketahui' }}</td>
                         <td>{{ $item->detail }}</td>
                     </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td colspan="3" class="text-center">Tidak ada data tim proyek.</td>
-                    </tr>
                 @endif
             </tbody>
         </table>
@@ -263,13 +244,37 @@
             $('#timelineTable').DataTable({
                 "searching": true,
                 "paging": true,
-                "info": true
+                "info": true,
+                "columnDefs": [
+                    { "defaultContent": "-", "targets": "_all" }
+                ],
+                "language": {
+                    "emptyTable": "Tidak ada data yang tersedia"
+                }
             });
 
             $('#timProyekTable').DataTable({
                 "searching": true,
                 "paging": true,
-                "info": true
+                "info": true,
+                "columnDefs": [
+                    { "defaultContent": "-", "targets": "_all" }
+                ],
+                "language": {
+                    "emptyTable": "Tidak ada data yang tersedia"
+                }
+            });
+
+            $('#sewaAlatTable').DataTable({
+                "searching": true,
+                "paging": true,
+                "info": true,
+                "columnDefs": [
+                    { "defaultContent": "-", "targets": "_all" }
+                ],
+                "language": {
+                    "emptyTable": "Tidak ada data yang tersedia"
+                }
             });
         });
     </script>
