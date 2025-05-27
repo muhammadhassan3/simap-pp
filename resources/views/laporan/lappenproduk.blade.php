@@ -183,7 +183,22 @@
                 var url = "/cetak?tgl_mulai=" + startDate + "&tgl_selesai=" + endDate;
                 window.location.href = url; // Redirect untuk mengunduh file
             } else {
-                alert("Pilih rentang tanggal terlebih dahulu!");
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                Toast.fire({
+                    icon: "error",
+                    title: "Pilih rentang tanggal terlebih dahulu!"
+                });
             }
         });
     </script>
