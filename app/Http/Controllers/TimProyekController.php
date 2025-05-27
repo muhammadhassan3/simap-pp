@@ -41,14 +41,41 @@ class TimProyekController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate(['id_project_disetujui' => 'required', 'id_pekerja' => 'required', 'peran' => 'required', 'keahlian' => 'string',]);
+        // Validasi input dengan pesan kustom
+        $request->validate([
+            'id_project_disetujui' => 'required', 
+            'id_pekerja' => 'required', 
+            'peran' => 'required', 
+            'keahlian' => 'string'
+        ], [
+            'id_project_disetujui.required' => 'Nama Proyek harus dipilih',
+            'id_pekerja.required' => 'Nama Pekerja harus dipilih',
+            'peran.required' => 'Peran harus dipilih'
+        ]);
 
-        //TimProject::create($request->all());
-
+        // Ambil data tim yang akan diupdate
         $tim = TimProyek::findOrFail($id);
+        
+        // Cek jika pekerja diubah
+        if ($tim->id_pekerja != $request->id_pekerja) {
+            // Cari apakah sudah ada pekerja yang sama di proyek yang sama
+            $existingTim = TimProyek::where('id_pekerja', $request->id_pekerja)
+                ->where('id_project_disetujui', $request->id_project_disetujui)
+                ->where('id', '!=', $id) // Kecuali dirinya sendiri
+                ->first();
+                
+            if ($existingTim) {
+                return redirect()->route('tim-proyek.edit', $id)
+                    ->with('error', 'Pekerja sudah terdaftar dalam tim proyek ini.')
+                    ->withInput();
+            }
+        }
+        
+        // Jika tidak ada duplikasi, update data
         $tim->update($request->all());
-
-        return redirect()->route('tim-proyek.detail', $tim->id_project_disetujui)->with('success', 'Data tim berhasil diperbarui');
+        
+        return redirect()->route('tim-proyek.detail', $tim->id_project_disetujui)
+            ->with('success', 'Data tim proyek berhasil diperbarui');
     }
 
     public function detail(Request $request, $id)  // Pastikan $id ada di sini
@@ -97,7 +124,18 @@ class TimProyekController extends Controller
             'id_pekerja' => 'required',
             'peran' => 'required',
             'keahlian' => 'required',
+        ], [
+            'id_project_disetujui.required' => 'Nama Proyek harus dipilih',
+            'id_pekerja.required' => 'Nama Pekerja harus dipilih',
+            'peran.required' => 'Peran harus dipilih',
+            'keahlian.required' => 'Keahlian harus diisi',
         ]);
+
+        // Periksa apakah proyek ada
+        $proyekExists = ProyekDisetujui::find($request->id_project_disetujui);
+        if (!$proyekExists) {
+            return redirect()->route('tim-proyek.create')->with('error', 'Proyek tidak ditemukan');
+        }
 
         // Cari apakah sudah ada data dengan pekerja dan proyek yang sama
         $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)
@@ -111,10 +149,14 @@ class TimProyekController extends Controller
                 'peran' => $request->peran,
                 'keahlian' => $request->keahlian,
             ]);
-            // Redirect dengan pesan sukses menggunakan ID dari objek yang baru dibuat
+
+            // Redirect dengan pesan sukses
             return redirect()->route('tim-proyek.detail', $request->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
         } else {
-            return redirect()->route('tim-proyek.create')->with('error', 'Pekerja telah dipilih sebelumnya.');
+            // Jika gagal membuat tim, kembalikan ke halaman create dengan menyimpan data yang sudah diisi
+            return redirect()->route('tim-proyek.create', ['id_project_disetujui' => $request->id_project_disetujui])
+                ->with('error', 'Pekerja telah dipilih sebelumnya.')
+                ->withInput();
         }
     }
 
@@ -123,6 +165,14 @@ class TimProyekController extends Controller
     $proyek_disetujui = ProyekDisetujui::with('pengajuan_proposal')->get();
     $pekerja = Pekerja::all();
     $selected_project_id = $request->query('id_project_disetujui');
+
+    // Validasi ID proyek jika ada
+    if ($selected_project_id) {
+        $proyekExists = ProyekDisetujui::find($selected_project_id);
+        if (!$proyekExists) {
+            return redirect()->route('tim-proyek.index')->with('error', 'ID Proyek tidak ditemukan');
+        }
+    }
 
     return view('timproject.create', [
         'proyek_disetujui' => $proyek_disetujui,

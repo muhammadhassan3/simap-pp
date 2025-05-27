@@ -33,20 +33,16 @@
                         <input type="number" class="form-control" name="qty" required>
                     </div>
                     <div class="mb-3">
-                        <label for="tempat_proyek_id" class="form-label">Nama Proyek</label>
-                        <select class="form-select" name="id_proyek" required>
-                            <option value="" disabled selected>Pilih Proyek</option>
-                            @foreach ($tempatProyek as $proyek)
-                                <option value="{{ $proyek->id }}">{{ $proyek->pengajuanProposal->nama_proyek }} ({{ $proyek->pengajuanProposal->tempatProyek->nama_tempat }})</option>
-                            @endforeach
-                        </select>
+                        <label for="tempat_proyek_id" class="form-label">Nama Tempat Proyek</label>
+                        <input type="text" class="form-control" value="{{ $proyekDisetujui->pengajuanProposal->tempatProyek->nama_tempat }}" readonly>
+                        <input type="hidden" name="id_proyek" value="{{ $proyekDisetujui->id }}">
                     </div>
                     <div class="mb-3">
                         <label for="detail" class="form-label">Detail</label>
                         <textarea class="form-control" name="detail" rows="3"></textarea>
                     </div>
                     <div class="d-flex justify-content-end gap-2">
-                        <a href="{{ route('sewa_alat.index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('sewa_alat.index', ['id_proyek_disetujui' => $id_proyek_disetujui]) }}" class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>

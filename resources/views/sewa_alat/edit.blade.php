@@ -6,7 +6,7 @@
                 <form action="{{ route('sewa_alat.update', $sewa_alat->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-        
+
                     <div class="mb-3">
                         <label for="nama_alat" class="form-label">Nama Alat</label>
                         <input type="text" class="form-control" name="nama_alat" value="{{ $sewa_alat->nama_alat }}" required>
@@ -35,7 +35,7 @@
                         <input type="number" class="form-control" name="qty" value="{{ $sewa_alat->qty }}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="id_proyek" class="form-label">Nama Proyek</label>
+                        <label for="id_proyek" class="form-label">Nama Tempat Proyek</label>
                         <select class="form-select" name="id_proyek" required>
                             <option value="" disabled>Pilih Proyek</option>
                             @foreach($tempatProyek as $proyek)
@@ -57,6 +57,6 @@
             </div>
         </div>
     </div>
-    
+
 
 </x-layout>
