@@ -89,11 +89,11 @@
                                 <tr>
                                     <td class="text-center">{{ $no++ }}</td>
                                     <td class="text-center">{{ $d['tanggal'] }}</td>
-                                    <td class="text-start">{{ $d['customer'] }}</td>
+                                    <td class="text-center">{{ $d['customer'] }}</td>
                                     <td class="text-center">{{ $d['produk'] }}</td>
                                     <td class="text-center">{{ $d['qty'] }}</td>
                                     <td class="text-end">Rp {{ number_format($d['harga'], 0, ',', '.') }}</td>
-                                    <td class="text-end">{{ number_format($d['total'], 0, ',', '.') }}</td>
+                                    <td class="text-end">Rp {{ number_format($d['total'], 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $d['jenis_pembayaran'] }}</td>
                                 </tr>
                             @endforeach

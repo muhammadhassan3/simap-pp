@@ -10,11 +10,11 @@
         <form action="{{ route('kategori_proyek.update', $kategoriProyek->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="mb-3">
-                <label for="id" class="form-label">ID Kategori</label>
-                <input type="text" name="id" class="form-control bg-light" value="{{ $kategoriProyek->id }}"
-                    required>
-            </div>
+{{--            <div class="mb-3">--}}
+{{--                <label for="id" class="form-label">ID Kategori</label>--}}
+{{--                <input type="text" name="id" class="form-control bg-light" value="{{ $kategoriProyek->id }}"--}}
+{{--                    required>--}}
+{{--            </div>--}}
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Kategori</label>
                 <input type="text" name="nama" class="form-control bg-light" value="{{ $kategoriProyek->nama }}"

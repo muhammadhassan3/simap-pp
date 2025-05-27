@@ -76,12 +76,12 @@
                                 <td class="text-center text-xs text-secondary mb-0">
                                     {{ $supervisor }}
                                 </td>
-                                <td class="text-center text-xs text-secondary mb-0">
+                                <td class="text-center text-x text-secondary mb-0">
                                     {{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
                                 <td class="text-center text-xs text-secondary mb-0">
                                     {{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
-                                <td class="text-start text-xs text-secondary mb-0">{{ $jadwal->pekerjaan }}</td>
-                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->status }}</td>
+                                <td class="text-center text-xs text-secondary mb-0">{{ $jadwal->pekerjaan }}</td>
+                                <td class="text-center text-xs text-secondary mb-0" style="text-transform: capitalize;">{{ $jadwal->status }}</td>
                                 <td class="text-center text-xs text-secondary mb-0">
                                     <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}?id_proyek_disetujui={{$id_proyek_disetujui}}"
                                        class="btn btn-warning">
@@ -113,6 +113,19 @@
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Notifikasi Sukses -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session("success") }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
+    @endif
     <script>
         function hapusJadwal(id) {
             Swal.fire({

@@ -30,9 +30,9 @@
                             @foreach ($proyek as $key => $item)
                                 <tr>
                                     <td class="text-center">{{ $key + 1 }}</td>
-                                    <td>{{ $item->pengajuanProposal->nama_proyek }}</td>
-                                    <td>{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}</td>
-                                    <td class="text-end">Rp {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->pengajuanProposal->nama_proyek }}</td>
+                                    <td class="text-center">{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}</td>
+                                    <td class="text-center">Rp {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->status }}</td>
                                     <td class="text-center">{{ $item->tanggal_mulai }}</td>
                                     <td class="text-center">{{ $item->tanggal_selesai }}</td>
@@ -66,6 +66,22 @@
     </div>
 
 </x-layout>
+
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Notifikasi Sukses -->
+@if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    </script>
+@endif
 
 <script>
     function searchTable() {
