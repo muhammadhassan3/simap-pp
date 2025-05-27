@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                         <label for="id_proyek_disetujui" class="form-label">Nama Proyek</label>
-                        <select class="form-select" name="id_proyek_disetujui" id="id_proyek_disetujui" required disabled>
+                        <select class="form-select" name="id_proyek_disetujui" id="id_proyek_disetujui" required readonly>
                                 <option value="{{ $proyekDisetujui->id }}"
                                         data-tanggal-mulai="{{ $proyekDisetujui->tanggal_mulai }}"
                                         data-tanggal-selesai="{{ $proyekDisetujui->tanggal_selesai }}" selected>
@@ -54,7 +54,6 @@
                     <div class="mb-3">
                         <label for="supervisor" class="form-label">Supervisor</label>
                         <input type="text" class="form-control" id="supervisor" disabled readonly value="{{$supervisor}}">
-                        <input type="hidden" name="id_tim_project" id="id_tim_project" >
                     </div>
 
                     <div class="row">
