@@ -264,13 +264,13 @@
                 "searching": true,
                 "paging": true,
                 "info": true
-            });
+            }).ext.setErrMode = 'none';
 
             $('#timProyekTable').DataTable({
                 "searching": true,
                 "paging": true,
                 "info": true
-            });
+            }).ext.setErrMode = 'none';
         });
     </script>
 </x-layout>

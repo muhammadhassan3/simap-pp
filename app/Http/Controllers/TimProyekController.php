@@ -61,9 +61,8 @@ class TimProyekController extends Controller
             });
         })->get();
 
-        $id = $tim->first()->id_project_disetujui;
 
-        return view('timproject.detail', compact('tim', 'id')); // Pastikan $id dikirim ke view
+        return view('timproject.detail', ['tim' => $tim, 'id' => $id]); // Pastikan $id dikirim ke view
     }
 
 
@@ -78,33 +77,20 @@ class TimProyekController extends Controller
     public function store(Request $request)
     {
         // Validasi input
-        $request->validate([
-            'id_project_disetujui' => 'required',
-            'id_pekerja' => 'required',
-            'peran' => 'required',
-            'keahlian' => 'required',
-        ]);
+        $request->validate(['id_project_disetujui' => 'required', 'id_pekerja' => 'required', 'peran' => 'required', 'keahlian' => 'required',]);
 
         // Cari apakah sudah ada data dengan pekerja dan proyek yang sama
-        $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)
-            ->where('id_project_disetujui', $request->id_project_disetujui)
-            ->first();
+        $TimProject = TimProyek::where('id_pekerja', $request->id_pekerja)->where('id_project_disetujui', $request->id_project_disetujui)->first();
 
         if (!$TimProject) {
             // Simpan data baru dan assign hasilnya ke $TimProject
-            $TimProject = TimProyek::create([
-                'id_project_disetujui' => $request->id_project_disetujui,
-                'id_pekerja' => $request->id_pekerja,
-                'peran' => $request->peran,
-                'keahlian' => $request->keahlian,
-            ]);
+            $TimProject = TimProyek::create(['id_project_disetujui' => $request->id_project_disetujui, 'id_pekerja' => $request->id_pekerja, 'peran' => $request->peran, 'keahlian' => $request->keahlian,]);
         } else {
             return redirect()->route('tim-proyek.create')->with('error', 'Pekerja telah dipilih sebelumnya.');
         }
 
         // Sekarang $TimProject pasti ada, bisa akses properti dengan aman
-        return redirect()->route('tim-proyek.detail', $TimProject->id_project_disetujui)
-            ->with('success', 'Tim proyek berhasil ditambahkan.');
+        return redirect()->route('tim-proyek.detail', $TimProject->id_project_disetujui)->with('success', 'Tim proyek berhasil ditambahkan.');
     }
 
 
