@@ -43,9 +43,6 @@
                                 placeholder="Cari Produk..." value="{{ request('search') }}">
                         </form>
                         <div class="d-flex gap-2">
-                            <a href="{{ route('laporan-produk') }}" class="btn btn-primary px-3">
-                                Laporan Produk
-                            </a>
                             <a href="{{ route('produk.create') }}" class="btn btn-primary px-3">
                                 <i class="bi bi-plus-lg"></i> Tambah Produk
                             </a>

@@ -120,7 +120,7 @@ Route::get('/evaluasi/tambah-dari-proyek', [EvaluasiProyekController::class, 'ta
 //Rizal
 Route::get('/evaluasi/laporan',[LaporanProyekController::class, "show"])->name('laporan-proyek');
 Route::get('/evaluasi/laporan/{id}', [LaporanDetail::class, 'detail'])->name('detail');
-Route::get('/evaluasi/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
+Route::get('/evaluasi/convert/{id}', [LaporanProyekController::class, 'convert'])->name('convert');
 
 //Safinka
 Route::resource('pengajuan_proposal', PengajuanProposalController::class);
