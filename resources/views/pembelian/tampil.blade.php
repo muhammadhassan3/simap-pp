@@ -72,13 +72,36 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $('#searchProject').on('keyup', function() {
-                let value = $(this).val().toLowerCase();
-                $('tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
-            });
-        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let searchInput = document.getElementById('searchProject');
+            let rows = document.querySelectorAll('tbody tr');
+            console.log('test');
+
+            if(searchInput){
+                searchInput.addEventListener('keyup', function (){
+                    console.log('test');
+                    let value = searchInput.value.toLowerCase();
+                    rows.forEach(row => {
+                        let rowText = row.textContent.toLowerCase();
+                        if(rowText.includes(value)){
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                })
+            }else{
+                console.log('searchProject tidak ada');
+            }
+        })
+        // $(document).ready(function() {
+        //     $('#searchProject').on('keyup', function() {
+        //         let value = $(this).val().toLowerCase();
+        //         $('tbody tr').filter(function() {
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        //         });
+        //     });
+        // });
     </script>
 </x-layout>
