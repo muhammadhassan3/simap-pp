@@ -48,7 +48,12 @@ class PenjadwalanProyekController extends Controller
         $idProyekDisetujui = $request['id_proyek_disetujui'];
         $proyekDisetujui = ProyekDisetujui::with(['pengajuanProposal', 'timProyek.pekerja'])->where('id', $idProyekDisetujui)->first();
         $timProyek = TimProyek::with('pekerja')->where('id_project_disetujui', $idProyekDisetujui)->where('peran', 'supervisor')->first();
-        $supervisor = $timProyek->pekerja->nama;
+        if($timProyek){
+            $supervisor = $timProyek->pekerja->nama;
+        }else{
+            $supervisor = '';
+        }
+
         return view('penjadwalan_proyek.tambahjadwal_proyek', ['proyekDisetujui' => $proyekDisetujui, 'idProyekDisetujui' => $idProyekDisetujui, 'supervisor' => $supervisor]);
     }
 
