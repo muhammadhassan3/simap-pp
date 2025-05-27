@@ -64,7 +64,7 @@ class SewaAlatController extends Controller
         $sewa_alat = SewaAlat::findOrFail($id);
         $sewa_alat->update($request->all());
 
-        return redirect()->route('sewa_alat.index')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route('sewa_alat.index',['id_proyek_disetujui'=>$request->id_proyek])->with('success', 'Data berhasil diperbarui!');
     }
 
 }
