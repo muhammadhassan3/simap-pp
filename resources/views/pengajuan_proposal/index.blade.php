@@ -121,5 +121,3 @@
         });
     </script>
 </x-layout>
-
-</html>
