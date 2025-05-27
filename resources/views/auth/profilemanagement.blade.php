@@ -97,7 +97,7 @@
         alerts.forEach(alert => {
             alert.classList.remove('show');
             alert.classList.add('fade');
-            setTimeout(() => alert.remove(), 500); // hapus dari DOM
+            setTimeout(() => alert.remove(), 3000); // hapus dari DOM
         });
     }, 1000);
 </script>

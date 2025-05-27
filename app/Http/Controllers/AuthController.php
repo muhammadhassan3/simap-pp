@@ -19,10 +19,7 @@ class AuthController extends Controller
     // Proses login
     public function login(Request $request)
     {
-         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validate(['email' => ['required', 'email'], 'password' => ['required'],]);
 
         if ($credentials) {
             $request->session()->regenerate();
@@ -34,12 +31,10 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 return redirect('dashboard');
             }
-            
+
             // Jika tidak ada yang cocok
             session()->flash('error', 'Email atau password salah.');
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ])->onlyInput('email');
+            return back()->withErrors(['email' => 'The provided credentials do not match our records.',])->onlyInput('email');
 
 
             $aktor = Aktor::where('email', $request->email)->first();
@@ -51,43 +46,27 @@ class AuthController extends Controller
             }
 
             // Jika tidak ada yang cocok
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ])->onlyInput('email');
+            return back()->withErrors(['email' => 'The provided credentials do not match our records.',])->onlyInput('email');
         }
     }
 
     // Logout user
-        public function logout(Request $request)
-    {
-        Auth::logout();
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-
-        return redirect()->route('login');
-    }
-
-
-    // Menampilkan data user yang sedang login
     public function profile()
     {
         $user = Auth::user();
         return view('auth.profilemanagement', compact('user'));
     }
 
-    // Update data user yang sedang login
+
+    // Menampilkan data user yang sedang login
+
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
         $pengguna = User::find($user->id);
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email'],
-        ]);
+        $request->validate(['name' => ['required', 'string', 'max:255'], 'email' => ['required', 'email'],]);
         $pengguna->username = $request->name;
         $pengguna->email = $request->email;
 
@@ -96,18 +75,19 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Sukses mengupdate profil!');
     }
 
-     // Update password hanya jika password lama benar
+    // Update data user yang sedang login
+
     public function updatePassword(Request $request)
     {
         $user = Auth::user();
         $pengguna = User::find($user->id);
 
         // Validasi input
-        $request->validate([
-            'currentpassword' => ['required'],
-            'newpassword' => ['required', 'confirmed'],
-        ]);
-        
+        $request->validate(['currentpassword' => ['required'], 'newpassword' => ['required'],]);
+        if ($request->newpassword != $request->newpassword_confirmation) {
+            return back()->withErrors(['newpassword' => 'Password baru tidak sama dengan konfirmasi password baru.']);
+        }
+
         // Cek apakah password lama cocok dengan yang ada di database
         if (!Hash::check($request->currentpassword, $pengguna->password)) {
             return back()->withErrors(['currentpassword' => 'Password lama tidak sesuai.']);
@@ -115,12 +95,14 @@ class AuthController extends Controller
 
         // Update password baru jika valid
         $pengguna->password = Hash::make($request->newpassword);
+
         $pengguna->save();
 
         return redirect()->back()->with('success', 'Password berhasil diperbarui!');
     }
 
-    // Hapus akun user yang sedang login dan logout otomatis
+    // Update password hanya jika password lama benar
+
     public function deleteAccount(Request $request)
     {
         $user = Auth::user();
@@ -138,8 +120,19 @@ class AuthController extends Controller
         return redirect()->back()->with('error', 'Gagal menghapus akun.');
     }
 
+    // Hapus akun user yang sedang login dan logout otomatis
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
 
 
+        return redirect()->route('login');
+    }
 
 
 }
