@@ -126,6 +126,7 @@ Route::get('/evaluasi/laporan/{id}', [LaporanDetail::class, 'detail'])->name('de
 Route::get('/evaluasi/convert/{id}', [LaporanDetail::class, 'convert'])->name('convert');
 
 //Safinka
+Route::put('/pengajuan_proposal/update-status/{id}', [PengajuanProposalController::class, 'updateStatus'])->name('proposal.updateStatus');
 Route::resource('pengajuan_proposal', PengajuanProposalController::class);
 
 //Alfiah
