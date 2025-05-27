@@ -14,7 +14,7 @@ class ProdukController extends Controller
 
         $produks = Produk::when($search, function ($query, $search) {
             return $query->where('nama', 'LIKE', "%{$search}%");
-        })->paginate(perPage: 5);
+        })->paginate(5);
 
         return view('produk.index', compact('produks'));
     }

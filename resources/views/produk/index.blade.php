@@ -13,6 +13,10 @@
             background-color: #b00020 !important;
             border-color: #98001b !important;
         }
+
+        .small.text-muted {
+            display: none;
+        }
     </style>
     <div class="col-12">
         <div class="card mb-4">
@@ -80,8 +84,7 @@
                                         <td>{{ $produk->deskripsi ?? '-' }}</td>
                                         <td>{{ number_format($produk->satuan, 0, ',', '.') }}</td>
                                         <td>
-                                            <a href="{{ route('produk.edit', $produk->id) }}"
-                                                class="btn btn-warning">
+                                            <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-warning">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -138,8 +141,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="d-flex justify-content-end mt-3">
-                        {{ $produks->appends(['search' => request('search')])->links() }}
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end align-items-center mt-4 px-2">
+                        <div>
+                            {{ $produks->links('pagination::bootstrap-5') }}
+                        </div>
                     </div>
                 </div>
             </div>
