@@ -49,8 +49,11 @@ Route::delete('/customer/{id}/delete', [CustomerController::class, 'destroy'])->
 
 //Alin
 Route::get('/pengawas-proyek', [PengawasProyekController::class, 'index'])->name('pengawas-proyek.index');
+Route::get('/pengawas-proyek/create', [PengawasProyekController::class, 'create'])->name('pengawas-proyek.create');
+Route::post('/pengawas-proyek/store', [PengawasProyekController::class, 'store'])->name('pengawas-proyek.store');
 Route::get('/pengawas-proyek/{id}/edit', [PengawasProyekController::class, 'edit'])->name('pengawas-proyek.edit');
 Route::put('/pengawas-proyek/{id}', [PengawasProyekController::class, 'update'])->name('pengawas-proyek.update');
+Route::delete('/pengawas-proyek/{id}/delete', [PengawasProyekController::class, 'destroy'])->name('pengawas-proyek.delete');
 
 //Arisa
 Route::resource('aktor', AktorController::class);
