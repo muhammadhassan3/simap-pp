@@ -34,14 +34,14 @@ class PelaksanaanProyekController extends Controller
 
         $penjadwalan = Penjadwalan::with('ProyekDisetujui')->where('id', $id)->first();
 
-        return view('Pelaksanaan.index', compact('pelaksanaan', 'penjadwalan'));
+        return view('pelaksanaan.index', compact('pelaksanaan', 'penjadwalan'));
     }
 
 
     public function create($id)
     {
         $penjadwalan = Penjadwalan::where('id', $id)->first();
-        return view('Pelaksanaan.create', compact('penjadwalan'));
+        return view('pelaksanaan.create', compact('penjadwalan'));
     }
 
     public function store(Request $request)
