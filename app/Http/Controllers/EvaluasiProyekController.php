@@ -48,7 +48,17 @@ class EvaluasiProyekController extends Controller
     public function edit($id)
     {
         $proyek = EvaluasiProyek::with('proyekDisetujui.pengajuanProposal')->findOrFail($id);
-        return view('evaluasi_proyek.tulis_evaluasi', compact('proyek'));
+        // Hitung durasi proyek
+        $tanggalMulai = $proyek->proyekDisetujui->tanggal_mulai;
+        $tanggalSelesai = $proyek->proyekDisetujui->tanggal_selesai;
+
+        if ($tanggalMulai && $tanggalSelesai) {
+            $durasi = \Carbon\Carbon::parse($tanggalMulai)->diffInDays(\Carbon\Carbon::parse($tanggalSelesai));
+        } else {
+            $durasi = 'Tidak tersedia';
+        }
+
+        return view('evaluasi_proyek.tulis_evaluasi', compact('proyek', 'durasi'));
     }
 
     public function update(Request $request, $id)
@@ -67,7 +77,6 @@ class EvaluasiProyekController extends Controller
     public function tambahEvaluasiDariProyek()
     {
         $proyekSelesai = ProyekDisetujui::where('status', 'Selesai')->get();
-
         foreach ($proyekSelesai as $proyek) {
             $cekEvaluasi = EvaluasiProyek::where('id_proyek_disetujui', $proyek->id)->first();
             if (!$cekEvaluasi) {
