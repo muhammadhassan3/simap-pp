@@ -1,5 +1,9 @@
 <x-layout>
-
+    @if (session('alert'))
+        <script>
+            alert("{{ session('alert') }}");
+        </script>
+    @endif
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
@@ -47,7 +51,7 @@
                         </a>
                     </div>
                 </div>
-                
+
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-hover align-middle border rounded shadow-sm">
                         <thead class="table-secondary">
