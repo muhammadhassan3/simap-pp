@@ -49,6 +49,23 @@
                                         {{ $p->status_proposal ? ucfirst($p->status_proposal) : '-' }}
                                     </td>
                                     <td class="px-4 py-2 text-start">
+                                        @if ($p->status_proposal == 'Pending')
+                                            <form action="{{ route('proposal.updateStatus',$p->id) }}?status=Disetujui" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-success" title="Proposal Disetujui">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('proposal.updateStatus', $p->id) }}?status=Ditolak" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-danger" title="Proposal Ditolak">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                         <a href="{{ route('pengajuan_proposal.edit', $p->id) }}"
                                             class="btn btn-warning text-black" title="Edit Proposal">
                                             <i class="fas fa-pen"></i>

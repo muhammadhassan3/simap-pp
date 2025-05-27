@@ -121,15 +121,16 @@ class PengajuanProposalController extends Controller
     //     return redirect()->back()->with('message', 'Status berhasil diperbarui!');
     // }
 
-    public function updateStatus($id_pengajuan_proposal, $status)
+    public function updateStatus(Request $request, $id_pengajuan_proposal)
     {
-        $proposal = PengajuanProposal::findOrFail($id_pengajuan_proposal);
+        $status = $request['status'];
+        $proposal = PengajuanProposal::where('id','=',$id_pengajuan_proposal)->first();
         $proposal->update(['status_proposal' => $status]);
 
-        if ($status === 'disetujui') {
+        if ($status === 'Disetujui') {
             ProyekDisetujui::create([
-                'id_pengajuan_proposal' => $proposal->id_pengajuan_proposal,
-                'status' => 'tersedia',
+                'id_pengajuan_proposal' => $proposal->id,
+                'status' => 'Tersedia',
                 'tanggal_mulai' => null,
                 'tanggal_selesai' => null,
             ]);
