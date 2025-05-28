@@ -34,7 +34,7 @@
                         Kembali
                     </a>
                 </div>
-                
+
                 <form action="{{ route('save-tempat-proyek') }}" enctype="multipart/form-data" method="post">
                     @csrf
                     <input type="text" name="id" value="{{ $data->id }}" hidden>
@@ -56,7 +56,7 @@
                         <select name="id_customer" class="form-select" aria-label="Default select example">
                             <option value="-1" disabled selected>Pilih</option>
                             @foreach ($customer as $item)
-                                <option value="{{ $item->id }}" @if ($data->id_customer == 1) selected @endif>
+                                <option value="{{ $item->id }}" @if ($data->id_customer == $item->id) selected @endif>
                                     {{ $item->nama_customer }}</option>
                             @endforeach
                         </select>
@@ -71,13 +71,13 @@
                             <select name="id_kategori_proyek" class="form-select" aria-label="Default select example">
                                 <option value="-1" disabled selected>Pilih</option>
                                 @foreach ($kategoriProyek as $item)
-                                    <option value="{{ $item->id }}" @if ($data->id_customer == 1) selected @endif>
+                                    <option value="{{ $item->id }}" @if ($data->id_kategori_proyek == $item->id) selected @endif>
                                         {{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <input type="submit" value="Tambah Tempat Proyek" class="btn btn-primary w-100">
+                    <input type="submit" value="Ubah tempat proyek" class="btn btn-primary w-100">
                 </form>
             </div>
         </div>
