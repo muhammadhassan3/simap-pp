@@ -35,7 +35,7 @@
                     <div class="mb-3">
                         <label for="tempat_proyek_id" class="form-label">Nama Tempat Proyek</label>
                         <input type="text" class="form-control" value="{{ $proyekDisetujui->pengajuanProposal->tempatProyek->nama_tempat }}" readonly>
-                        <input type="hidden" name="id_proyek" value="{{ $proyekDisetujui->id }}">
+                        <input type="hidden" name="id_proyek" value="{{ $id_proyek_disetujui }}">
                     </div>
                     <div class="mb-3">
                         <label for="detail" class="form-label">Detail</label>
