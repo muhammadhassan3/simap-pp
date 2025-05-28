@@ -29,7 +29,7 @@ return new class extends Migration
         });
         Schema::create('pengajuan_proposal', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_tempat_proyek')->constrained('tempat_proyek', 'id');
+            $table->foreignId('id_tempat_proyek')->constrained('tempat_proyek', 'id')->onDelete('cascade');;
             $table->string('file_proposal');
             $table->string('nama_proyek');
             $table->decimal('harga', 10, 2);
