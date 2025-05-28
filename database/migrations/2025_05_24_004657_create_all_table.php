@@ -182,7 +182,7 @@ return new class extends Migration
             $table->double('harga_sewa');
             $table->foreignId('customer_id')->references('id')->on('customer')->onDelete('cascade');
             $table->integer('durasi');
-            $table->foreignId('id_proyek')->references('id')->on('tempat_proyek')->onDelete('cascade');
+            $table->foreignId('id_proyek')->references('id')->on('proyek_disetujui')->onDelete('cascade');
             $table->integer('qty');
             $table->string('detail');
             $table->timestamps();

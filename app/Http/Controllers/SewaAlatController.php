@@ -24,10 +24,8 @@ class SewaAlatController extends Controller
         // Validasi data
         $request->validate(['nama_alat' => 'required|string|max:255', 'harga_sewa' => 'required|numeric', 'customer_id' => 'required|exists:customer,id', 'durasi' => 'required|numeric', 'qty' => 'required|numeric', 'id_proyek' => 'required', 'detail' => 'nullable|string',]);
 
-        $proyekDisetujui = ProyekDisetujui::where('id', $request->id_proyek)->first();
-        $tempatProyek = $proyekDisetujui->pengajuanProposal->tempatProyek->id;
         // Menyimpan data ke tabel sewa_alat
-        SewaAlat::create(['nama_alat' => $request->nama_alat, 'harga_sewa' => $request->harga_sewa, 'customer_id' => $request->customer_id, 'durasi' => $request->durasi, 'qty' => $request->qty, 'id_proyek' => $tempatProyek, 'detail' => $request->detail,]);
+        SewaAlat::create(['nama_alat' => $request->nama_alat, 'harga_sewa' => $request->harga_sewa, 'customer_id' => $request->customer_id, 'durasi' => $request->durasi, 'qty' => $request->qty, 'id_proyek' => $request->id_proyek, 'detail' => $request->detail,]);
 
         return redirect()->route('sewa_alat.index', ['id_proyek_disetujui' => $request->id_proyek])->with('success', 'Data berhasil disimpan!');
     }
