@@ -5,11 +5,11 @@
             <div class="card mb-4">
                 <div class="card-header pb-0" style="background: white">
                     <h1>Daftar Marketing</h1>
-        
+
                     <a href="{{ route('market.create') }}" class="btn btn-primary">
                         + Tambah Marketing
                     </a>
-        
+
                     <!-- Notifikasi -->
                     @if (session('success'))
                         <div class="alert alert-success position-fixed top-0 end-0 m-3" id="alert">
@@ -19,11 +19,11 @@
                             setTimeout(() => document.getElementById('alert').style.display = 'none', 3000);
                         </script>
                     @endif
-        
+
                     {{-- Fitur Search --}}
                     <form action="{{ route('market.index') }}" method="GET">
                         <div class="row mb-3 mt-3 d-flex align-items-end gap-2">
-        
+
                             <!-- Input Nama Produk -->
                             <div class="col mb-3">
                                 <input type="text" name="produk" class="form-control" list="productList"
@@ -34,7 +34,7 @@
                                     @endforeach
                                 </datalist>
                             </div>
-        
+
                             <!-- Input Nama Customer -->
                             <div class="col mb-3">
                                 <input type="text" name="customer" class="form-control" list="customerList"
@@ -45,7 +45,7 @@
                                     @endforeach
                                 </datalist>
                             </div>
-        
+
                             <!-- Input Jenis Pembayaran -->
                             <div class="col mb-3">
                                 <select name="jenis_pembayaran" class="form-control">
@@ -56,13 +56,13 @@
                                         DP</option>
                                 </select>
                             </div>
-        
+
                             <!-- Input Tanggal Pembelian -->
                             <div class="col mb-3">
                                 <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}"
                                     onclick="this.showPicker()">
                             </div>
-        
+
                             <!-- Tombol Cari & Clear -->
                             <div class="col d-flex gap-2">
                                 <button type="submit" class="btn btn-primary">🔍 Cari</button>
@@ -70,8 +70,8 @@
                             </div>
                         </div>
                     </form>
-        
-        
+
+
                     <!-- Tabel Marketing -->
                     <div class="table-responsive">
                         <table class="table table-hover align-middle border rounded shadow-sm">
@@ -125,7 +125,7 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        
+
                     </div>
                     <div class="d-flex justify-content-center">
                         {{ $marketings->links('pagination::bootstrap-4') }}
@@ -180,7 +180,7 @@
                                 <p><strong>Keterangan Pembayaran:</strong>
                                     {{ $marketing->keterangan_pembayaran ?? '-' }}</p>
                                 <p><strong>Tanggal Pembelian:</strong>
-                                    {{ $marketing->tanggal_pembayaran }}
+                                    {{ $marketing->tanggal_pembelian }}
                                 </p>
                             </div>
                         </div>
