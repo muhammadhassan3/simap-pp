@@ -22,7 +22,7 @@ class SewaAlatController extends Controller
     public function store(Request $request)
     {
         // Validasi data
-        $request->validate(['nama_alat' => 'required|string|max:255', 'harga_sewa' => 'required|numeric', 'customer_id' => 'required|exists:customer,id', 'durasi' => 'required|numeric', 'qty' => 'required|numeric', 'id_proyek' => 'required|exists:tempat_proyek,id', 'detail' => 'nullable|string',]);
+        $request->validate(['nama_alat' => 'required|string|max:255', 'harga_sewa' => 'required|numeric', 'customer_id' => 'required|exists:customer,id', 'durasi' => 'required|numeric', 'qty' => 'required|numeric', 'id_proyek' => 'required', 'detail' => 'nullable|string',]);
 
         // Menyimpan data ke tabel sewa_alat
         SewaAlat::create(['nama_alat' => $request->nama_alat, 'harga_sewa' => $request->harga_sewa, 'customer_id' => $request->customer_id, 'durasi' => $request->durasi, 'qty' => $request->qty, 'id_proyek' => $request->id_proyek, 'detail' => $request->detail,]);
@@ -60,7 +60,7 @@ class SewaAlatController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate(['nama_alat' => 'required|string|max:255', 'harga_sewa' => 'required|numeric', 'customer_id' => 'required|exists:customer,id', 'durasi' => 'required|numeric', 'qty' => 'required|numeric', 'id_proyek' => 'required|exists:tempat_proyek,id', 'detail' => 'nullable|string',]);
+        $request->validate(['nama_alat' => 'required|string|max:255', 'harga_sewa' => 'required|numeric', 'customer_id' => 'required|exists:customer,id', 'durasi' => 'required|numeric', 'qty' => 'required|numeric', 'id_proyek' => 'required', 'detail' => 'nullable|string',]);
 
         $sewa_alat = SewaAlat::findOrFail($id);
         $sewa_alat->update($request->all());
