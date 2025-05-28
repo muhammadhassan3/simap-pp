@@ -46,6 +46,16 @@
                     <span class="nav-link-text ms-1">Customer</span>
                 </a>
             </li>
+                 <li class="nav-item">
+                <a class="nav-link" href="{{ route('kategori_proyek.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <img style="width: 16px;"
+                            src="https://img.icons8.com/?size=100&id=7gtfJBXgkVkP&format=png&color=000000" alt="">
+                    </div>
+                    <span class="nav-link-text ms-1">Kategori</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('show-tempat-proyek') }}">
                     <div
@@ -171,16 +181,7 @@
                     <span class="nav-link-text ms-1">Aktor</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('kategori_proyek.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=7gtfJBXgkVkP&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Kategori</span>
-                </a>
-            </li>
+
 
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>

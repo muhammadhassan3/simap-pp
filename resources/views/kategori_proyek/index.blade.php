@@ -82,7 +82,7 @@
         <div class="modal-dialog">
             <div class="modal-content" style="border-radius: 15px;">
                 <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="deleteKategoriLabel">Hapus Pekerja</h5>
+                    <h5 class="modal-title" id="deleteKategoriLabel">Hapus Kategori</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
