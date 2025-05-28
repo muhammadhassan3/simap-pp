@@ -40,7 +40,7 @@ return new class extends Migration
         });
         Schema::create('proyek_disetujui', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_pengajuan_proposal')->constrained('pengajuan_proposal', 'id');
+            $table->foreignId('id_pengajuan_proposal')->constrained('pengajuan_proposal', 'id')->onDelete('cascade');
             $table->enum('status', ['Tersedia', 'Dikerjakan','Batal','Selesai'])->default('Tersedia');
             $table->date('tanggal_mulai')->nullable();
             $table->date('tanggal_selesai')->nullable();
