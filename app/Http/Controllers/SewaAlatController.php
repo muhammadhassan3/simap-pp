@@ -14,7 +14,7 @@ class SewaAlatController extends Controller
     public function index(Request $request)
     {
         // Mengambil semua data sewa alat beserta relasi customer dan tempat proyek
-        $sewaAlat = SewaAlat::with(['Customer', 'TempatProyek'])->get(); // Periksa nama relasi
+        $sewaAlat = SewaAlat::with(['Customer', 'TempatProyek'])->where('id_proyek', $request['id_proyek_disetujui'])->get(); // Periksa nama relasi
         $id_proyek_disetujui = $request->query('id_proyek_disetujui');
         return view('sewa_alat.index', compact('sewaAlat', 'id_proyek_disetujui')); // Pastikan nama view sesuai
     }
@@ -27,7 +27,7 @@ class SewaAlatController extends Controller
         // Menyimpan data ke tabel sewa_alat
         SewaAlat::create(['nama_alat' => $request->nama_alat, 'harga_sewa' => $request->harga_sewa, 'customer_id' => $request->customer_id, 'durasi' => $request->durasi, 'qty' => $request->qty, 'id_proyek' => $request->id_proyek, 'detail' => $request->detail,]);
 
-        return redirect()->route('sewa_alat.index', ['id_proyek_disetujui'=>$request->id_proyek])->with('success', 'Data berhasil disimpan!');
+        return redirect()->route('sewa_alat.index', ['id_proyek_disetujui' => $request->id_proyek])->with('success', 'Data berhasil disimpan!');
     }
 
     public function create(Request $request)
@@ -47,13 +47,14 @@ class SewaAlatController extends Controller
         return redirect()->back()->with('success', 'Data berhasil dihapus!');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $idProyekDisetujui = $request->query('id_proyek_disetujui');
         $sewa_alat = SewaAlat::findOrFail($id);
         $customers = Customer::all();
-        $tempatProyek = TempatProyek::all();
+        $tempatProyek = ProyekDisetujui::where('id', $idProyekDisetujui)->first();
 
-        return view('sewa_alat.edit', compact('sewa_alat', 'customers', 'tempatProyek'));
+        return view('sewa_alat.edit', ['sewa_alat'=>$sewa_alat, 'customers'=>$customers, 'tempatProyek'=>$tempatProyek, 'idProyekDisetujui'=>$idProyekDisetujui]);
     }
 
 
@@ -64,7 +65,7 @@ class SewaAlatController extends Controller
         $sewa_alat = SewaAlat::findOrFail($id);
         $sewa_alat->update($request->all());
 
-        return redirect()->route('sewa_alat.index',['id_proyek_disetujui'=>$request->id_proyek])->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route('sewa_alat.index', ['id_proyek_disetujui' => $request->id_proyek])->with('success', 'Data berhasil diperbarui!');
     }
 
 }

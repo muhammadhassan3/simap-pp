@@ -36,13 +36,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="id_proyek" class="form-label">Nama Tempat Proyek</label>
-                        <select class="form-select" name="id_proyek" required>
-                            <option value="" disabled>Pilih Proyek</option>
-                            @foreach($tempatProyek as $proyek)
-                                <option value="{{ $proyek->id }}" {{ $sewa_alat->id_proyek == $proyek->id ? 'selected' : '' }}>
-                                    {{ $proyek->nama_tempat }}
+                        <select class="form-select" name="id_proyek" required readonly>
+                                <option value="{{ $tempatProyek->id }}" selected>
+                                    {{ $tempatProyek->pengajuanProposal->tempatProyek->nama_tempat }}
                                 </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
@@ -50,7 +47,7 @@
                         <textarea class="form-control" name="detail" rows="3">{{ $sewa_alat->detail }}</textarea>
                     </div>
                     <div class="d-flex justify-content-end gap-2">
-                        <a href="{{ route('sewa_alat.index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('sewa_alat.index',  ['id_proyek_disetujui' => $idProyekDisetujui]) }}" class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
                     </div>
                 </form>
