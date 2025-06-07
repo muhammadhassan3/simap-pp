@@ -12,9 +12,9 @@ class TempatProyekController{
     function show(Request $request){
         if($request->has('search')){
             $query = $request->get('search');
-            $data = TempatProyek::where('nama_tempat', 'LIKE', "%$query%")->get();
+            $data = TempatProyek::where('nama_tempat', 'LIKE', "%$query%")->paginate(10);
         }else{
-            $data = TempatProyek::all();
+            $data = TempatProyek::paginate(10);
         }
 
         return view('tempat-proyek.index', ["data" => $data]);
