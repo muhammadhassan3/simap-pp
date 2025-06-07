@@ -22,7 +22,7 @@
                         <thead class="table-secondary">
                             <tr>
                                 <th>Nama Proyek</th>
-                                <th>Harga Proyek</th>
+                                <th>Harga Proyek (Rp)</th>
                                 <th>Durasi</th>
                                 <th class="text-center">Status</th>
                                 <th>Keterangan</th>
@@ -33,7 +33,7 @@
                             @foreach ($proyekSelesai as $proyek)
                                 <tr>
                                     <td>{{ $proyek->nama_proyek }}</td>
-                                    <td>Rp {{ number_format($proyek->harga, 0, ',', '.') }}</td>
+                                    <td>{{ number_format($proyek->harga, 0, ',', '.') }}</td>
                                     <td>{{ $proyek->durasi }} hari</td> {{-- Durasi dihitung dari tanggal_mulai - tanggal_selesai --}}
                                     <td class="text-success text-center">
                                         <strong>{{ strtoupper($proyek->status) }}</strong>

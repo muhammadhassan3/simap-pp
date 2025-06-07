@@ -73,11 +73,11 @@
                                 </th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    HARGA
+                                    HARGA (Rp)
                                 </th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    TOTAL PEMBAYARAN
+                                    TOTAL PEMBAYARAN (Rp)
                                 </th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -94,17 +94,17 @@
                                     <td class="text-center">{{ $d['customer'] }}</td>
                                     <td class="text-center">{{ $d['produk'] }}</td>
                                     <td class="text-center">{{ $d['qty'] }}</td>
-                                    <td class="text-end">Rp {{ number_format($d['harga'], 0, ',', '.') }}</td>
-                                    <td class="text-end">Rp {{ number_format($d['total'], 0, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($d['harga'], 0, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($d['total'], 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $d['jenis_pembayaran'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                         <tfoot class="table-secondary">
                             <tr>
-                                <th colspan="6" class="text-end">Total:</th>
+                                <th colspan="6" class="text-end">Total(Rp) :</th>
                                 <th id="totalKeseluruhan" class="text-end">
-                                    Rp {{ number_format($totalKeseluruhan, 0, ',', '.') }}</th>
+                                    {{ number_format($totalKeseluruhan, 0, ',', '.') }}</th>
                                 <th></th>
                             </tr>
                         </tfoot>

@@ -9,8 +9,8 @@
         <input type="text" class="form-control" value="{{ $durasi }} hari" readonly>
 
 
-        <h5 class="mt-3">Harga Proyek</h5>
-        <input type="text" class="form-control" value="Rp {{ number_format($proyek->proyekDisetujui->pengajuanProposal->harga, 0, ',', '.') }}" readonly>
+        <h5 class="mt-3">Harga Proyek (Rp)</h5>
+        <input type="text" class="form-control" value="{{ number_format($proyek->proyekDisetujui->pengajuanProposal->harga, 0, ',', '.') }}" readonly>
 
         <h5 class="mt-3">Tulis Evaluasi</h5>
         <form action="{{ route('evaluasi.update', $proyek->id) }}" method="POST">
