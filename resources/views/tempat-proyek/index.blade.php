@@ -89,10 +89,11 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    {{$data->links()}}
+                </div>
             </div>
-
         </div>
-    </div>
     </div>
 
     {{-- Delete Modal --}}
@@ -123,6 +124,11 @@
         </div>
     </div>
 
+    <style>
+        nav ul {
+            gap: 4px;
+        }
+    </style>
     <script>
         function selectItem(id) {
             document.getElementById("id").value = id
