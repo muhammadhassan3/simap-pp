@@ -1,12 +1,12 @@
 <x-layout>
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <h2 class="mb-4">Tambah Marketing</h2>
-        
+
                 <form action="{{ route('market.store') }}" method="POST">
                     @csrf
-        
+
                     <!-- Nama Produk & Nama Customer -->
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -28,13 +28,13 @@
                             </select>
                         </div>
                     </div>
-        
+
                     <!-- Tujuan Pembelian -->
                     <div class="mb-3">
                         <label for="tujuan" class="form-label">Tujuan Pembelian</label>
                         <textarea class="form-control" name="tujuan_pembelian" id="tujuan"></textarea>
                     </div>
-        
+
                     <!-- Jenis Pembayaran & Keterangan Pembayaran -->
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -50,14 +50,14 @@
                             <input type="text" class="form-control" name="keterangan_pembayaran" id="keterangan">
                         </div>
                     </div>
-        
+
                     <!-- Tanggal Pembelian -->
                     <div class="mb-3">
                         <label for="tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
                         <input type="date" class="form-control" name="tanggal_pembelian" id="tanggal_pembelian"
-                               onclick="this.showPicker()">
+                            onclick="this.showPicker()">
                     </div>
-        
+
                     <!-- Tombol Submit -->
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">Batal</a>

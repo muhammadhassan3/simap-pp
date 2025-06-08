@@ -47,7 +47,7 @@
                         <input type="text" class="form-control" id="total_harga" name="total_harga"
                                value="{{ number_format($detail->total_harga, 0, ',', '.') }}" readonly>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
                 </form>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <x-layout>
-    @if($errors->any())
+    @if ($errors->any())
         <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -20,7 +20,7 @@
             }, 3000); // Alert hilang setelah 3 detik
         </script>
     @endif
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <!-- Button Kembali -->
@@ -34,8 +34,8 @@
                         Kembali
                     </a>
                 </div>
-                
-                <form action="{{route("save-tempat-proyek")}}" enctype="multipart/form-data" method="post">
+
+                <form action="{{ route('save-tempat-proyek') }}" enctype="multipart/form-data" method="post">
                     @csrf
                     <div class="mb-3 flex-row d-flex">
                         <label for="namaTempat" class="col-sm-2 col-form-label">Nama Tempat</label>
@@ -53,8 +53,8 @@
                         <label for="customer" class="col-sm-2 col-form-label">Customer</label>
                         <select name="id_customer" class="form-select" aria-label="Default select example">
                             <option value="-1" disabled selected>Pilih</option>
-                            @foreach($customer as $item)
-                                <option value="{{$item->id}}">{{$item->nama_customer}}</option>
+                            @foreach ($customer as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama_customer }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -67,8 +67,8 @@
                             <label for="kategoriProyek" class="col col-form-label">kategori Proyek</label>
                             <select name="id_kategori_proyek" class="form-select" aria-label="Default select example">
                                 <option value="-1" disabled selected>Pilih</option>
-                                @foreach($kategoriProyek as $item)
-                                    <option value="{{$item->id}}">{{$item->nama}}</option>
+                                @foreach ($kategoriProyek as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>

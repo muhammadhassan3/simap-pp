@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <div class="">

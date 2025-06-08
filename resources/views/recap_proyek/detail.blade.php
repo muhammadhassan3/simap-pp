@@ -26,7 +26,7 @@
             background-color: #f2f2f2;
         }
     </style>
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <h4 class="text-mb-4">Laporan Proyek</h4>
