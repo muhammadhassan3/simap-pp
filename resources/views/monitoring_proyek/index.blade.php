@@ -72,15 +72,41 @@
         <div class="card-body p-4">
             <div id="legend-container" class="d-flex justify-content-center mb-3">
                 <div class="d-inline-flex align-items-center me-4">
-                    <div style="width:20px; height:20px; background-color:rgba(25, 118, 210, 0.85); margin-right:5px; border-radius:4px;"></div>
+                    <div
+                        style="width:20px; height:20px; background-color:rgba(25, 118, 210, 0.85); margin-right:5px; border-radius:4px;">
+                    </div>
                     <span>BH (On Time)</span>
                 </div>
                 <div class="d-inline-flex align-items-center">
-                    <div style="width:20px; height:20px; background-color:rgba(220, 53, 69, 0.85); margin-right:5px; border-radius:4px;"></div>
+                    <div
+                        style="width:20px; height:20px; background-color:rgba(220, 53, 69, 0.85); margin-right:5px; border-radius:4px;">
+                    </div>
                     <span>Failure (Late)</span>
                 </div>
             </div>
-            <canvas id="timelineStatusChart" style="height: 350px;"></canvas>
+
+            <!-- Filter Toggle Buttons -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="filterBH" data-filter="BH">
+                        <i class="bi bi-check-circle"></i> Show BH
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" id="filterFailure"
+                        data-filter="failure">
+                        <i class="bi bi-x-circle"></i> Show Failure
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="filterAll" data-filter="all">
+                        <i class="bi bi-eye"></i> Show All
+                    </button>
+                </div>
+                <div class="text-muted small">
+                    <span id="dataCounter">Showing 0 of 0 items</span>
+                </div>
+            </div>
+
+            <div class="chart-responsive-container">
+                <canvas id="timelineStatusChart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -122,7 +148,8 @@
 
                             <td>{{ date('d-m-Y', strtotime($item->tanggal_selesai ?? '-')) }}</td>
 
-                            <td>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}</td>
+                            <td>{{ $monitoringProyek->Proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}
+                            </td>
 
                             <td>{{ $item->pekerjaan ?? '-' }}</td>
 
@@ -195,7 +222,7 @@
                             <td>{{ $item->peran ?? '-' }}</td>
                         </tr>
                     @endforeach
-                 @endif
+                @endif
             </tbody>
         </table>
     </div>
@@ -228,15 +255,15 @@
             <tbody>
                 @if ($sewaAlat && $sewaAlat->isNotEmpty())
                     @foreach ($sewaAlat as $index => $item)
-                    <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->nama_alat }}</td>
-                        <td>Rp. {{ number_format($item->harga_sewa, 0, ',', '.') }}/jam</td>
-                        <td>{{ $item->customer->nama_customer ?? '-' }}</td>
-                        <td>{{ $item->durasi }} menit</td>
-                        <td>{{ $item->qty }}</td>
-                        <td>{{ $item->detail }}</td>
-                    </tr>
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->nama_alat }}</td>
+                            <td>Rp. {{ number_format($item->harga_sewa, 0, ',', '.') }}/jam</td>
+                            <td>{{ $item->customer->nama_customer ?? '-' }}</td>
+                            <td>{{ $item->durasi }} menit</td>
+                            <td>{{ $item->qty }}</td>
+                            <td>{{ $item->detail }}</td>
+                        </tr>
                     @endforeach
                 @endif
             </tbody>
@@ -244,325 +271,525 @@
     </div>
 
     @push('scripts')
-    <style>
-        /* Chart container styles */
-        .chart-container {
-            position: relative;
-            height: 400px;
-            max-height: 600px;
-            width: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+        <style>
+            /* Chart responsive container */
+            .chart-responsive-container {
+                position: relative;
+                width: 100%;
+                min-height: 250px;
+                max-height: 400px;
+                overflow: hidden;
+            }
 
-        /* Ensure smooth scrolling in chart container */
-        .chart-container::-webkit-scrollbar {
-            width: 8px;
-        }
+            #timelineStatusChart {
+                display: block;
+                width: 100% !important;
+                height: auto !important;
+            }
 
-        .chart-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
+            /* Filter buttons styling */
+            .btn-outline-primary.active,
+            .btn-outline-danger.active,
+            .btn-outline-secondary.active {
+                background-color: var(--bs-primary);
+                border-color: var(--bs-primary);
+                color: white;
+            }
 
-        .chart-container::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
+            .btn-outline-danger.active {
+                background-color: var(--bs-danger);
+                border-color: var(--bs-danger);
+                color: white;
+            }
 
-        .chart-container::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-    </style>
-    <!-- Link CSS DataTables -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+            .btn-outline-secondary.active {
+                background-color: var(--bs-secondary);
+                border-color: var(--bs-secondary);
+                color: white;
+            }
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
-    <!-- Chart.js untuk Grafik -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+            /* Chart container styles */
+            .chart-container {
+                position: relative;
+                height: 250px;
+                max-height: 400px;
+                width: 100%;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
 
-    <script>            $(document).ready(function() {
-            // Function to adjust chart container height based on number of items
-            function adjustChartContainerHeight(itemCount) {
-                const container = document.querySelector('#timelineStatusChart').parentNode;
-                const minHeight = 400; // minimum height
-                const baseHeight = 100; // base height
-                const heightPerItem = 30; // height per timeline item
+            /* Ensure smooth scrolling in chart container */
+            .chart-container::-webkit-scrollbar {
+                width: 8px;
+            }
 
-                // Calculate appropriate height based on number of items
-                const calculatedHeight = Math.max(minHeight, baseHeight + (itemCount * heightPerItem));
+            .chart-container::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
 
-                // Set maximum height to prevent excessive growth
-                const maxHeight = 700;
-                const finalHeight = Math.min(calculatedHeight, maxHeight) + 'px';
+            .chart-container::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
+            }
 
-                // Apply the height
-                container.style.height = finalHeight;
+            .chart-container::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
 
-                // Add scrollbar if many items
-                if (calculatedHeight > maxHeight) {
-                    container.style.overflowY = 'auto';
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .chart-responsive-container {
+                    min-height: 200px;
+                    max-height: 300px;
                 }
             }
 
-            // DataTables initialization
-            $('#timelineTable').DataTable({
-                responsive: true,
-                "searching": true,
-                "paging": true,
-                "info": true,
-                "columnDefs": [
-                    { "defaultContent": "-", "targets": "_all" }
-                ],
-                "language": {
-                    "emptyTable": "Tidak ada data yang tersedia"
+            @media (max-width: 576px) {
+                .chart-responsive-container {
+                    min-height: 180px;
+                    max-height: 250px;
                 }
-            });
 
-            $('#timProyekTable').DataTable({
-                responsive: true,
-                "searching": true,
-                "paging": true,
-                "info": true,
-                "columnDefs": [
-                    { "defaultContent": "-", "targets": "_all" }
-                ],
-                "language": {
-                    "emptyTable": "Tidak ada data yang tersedia"
+                .btn-sm {
+                    font-size: 0.75rem;
+                    padding: 0.25rem 0.5rem;
                 }
-            });
 
-            $('#sewaAlatTable').DataTable({
-                responsive: true,
-                "searching": true,
-                "paging": true,
-                "info": true,
-                "columnDefs": [
-                    { "defaultContent": "-", "targets": "_all" }
-                ],
-                "language": {
-                    "emptyTable": "Tidak ada data yang tersedia"
+                .d-flex.justify-content-between {
+                    flex-direction: column;
+                    gap: 10px;
                 }
-            });
 
-            // Persiapan data untuk grafik
-            var timelineData = [];
+                .d-flex.gap-2 {
+                    justify-content: center;
+                }
 
-            @if($monitoringProyek && $monitoringProyek->Penjadwalan && $monitoringProyek->Penjadwalan->isNotEmpty())
-                @foreach($monitoringProyek->Penjadwalan as $item)
-                    timelineData.push({
-                        tanggalMulai: '{{ date('d/m/Y', strtotime($item->tanggal_mulai)) }}',
-                        tanggalSelesai: '{{ date('d/m/Y', strtotime($item->tanggal_selesai)) }}',
-                        status: '{{ $monitoringProyek->Proyek_disetujui &&
-                                   $monitoringProyek->Proyek_disetujui->tanggal_selesai &&
-                                   $item->tanggal_selesai &&
-                                   strtotime($item->tanggal_selesai) > strtotime($monitoringProyek->Proyek_disetujui->tanggal_selesai)
-                                   ? 'failure' : 'BH' }}',
-                        pekerjaan: '{{ str_replace("'", "\\'", $item->pekerjaan ?? '-') }}'
+                #dataCounter {
+                    text-align: center;
+                }
+            }
+        </style>
+        <!-- Link CSS DataTables -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
+        <!-- Chart.js untuk Grafik -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                // Function to adjust chart container height based on number of items
+                function adjustChartContainerHeight(itemCount) {
+                    const container = document.querySelector('.chart-responsive-container');
+                    if (!container) return;
+
+                    const minHeight = 200; // minimum height (reduced from 300)
+                    const heightPerItem = 25; // height per timeline item (reduced from 40)
+                    const baseHeight = 80; // base height (reduced from 100)
+
+                    // Calculate appropriate height based on number of items
+                    const calculatedHeight = Math.max(minHeight, baseHeight + (itemCount * heightPerItem));
+
+                    // Set maximum height to prevent excessive growth
+                    const maxHeight = 400; // reduced from 600
+                    const finalHeight = Math.min(calculatedHeight, maxHeight);
+
+                    // Apply the height
+                    container.style.height = finalHeight + 'px';
+
+                    // Handle small screens
+                    if (window.innerWidth <= 768) {
+                        container.style.height = Math.min(finalHeight * 0.8, 300) + 'px'; // reduced from 450
+                    }
+                    if (window.innerWidth <= 576) {
+                        container.style.height = Math.min(finalHeight * 0.7, 250) + 'px'; // reduced from 350
+                    }
+                }
+
+                // DataTables initialization
+                $('#timelineTable').DataTable({
+                    responsive: true,
+                    "searching": true,
+                    "paging": true,
+                    "info": true,
+                    "columnDefs": [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    "language": {
+                        "emptyTable": "Tidak ada data yang tersedia"
+                    }
+                });
+
+                $('#timProyekTable').DataTable({
+                    responsive: true,
+                    "searching": true,
+                    "paging": true,
+                    "info": true,
+                    "columnDefs": [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    "language": {
+                        "emptyTable": "Tidak ada data yang tersedia"
+                    }
+                });
+
+                $('#sewaAlatTable').DataTable({
+                    responsive: true,
+                    "searching": true,
+                    "paging": true,
+                    "info": true,
+                    "columnDefs": [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    "language": {
+                        "emptyTable": "Tidak ada data yang tersedia"
+                    }
+                });
+
+                // Persiapan data untuk grafik
+                var timelineData = [];
+
+                @if ($monitoringProyek && $monitoringProyek->Penjadwalan && $monitoringProyek->Penjadwalan->isNotEmpty())
+                    @foreach ($monitoringProyek->Penjadwalan as $item)
+                        timelineData.push({
+                            tanggalMulai: '{{ date('d/m/Y', strtotime($item->tanggal_mulai)) }}',
+                            tanggalSelesai: '{{ date('d/m/Y', strtotime($item->tanggal_selesai)) }}',
+                            status: '{{ $monitoringProyek->Proyek_disetujui &&
+                            $monitoringProyek->Proyek_disetujui->tanggal_selesai &&
+                            $item->tanggal_selesai &&
+                            strtotime($item->tanggal_selesai) > strtotime($monitoringProyek->Proyek_disetujui->tanggal_selesai)
+                                ? 'failure'
+                                : 'BH' }}',
+                            pekerjaan: '{{ str_replace("'", "\\'", $item->pekerjaan ?? '-') }}'
+                        });
+                    @endforeach
+                @endif
+
+                // Adjust chart container height based on timeline data
+                adjustChartContainerHeight(timelineData.length);
+
+                // Membuat grafik
+                var ctx = document.getElementById('timelineStatusChart').getContext('2d');
+
+                // Function to generate chart data
+                function generateChartData(data) {
+                    var chartLabels = [];
+                    var chartStatusData = [];
+                    var chartBackgroundColors = [];
+                    var chartBorderColors = [];
+                    var chartHoverBackgroundColors = [];
+
+                    data.forEach(function(item) {
+                        chartLabels.push(item.pekerjaan + ' (' + item.tanggalMulai + ' - ' + item
+                            .tanggalSelesai + ')');
+                        chartStatusData.push(1);
+
+                        if (item.status === 'BH') {
+                            chartBackgroundColors.push('rgba(25, 118, 210, 0.85)');
+                            chartBorderColors.push('rgba(25, 118, 210, 1)');
+                            chartHoverBackgroundColors.push('rgba(25, 118, 210, 1)');
+                        } else {
+                            chartBackgroundColors.push('rgba(220, 53, 69, 0.85)');
+                            chartBorderColors.push('rgba(220, 53, 69, 1)');
+                            chartHoverBackgroundColors.push('rgba(220, 53, 69, 1)');
+                        }
                     });
-                @endforeach
-            @endif
 
-            // Adjust chart container height based on timeline data
-            adjustChartContainerHeight(timelineData.length);
-
-            // Membuat grafik
-            var ctx = document.getElementById('timelineStatusChart').getContext('2d');
-
-            // Mengorganisasi data untuk grafik
-            var labels = [];
-            var statusData = [];
-            var backgroundColors = [];
-            var borderColors = [];
-            var hoverBackgroundColors = [];
-
-            timelineData.forEach(function(item) {
-                labels.push(item.pekerjaan + ' (' + item.tanggalMulai + ' - ' + item.tanggalSelesai + ')');
-
-                // Semua bar akan memiliki nilai 1, yang warna menjadi indikator status
-                statusData.push(1);
-
-                // Set warna berdasarkan status
-                if (item.status === 'BH') {
-                    backgroundColors.push('rgba(25, 118, 210, 0.85)'); // Biru untuk On Time
-                    borderColors.push('rgba(25, 118, 210, 1)');
-                    hoverBackgroundColors.push('rgba(25, 118, 210, 1)');
-                } else {
-                    backgroundColors.push('rgba(220, 53, 69, 0.85)');  // Merah untuk Late
-                    borderColors.push('rgba(220, 53, 69, 1)');
-                    hoverBackgroundColors.push('rgba(220, 53, 69, 1)');
+                    return {
+                        labels: chartLabels,
+                        statusData: chartStatusData,
+                        backgroundColors: chartBackgroundColors,
+                        borderColors: chartBorderColors,
+                        hoverBackgroundColors: chartHoverBackgroundColors
+                    };
                 }
-            });
 
-            var timelineStatusChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
+                // Generate initial chart data
+                var chartData = generateChartData(timelineData);
+                var labels = chartData.labels;
+                var statusData = chartData.statusData;
+                var backgroundColors = chartData.backgroundColors;
+                var borderColors = chartData.borderColors;
+                var hoverBackgroundColors = chartData.hoverBackgroundColors;
+
+                var timelineStatusChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
                             label: 'Status Timeline',
                             data: statusData,
                             backgroundColor: backgroundColors,
                             borderColor: borderColors,
                             borderWidth: 1.5,
                             borderRadius: 6,
-                            maxBarThickness: 35,
+                            maxBarThickness: 25, // reduced from 35
                             minBarLength: 5,
-                            hoverBackgroundColor: hoverBackgroundColors
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    barThickness: 25,
-                    onResize: function(chart, size) {
-                        // Adjust the height based on number of data points
-                        const minHeight = 400;
-                        const heightPerItem = 30; // pixels per item
-                        const calculatedHeight = Math.max(minHeight, timelineData.length * heightPerItem);
-
-                        // Set a maximum height to prevent excessive growth
-                        const maxHeight = 600;
-                        chart.height = Math.min(calculatedHeight, maxHeight);
+                            hoverBackgroundColor: hoverBackgroundColors,
+                            categoryPercentage: 0.6, // Add spacing between categories
+                            barPercentage: 0.7 // Add spacing between bars
+                        }]
                     },
-                    plugins: {
-                        legend: {
-                            display: false // Sembunyikan legend default
-                        },
-                        // Custom legend
-                        htmlLegend: {
-                            containerID: 'legend-container',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Status Timeline Proyek',
-                            font: {
-                                family: 'Arial, sans-serif',
-                                size: 18,
-                                weight: 'bold'
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        resizeDelay: 300,
+                        plugins: {
+                            legend: {
+                                display: false // Hide default legend
                             },
-                            padding: {
-                                top: 10,
-                                bottom: 25
-                            },
-                            color: '#333'
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            titleFont: {
-                                family: 'Arial, sans-serif',
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            bodyFont: {
-                                family: 'Arial, sans-serif',
-                                size: 13
-                            },
-                            padding: 12,
-                            cornerRadius: 6,
-                            displayColors: true,
-                            callbacks: {
-                                title: function(tooltipItems) {
-                                    return tooltipItems[0].label;
-                                },
-                                label: function(context) {
-                                    const index = context.dataIndex;
-                                    // Ambil status dari warna background
-                                    const bgColor = context.dataset.backgroundColor[index];
-                                    const isBlue = bgColor.includes('118, 210'); // Cek apakah warna biru (On Time)
-                                    return isBlue ? 'Status: BH (On Time)' : 'Status: Failure (Late)';
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            border: {
+                            title: {
                                 display: true,
-                                width: 1,
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            ticks: {
-                                autoSkip: false,
-                                maxRotation: 0, // Tidak miring lagi
-                                minRotation: 0,
-                                padding: 12,
+                                text: 'Status Timeline Proyek',
                                 font: {
                                     family: 'Arial, sans-serif',
-                                    size: 11,
-                                    weight: '500'
+                                    size: function(context) {
+                                        return window.innerWidth <= 576 ? 14 : 16;
+                                    },
+                                    weight: 'bold'
                                 },
-                                color: '#555',
-                                // Buat label lebih rapi dengan memotong teks yang terlalu panjang
-                                callback: function(value, index, values) {
-                                    const label = this.getLabelForValue(value);
-                                    const maxLength = 25; // Increase character limit slightly
-                                    if (label.length > maxLength) {
-                                        return label.substr(0, maxLength) + '...';
+                                padding: {
+                                    top: 10,
+                                    bottom: 20
+                                },
+                                color: '#333'
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleFont: {
+                                    family: 'Arial, sans-serif',
+                                    size: function() {
+                                        return window.innerWidth <= 576 ? 12 : 14;
+                                    },
+                                    weight: 'bold'
+                                },
+                                bodyFont: {
+                                    family: 'Arial, sans-serif',
+                                    size: function() {
+                                        return window.innerWidth <= 576 ? 11 : 13;
                                     }
-                                    return label;
+                                },
+                                padding: window.innerWidth <= 576 ? 8 : 12,
+                                cornerRadius: 6,
+                                displayColors: true,
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        const label = tooltipItems[0].label;
+                                        // Truncate long labels for mobile
+                                        if (window.innerWidth <= 576 && label.length > 30) {
+                                            return label.substr(0, 30) + '...';
+                                        }
+                                        return label;
+                                    },
+                                    label: function(context) {
+                                        const index = context.dataIndex;
+                                        const bgColor = context.dataset.backgroundColor[index];
+                                        const isBlue = bgColor.includes('118, 210');
+                                        return isBlue ? 'Status: BH (On Time)' : 'Status: Failure (Late)';
+                                    }
                                 }
                             }
                         },
-                        y: {
-                            beginAtZero: true,
-                            max: 1,
-                            border: {
-                                display: true,
-                                width: 1,
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.07)',
-                                lineWidth: 0.5
-                            },
-                            ticks: {
-                                stepSize: 1,
-                                font: {
-                                    family: 'Arial, sans-serif',
-                                    size: 12,
-                                    weight: '500'
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
                                 },
-                                color: '#555',
-                                padding: 10,
-                                callback: function(value) {
-                                    return value === 1 ? 'Ya' : 'Tidak';
+                                border: {
+                                    display: true,
+                                    width: 1,
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    autoSkip: true,
+                                    maxTicksLimit: window.innerWidth <= 576 ? 2 : (window.innerWidth <= 768 ?
+                                        3 : 5), // Reduced to show fewer labels with better spacing
+                                    maxRotation: window.innerWidth <= 768 ? 45 : 0,
+                                    minRotation: 0,
+                                    padding: window.innerWidth <= 576 ? 15 : 20, // Increased padding
+                                    font: {
+                                        family: 'Arial, sans-serif',
+                                        size: window.innerWidth <= 576 ? 9 : (window.innerWidth <= 768 ? 10 :
+                                            11),
+                                        weight: '500'
+                                    },
+                                    color: '#555',
+                                    callback: function(value, index, values) {
+                                        const label = this.getLabelForValue(value);
+                                        let maxLength;
+
+                                        if (window.innerWidth <= 576) {
+                                            maxLength = 15;
+                                        } else if (window.innerWidth <= 768) {
+                                            maxLength = 25; // Increased for better readability
+                                        } else {
+                                            maxLength = 35; // Increased for better readability
+                                        }
+
+                                        if (label.length > maxLength) {
+                                            return label.substr(0, maxLength) + '...';
+                                        }
+                                        return label;
+                                    }
                                 }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                max: 1,
+                                border: {
+                                    display: true,
+                                    width: 1,
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.07)',
+                                    lineWidth: 0.5
+                                },
+                                ticks: {
+                                    stepSize: 1,
+                                    font: {
+                                        family: 'Arial, sans-serif',
+                                        size: window.innerWidth <= 576 ? 10 : 12,
+                                        weight: '500'
+                                    },
+                                    color: '#555',
+                                    padding: window.innerWidth <= 576 ? 6 : 10,
+                                    callback: function(value) {
+                                        return value === 1 ? 'Ya' : 'Tidak';
+                                    }
+                                }
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                left: window.innerWidth <= 576 ? 15 : 25, // Increased padding
+                                right: window.innerWidth <= 576 ? 15 : 25, // Increased padding
+                                top: 10, // Increased top padding
+                                bottom: window.innerWidth <= 576 ? 20 :
+                                    30 // Increased bottom padding for labels
+                            }
+                        },
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutQuart'
+                        },
+                        elements: {
+                            bar: {
+                                maxBarThickness: window.innerWidth <= 576 ? 15 : (window.innerWidth <= 768 ?
+                                    20 : 25), // reduced from 20, 25, 35
+                                borderRadius: 4,
+                                categoryPercentage: 0.6, // Add spacing between categories
+                                barPercentage: 0.7 // Add spacing between bars
                             }
                         }
-                    },
-                    layout: {
-                        padding: {
-                            left: 15,
-                            right: 15,
-                            top: 5,
-                            bottom: 15
-                        },
-                        autoPadding: true
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeOutQuart'
                     }
-                }
-            });
+                });
 
-            // Handle window resize for responsive chart
-            $(window).on('resize', function() {
-                if (timelineStatusChart) {
-                    timelineStatusChart.resize();
-                    adjustChartContainerHeight(timelineData.length);
+                // Store original data for filtering
+                var originalTimelineData = [...timelineData];
+
+                // Filter functionality
+                function filterChart(filterType) {
+                    let filteredData = [];
+
+                    if (filterType === 'all') {
+                        filteredData = [...originalTimelineData];
+                    } else {
+                        filteredData = originalTimelineData.filter(function(item) {
+                            return item.status === filterType;
+                        });
+                    }
+
+                    // Generate new chart data based on filter
+                    var newChartData = generateChartData(filteredData);
+
+                    // Update chart data
+                    timelineStatusChart.data.labels = newChartData.labels;
+                    timelineStatusChart.data.datasets[0].data = newChartData.statusData;
+                    timelineStatusChart.data.datasets[0].backgroundColor = newChartData.backgroundColors;
+                    timelineStatusChart.data.datasets[0].borderColor = newChartData.borderColors;
+                    timelineStatusChart.data.datasets[0].hoverBackgroundColor = newChartData.hoverBackgroundColors;
+
+                    // Update chart height based on filtered data
+                    adjustChartContainerHeight(filteredData.length);
+
+                    // Update counter
+                    updateDataCounter(filteredData.length, originalTimelineData.length);
+
+                    // Update chart with animation
+                    timelineStatusChart.update('active');
                 }
+
+                // Function to update data counter
+                function updateDataCounter(showing, total) {
+                    $('#dataCounter').text(`Showing ${showing} of ${total} items`);
+                }
+
+                // Filter button event handlers
+                $('#filterBH').on('click', function() {
+                    filterChart('BH');
+                    $('.btn[data-filter]').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                $('#filterFailure').on('click', function() {
+                    filterChart('failure');
+                    $('.btn[data-filter]').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                $('#filterAll').on('click', function() {
+                    filterChart('all');
+                    $('.btn[data-filter]').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                // Set default filter to "Show All"
+                $('#filterAll').addClass('active');
+
+                // Initialize counter
+                updateDataCounter(timelineData.length, timelineData.length);
+
+                // Handle window resize for responsive chart
+                let resizeTimeout;
+                $(window).on('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(function() {
+                        if (timelineStatusChart) {
+                            // Update chart options for responsive behavior
+                            timelineStatusChart.options.scales.x.ticks.maxTicksLimit =
+                                window.innerWidth <= 576 ? 2 : (window.innerWidth <= 768 ? 3 :
+                                5); // Updated to match new limits
+                            timelineStatusChart.options.scales.x.ticks.maxRotation =
+                                window.innerWidth <= 768 ? 45 : 0;
+                            timelineStatusChart.options.scales.x.ticks.padding =
+                                window.innerWidth <= 576 ? 15 : 20; // Add padding update
+                            timelineStatusChart.options.elements.bar.maxBarThickness =
+                                window.innerWidth <= 576 ? 15 : (window.innerWidth <= 768 ? 20 :
+                                    25); // reduced from 20, 25, 35
+
+                            // Adjust container height
+                            adjustChartContainerHeight(timelineData.length);
+
+                            // Update and resize chart
+                            timelineStatusChart.update('resize');
+                            timelineStatusChart.resize();
+                        }
+                    }, 250);
+                });
+
+                // Initial height adjustment
+                adjustChartContainerHeight(timelineData.length);
             });
-        });
-    </script>
+        </script>
     @endpush
 </x-layout>
