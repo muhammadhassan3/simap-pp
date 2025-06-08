@@ -47,4 +47,16 @@
             </div>
         </div>
     </div>
+    <script>
+        function formatCurrency(input) {
+            // Menghapus semua karakter yang bukan angka
+            let value = input.value.replace(/[^0-9]/g, '');
+
+            // Format angka dengan pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Mengupdate nilai input
+            input.value = value;
+        }
+    </script>
 </x-layout>

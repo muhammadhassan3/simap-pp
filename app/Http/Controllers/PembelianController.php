@@ -45,7 +45,7 @@ class PembelianController extends Controller
         //Simpan Detail Pembelian
         for ($i = 0; $i < sizeof($request->nama_produk); $i++) {
             $qty = intval($request->qty[$i]);
-            $harga_satuan = intval($request->harga_satuan[$i]);
+            $harga_satuan = str_replace('.', '', $request->harga_satuan[$i]);;
 
             $detailPembelian = new DetailPembelianModel();
             $detailPembelian->id_pembelian = $pembelian->id;
