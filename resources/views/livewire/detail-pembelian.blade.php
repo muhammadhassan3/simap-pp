@@ -26,8 +26,8 @@
                             <input type="number" class="form-control qty" name="qty[]" placeholder="QTY" required>
                         </div>
                         <div class="form-group me-2">
-                            <input type="number" class="form-control harga_satuan" name="harga_satuan[]"
-                                placeholder="Harga Satuan" required>
+                            <input type="text" class="form-control harga_satuan" name="harga_satuan[]"
+                                placeholder="Harga Satuan" required oninput="formatCurrency(this)">
                         </div>
                         <div class="form-group me-2">
                             <input type="text" id="total_harga" class="form-control total_harga" name="total_harga[]"
@@ -61,7 +61,7 @@
                 const totalInput = parentRow.querySelector(".total_harga");
 
                 const qty = parseFloat(qtyInput.value) || 0;
-                const hargaSatuan = parseFloat(hargaInput.value) || 0;
+                const hargaSatuan = parseFloat(hargaInput.value.replace('.','')) || 0;
                 const totalHarga = qty * hargaSatuan;
 
                 // Format angka dengan pemisah ribuan lokal Indonesia

@@ -114,7 +114,7 @@
                                        value="{{ number_format($detail->harga_satuan, 0, ',', '.') }}" readonly>
                             </div>
                             <div class="form-group me-2" style="width: 207px;">
-                                <input type="text" class="form-control" value="{{ $detail->total_harga }}" readonly>
+                                <input type="text" class="form-control" value="{{ number_format($detail->total_harga, 0, ',', '.')}}" readonly>
                             </div>
                             <div class="form-group me-2" style="width: 150px;">
                                 <a href="{{ route('pembelian.edit', $detail->id) }}" class="btn btn-warning">
