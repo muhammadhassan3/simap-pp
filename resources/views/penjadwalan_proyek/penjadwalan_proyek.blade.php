@@ -28,77 +28,102 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table align-items-center mb-0" id="jadwalTable">
-                    <thead>
-                        <tr>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                No
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Nama Proyek
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Supervisor
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Tanggal Mulai
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Tanggal Selesai
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Pekerjaan
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Status
-                            </th>
-                            <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
-                                Aksi
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="jadwalTableBody">
-                        @foreach ($penjadwalanProyek as $jadwal)
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0" id="jadwalTable">
+                        <thead>
                             <tr>
-                                <td class="text-center text-xs  mb-0">{{ $loop->iteration }}</td>
-                                <td class="text-center text-xs  mb-0">
-                                    {{ $jadwal->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Diketahui' }}
-                                </td>
-                                <td class="text-center text-xs  mb-0">
-                                    {{ $supervisor }}
-                                </td>
-                                <td class="text-center text-xs  mb-0">
-                                    {{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
-                                <td class="text-center text-xs  mb-0">
-                                    {{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
-                                <td class="text-center text-xs  mb-0">{{ $jadwal->pekerjaan }}</td>
-                                <td class="text-center text-xs  mb-0" style="text-transform: capitalize;">
-                                    {{ $jadwal->status }}</td>
-                                <td class="text-center text-xs  mb-0">
-                                    <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}?id_proyek_disetujui={{ $id_proyek_disetujui }}"
-                                        class="btn btn-warning">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <form id="delete-form-{{ $jadwal->id }}"
-                                        action="/penjadwalan_proyek/delete/{{ $jadwal->id }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="hapusJadwal('{{ $jadwal->id }}')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    No
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Nama Proyek
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Supervisor
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Tanggal Mulai
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Tanggal Selesai
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Pekerjaan
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Status
+                                </th>
+                                <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">
+                                    Aksi
+                                </th>
                             </tr>
-                        @endforeach
-                        <!-- Baris untuk "Data tidak ditemukan" -->
-                        <tr id="noDataRow" style="display: none;">
-                            <td colspan="8" class="text-center ">Data tidak ditemukan</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody id="jadwalTableBody">
+                            @foreach ($penjadwalanProyek as $jadwal)
+                                <tr>
+                                    <td class="text-center text-xs  mb-0">{{ ($penjadwalanProyek->currentPage() - 1) * $penjadwalanProyek->perPage() + $loop->iteration }}</td>
+                                    <td class="text-center text-xs  mb-0">
+                                        {{ $jadwal->proyekDisetujui->pengajuanProposal->nama_proyek ?? 'Tidak Diketahui' }}
+                                    </td>
+                                    <td class="text-center text-xs  mb-0">
+                                        {{ $supervisor }}
+                                    </td>
+                                    <td class="text-center text-xs  mb-0">
+                                        {{ date('d-m-Y', strtotime($jadwal->tanggal_mulai)) }}</td>
+                                    <td class="text-center text-xs  mb-0">
+                                        {{ date('d-m-Y', strtotime($jadwal->tanggal_selesai)) }}</td>
+                                    <td class="text-center text-xs  mb-0">{{ $jadwal->pekerjaan }}</td>
+                                    <td class="text-center text-xs  mb-0" style="text-transform: capitalize;">
+                                        {{ $jadwal->status }}</td>
+                                    <td class="text-center text-xs  mb-0">
+                                        <a href="/penjadwalan_proyek/edit/{{ $jadwal->id }}?id_proyek_disetujui={{ $id_proyek_disetujui }}"
+                                            class="btn btn-warning">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form id="delete-form-{{ $jadwal->id }}"
+                                            action="/penjadwalan_proyek/delete/{{ $jadwal->id }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="hapusJadwal('{{ $jadwal->id }}')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <!-- Baris untuk "Data tidak ditemukan" -->
+                            <tr id="noDataRow" style="display: none;">
+                                <td colspan="8" class="text-center ">Data tidak ditemukan</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- filepath: d:\proj\simap-pp\resources\views\penjadwalan_proyek\penjadwalan_proyek.blade.php -->
+                    <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap px-2">
+                        <div class="d-flex align-items-center">
+                            <div class="badge bg-success text-white rounded-pill px-3 py-2 fw-normal">
+                                <i class="bi bi-info-circle me-1"></i>
+                                {{ $penjadwalanProyek->firstItem() ?? 0 }} - {{ $penjadwalanProyek->lastItem() ?? 0 }}
+                                of {{ $penjadwalanProyek->total() ?? 0 }} rows
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="badge bg-success text-white rounded-pill px-3 py-2 fw-normal">
+                                <a href="{{ $penjadwalanProyek->appends(['id_proyek_disetujui' => request('id_proyek_disetujui')])->previousPageUrl() }}"
+                                    class="btn-sm text-white {{ $penjadwalanProyek->currentPage() == 1 ? 'disabled' : '' }}">
+                                    <i class="bi bi-chevron-left"></i> Previous
+                                </a>
+                                <span class="mx-2">Page {{ $penjadwalanProyek->currentPage() }} of
+                                    {{ $penjadwalanProyek->lastPage() }}</span>
+                                <a href="{{ $penjadwalanProyek->appends(['id_proyek_disetujui' => request('id_proyek_disetujui')])->nextPageUrl() }}"
+                                    class="btn-sm text-white {{ $penjadwalanProyek->currentPage() == $penjadwalanProyek->lastPage() ? 'disabled' : '' }}">
+                                    Next <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
