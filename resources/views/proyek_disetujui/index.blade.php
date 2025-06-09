@@ -15,13 +15,13 @@
                 <table class="table table-hover align-middle border rounded shadow-sm">
                     <thead class="table-secondary">
                         <tr>
-                            <thclass="text-center">No</th>
-                            <thclass="text-center">Nama Proyek</th>
-                            <thclass="text-center">Tempat Proyek</th>
-                            <thclass="text-center">Harga Proyek (Rp)</th>
-                            <thclass="text-center">Status</th>
-                            <thclass="text-center">Tanggal Mulai</th>
-                            <thclass="text-center">Tanggal Selesai</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Nama Proyek</th>
+                            <th class="text-center">Tempat Proyek</th>
+                            <th class="text-center">Harga Proyek (Rp)</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Tanggal Mulai</th>
+                            <th class="text-center">Tanggal Selesai</th>
                             <th class="text-center"width="50">Aksi</th>
                         </tr>
                     </thead>
@@ -84,8 +84,6 @@
     </div>
 
                 </div>
-            </div>
-        </div>
 
 </x-layout>
 
