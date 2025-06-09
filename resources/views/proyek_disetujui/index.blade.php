@@ -12,7 +12,7 @@
 
             {{-- DATA --}}
             <div class="table-responsive">
-                <table class="table table-hover align-middle border rounded shadow-sm">
+                <table class="table table-hover align-middle border rounded shadow-sm mb-2">
                     <thead class="table-secondary">
                     <tr>
                         <th class="text-center">No</th>
@@ -60,7 +60,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap px-2">
+                <div class="d-flex justify-content-between align-items-center mt-0 mb-3 flex-wrap px-1">
                     <div class="d-flex align-items-center">
                         <div class="badge bg-success text-white rounded-pill px-3 py-2 fw-normal">
                             <i class="bi bi-info-circle me-1"></i>
