@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <h2 class="mb-4">Evaluasi Proyek</h2>
@@ -44,13 +44,13 @@
 
                                     <td>
                                         <a href="{{ route('evaluasi.edit', $proyek->id) }}" class="btn btn-success">
-                                            <i class="fas fa-pencil"></i> Evaluasi
+                                            <i class="fas fa-clipboard-check"></i> Evaluasi
                                         </a>
-                                        <a href="{{ route('detail', $proyek->id_proyek) }}"
-                                            class="btn btn-warning">
-                                            <i class="fas fa-pencil"></i> Laporan
+                                        <a href="{{ route('detail', $proyek->id_proyek) }}" class="btn btn-warning">
+                                            <i class="fas fa-file-alt"></i> Laporan
                                         </a>
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>

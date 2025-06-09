@@ -20,7 +20,7 @@
             }, 3000); // Alert hilang setelah 3 detik
         </script>
     @endif
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <!-- Button Kembali -->
@@ -71,7 +71,8 @@
                             <select name="id_kategori_proyek" class="form-select" aria-label="Default select example">
                                 <option value="-1" disabled selected>Pilih</option>
                                 @foreach ($kategoriProyek as $item)
-                                    <option value="{{ $item->id }}" @if ($data->id_kategori_proyek == $item->id) selected @endif>
+                                    <option value="{{ $item->id }}"
+                                        @if ($data->id_kategori_proyek == $item->id) selected @endif>
                                         {{ $item->nama }}</option>
                                 @endforeach
                             </select>

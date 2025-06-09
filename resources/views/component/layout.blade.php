@@ -42,16 +42,16 @@
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show bg-gray-100 p-1">
 
     {{-- SIDEBAR COMPONENT --}}
     <x-sidebar></x-sidebar>
 
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg" style="margin-left: 260px;">
         <!-- Navbar -->
         <x-navbar></x-navbar>
         <!-- End Navbar -->
-        <div class="" style="margin: 10px;">
+        <div class="" style="margin-top: 10px;">
             @hasSection('content')
                 @yield('content')
             @else
@@ -71,6 +71,83 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidenav-main');
+            const toggleBtn = document.getElementById('sidebarToggle');
+
+            // Fungsi untuk atur tampilan sidebar sesuai ukuran layar
+            function handleSidebar() {
+                if (window.innerWidth < 992) {
+                    // Layar kecil: sidebar offcanvas tersembunyi
+                    sidebar.style.position = 'fixed';
+                    sidebar.style.top = '0';
+                    sidebar.style.left = '0';
+                    sidebar.style.height = '100vh';
+                    sidebar.style.width = '250px';
+                    sidebar.style.backgroundColor = 'white';
+                    sidebar.style.borderRight = '1px solid rgba(0,0,0,.125)';
+                    sidebar.style.boxShadow = '2px 0 8px rgba(0,0,0,0.15)';
+                    sidebar.style.transform = 'translateX(-100%)';
+                    sidebar.style.transition = 'transform 0.3s ease';
+                    sidebar.style.zIndex = '1050';
+
+                    // Tutup sidebar (default)
+                    sidebar.classList.remove('show');
+                    sidebar.style.pointerEvents = 'none'; // agar tidak bisa klik saat tersembunyi
+
+                } else {
+                    // Layar besar: sidebar normal selalu tampil
+                    sidebar.style.position = '';
+                    sidebar.style.top = '';
+                    sidebar.style.left = '';
+                    sidebar.style.height = '';
+                    sidebar.style.width = '';
+                    sidebar.style.backgroundColor = '';
+                    sidebar.style.borderRight = '';
+                    sidebar.style.boxShadow = '';
+                    sidebar.style.transform = 'none';
+                    sidebar.style.transition = '';
+                    sidebar.style.zIndex = '';
+                    sidebar.style.pointerEvents = '';
+
+                    sidebar.classList.remove('show');
+                }
+            }
+
+            // Toggle sidebar on small screen
+            toggleBtn.addEventListener('click', function() {
+                if (sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                    sidebar.style.transform = 'translateX(-100%)';
+                    sidebar.style.pointerEvents = 'none';
+                } else {
+                    sidebar.classList.add('show');
+                    sidebar.style.transform = 'translateX(0)';
+                    sidebar.style.pointerEvents = 'auto';
+                }
+            });
+
+            // Close sidebar when clicking outside it on small screens
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth < 992) {
+                    if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                        sidebar.classList.remove('show');
+                        sidebar.style.transform = 'translateX(-100%)';
+                        sidebar.style.pointerEvents = 'none';
+                    }
+                }
+            });
+
+            // Adjust on resize
+            window.addEventListener('resize', handleSidebar);
+
+            // Jalankan sekali saat halaman load
+            handleSidebar();
+        });
+    </script> --}}
+
     @stack('scripts')
 </body>
 

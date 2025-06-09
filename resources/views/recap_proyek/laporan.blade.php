@@ -26,70 +26,68 @@
             background-color: #f2f2f2;
         }
     </style>
-    <div class="col-12">
-        <div class="card mb-4">
-            <div class="card-header pb-0" style="background: white">
-                <h4 class="text-mb-4">Laporan Proyek</h4>
+    <div class="card mb-4">
+        <div class="card-header pb-0" style="background: white">
+            <h2>Laporan Proyek</h2>
 
-                <!-- Search Bar -->
-                <div class="mb-4">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Proyek"
-                        onkeyup="searchTable()">
-                </div>
+            <!-- Search Bar -->
+            <div class="mb-4">
+                <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Proyek"
+                    onkeyup="searchTable()">
+            </div>
 
-                <!-- Print Button -->
-                <!-- <div class="mb-4 text-end">
+            <!-- Print Button -->
+            <!-- <div class="mb-4 text-end">
                     <button class="btn btn-primary" onclick="printReport()">Cetak Laporan</button>
                 </div> -->
 
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle border rounded shadow-sm">
-                        <thead class="table-secondary">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle border rounded shadow-sm">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th class="">Nama
+                                Proyek
+                            </th>
+                            <th class="">Tempat
+                                Proyek</th>
+                            <th class="">Nama
+                                Perusahaan</th>
+                            <th class="">Tanggal
+                                Mulai</th>
+                            <th class="">Tanggal
+                                Selesai</th>
+                            <th class="">Aksi</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="projectTable">
+                        <!-- Loop through data -->
+                        @foreach ($pembelian as $item)
                             <tr>
-                                <th class="">Nama
-                                    Proyek
-                                </th>
-                                <th class="">Tempat
-                                    Proyek</th>
-                                <th class="">Nama
-                                    Perusahaan</th>
-                                <th class="">Tanggal
-                                    Mulai</th>
-                                <th class="">Tanggal
-                                    Selesai</th>
-                                <th class="">Aksi</th>
+                                <td>
+                                    {{ $item->proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}
+                                </td>
+                                <td>
+                                    {{ $item->proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? 'Tidak Ada Alamat' }}
+                                </td>
+                                <td>
+                                    {{ $item->proyek_disetujui->pengajuanProposal->tempatProyek->nama_tempat ?? 'Tidak Ada Nama Proyek' }}
 
+                                </td>
+                                <td>
+                                    {{ $item->proyek_disetujui->tanggal_mulai ?? 'Tidak Ada Tanggal Mulai' }}
+                                </td>
+                                <td>
+                                    {{ $item->proyek_disetujui->tanggal_selesai ?? 'Tidak Ada Tanggal Selesai' }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('detail', ['id' => $item->proyek_disetujui->id]) }}"
+                                        class="btn btn-info">Detail</a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody id="projectTable">
-                            <!-- Loop through data -->
-                            @foreach ($pembelian as $item)
-                                <tr>
-                                    <td>
-                                        {{ $item->proyek_disetujui->pengajuanProposal->nama_proyek ?? 'Tidak Ada Nama Proyek' }}
-                                    </td>
-                                    <td>
-                                        {{ $item->proyek_disetujui->pengajuanProposal->tempatProyek->alamat ?? 'Tidak Ada Alamat' }}
-                                    </td>
-                                    <td>
-                                        {{ $item->proyek_disetujui->pengajuanProposal->tempatProyek->nama_tempat ?? 'Tidak Ada Nama Proyek' }}
-
-                                    </td>
-                                    <td>
-                                        {{ $item->proyek_disetujui->tanggal_mulai ?? 'Tidak Ada Tanggal Mulai' }}
-                                    </td>
-                                    <td>
-                                        {{ $item->proyek_disetujui->tanggal_selesai ?? 'Tidak Ada Tanggal Selesai' }}
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('detail', ['id' => $item->proyek_disetujui->id]) }}"
-                                            class="btn btn-info">Detail</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
