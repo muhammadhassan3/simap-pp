@@ -1,6 +1,6 @@
 <x-layout>
 
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <div style="font-size: 16px; margin-bottom: 18px" class="fw-bold">Tambah Sewa Alat Berat</div>
@@ -34,7 +34,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="tempat_proyek_id" class="form-label">Nama Tempat Proyek</label>
-                        <input type="text" class="form-control" value="{{ $proyekDisetujui->pengajuanProposal->tempatProyek->nama_tempat }}" readonly>
+                        <input type="text" class="form-control"
+                            value="{{ $proyekDisetujui->pengajuanProposal->tempatProyek->nama_tempat }}" readonly>
                         <input type="hidden" name="id_proyek" value="{{ $id_proyek_disetujui }}">
                     </div>
                     <div class="mb-3">
@@ -42,7 +43,8 @@
                         <textarea class="form-control" name="detail" rows="3"></textarea>
                     </div>
                     <div class="d-flex justify-content-end gap-2">
-                        <a href="{{ route('sewa_alat.index', ['id_proyek_disetujui' => $id_proyek_disetujui]) }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('sewa_alat.index', ['id_proyek_disetujui' => $id_proyek_disetujui]) }}"
+                            class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>

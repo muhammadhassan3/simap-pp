@@ -1,27 +1,43 @@
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl flex w-full justify-end items-center border-b-2"
-    id="navbarBlur" style="height: 4.575rem;" navbar-scroll="true">
-    <!-- Navbar -->
-    <div class="ms-auto d-flex align-items-center">
-        <span class="me-1">Admin Ganteng</span>
-        <div class="dropdown">
-            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <div
-                    class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-fill" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                    </svg>
-                </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
-                {{-- <li><a class="dropdown-item" href="#">Settings</a></li> --}}
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item text-danger" href="{{ route('logout') }}">Logout</a></li>
-            </ul>
+<nav class="navbar card navbar-expand-lg bg-white shadow-sm border-bottom px-4 py-1 rounded-3" style="height: fit-content;">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <div>
+            <h6 class="mb-0 fw-bold" style="font-size: 1.5rem; font-family: 'Poppins', sans-serif; letter-spacing: 1px;">
+                SISMA
+            </h6>
         </div>
+        
+        {{-- Kanan: Username + Dropdown --}}
+        <div class="d-flex align-items-center gap-2">
+            {{-- Username --}}
+            <span class="fw-semibold text-dark">{{ auth()->user()->username ?? 'Username' }}</span>
+
+            {{-- Dropdown --}}
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#"
+                    id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="bg-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                        style="width: 36px; height: 36px;">
+                        <i class="bi bi-person-fill fs-5 text-dark"></i>
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="profileDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('profile') }}">
+                            <i class="bi bi-person-circle me-2"></i> Profile
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">
+                            <i class="bi bi-box-arrow-right me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </nav>

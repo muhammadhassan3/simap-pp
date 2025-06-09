@@ -18,7 +18,7 @@
         }
 
         h2 {
-            text-align: center;
+            text-align: start;
             /* Center the title */
             margin-bottom: 20px;
             /* Optional: Add some space below the title */
@@ -126,74 +126,80 @@
             });
         }
     </script>
-    <div class="container">
-        <div style="margin-bottom: 15px;">
-            <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $id_proyek_disetujui]) }}" class="btn btn-outline-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8" />
-                </svg>
-                Kembali
-            </a>
-        </div>
-        <h2>Data Sewa Alat Berat</h2>
-        <div class="top-bar">
-            <a href="/sewa_alat/create?id_proyek_disetujui={{$id_proyek_disetujui}}" class="add-button">+ Tambah Alat Berat</a>
-            <input type="text" id="searchInput" class="search-box" placeholder="Cari..." onkeyup="searchTable()">
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nama Alat</th>
-                    <th>Harga Sewa</th>
-                    <th>Nama Perusahaan</th>
-                    <th>Durasi</th>
-                    <th>Qty</th>
-                    <th>Detail</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($sewaAlat as $alat)
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div style="margin-bottom: 15px;">
+                <a href="{{ route('monitoring_proyek.index', ['id_proyek_disetujui' => $id_proyek_disetujui]) }}"
+                    class="btn btn-outline-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8" />
+                    </svg>
+                    Kembali
+                </a>
+            </div>
+            <h2>Data Sewa Alat Berat</h2>
+
+            <div class="top-bar">
+                <a href="/sewa_alat/create?id_proyek_disetujui={{ $id_proyek_disetujui }}" class="add-button">+ Tambah
+                    Alat Berat</a>
+                <input type="text" id="searchInput" class="search-box" placeholder="Cari..." onkeyup="searchTable()">
+            </div>
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ $alat->id }}</td>
-                        <td>{{ $alat->nama_alat }}</td>
-                        <td>Rp. {{ number_format($alat->harga_sewa, 0, ',', '.') }}/jam</td>
-                        <td>{{ $alat->customer->nama_customer }}</td>
-                        <td>{{ $alat->durasi }} menit</td>
-                        <td>{{ $alat->qty }}</td>
-                        <td>{{ $alat->detail }}</td>
-                        <td class="action-buttons">
-                            <a href="/sewa_alat/{{ $alat->id }}/edit?id_proyek_disetujui={{$id_proyek_disetujui}}" class="edit-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path
-                                        d="M14.1 4.22l5.66 5.66-9.19 9.19-5.66-5.66 9.19-9.19M15.5 3c-.4 0-.8.15-1.06.44L3.44 14.5a1.5 1.5 0 000 2.12l4.95 4.95c.29.29.67.44 1.06.44s.78-.15 1.06-.44L20.56 9.5a1.5 1.5 0 000-2.12l-4.95-4.95A1.5 1.5 0 0015.5 3z">
-                                    </path>
-                                </svg>
-                            </a>
-                            <form action="/sewa_alat/{{ $alat->id }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="delete-button" onclick="confirmDelete(event)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path
-                                            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </form>
-                        </td>
+                        <th>ID</th>
+                        <th>Nama Alat</th>
+                        <th>Harga Sewa</th>
+                        <th>Nama Perusahaan</th>
+                        <th>Durasi</th>
+                        <th>Qty</th>
+                        <th>Detail</th>
+                        <th>Aksi</th>
                     </tr>
-                @endforeach
-                @if ($sewaAlat->isEmpty())
-                    <tr>
-                        <td colspan="9" style="text-align: center;">Tidak ada data tersedia.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($sewaAlat as $alat)
+                        <tr>
+                            <td>{{ $alat->id }}</td>
+                            <td>{{ $alat->nama_alat }}</td>
+                            <td>Rp. {{ number_format($alat->harga_sewa, 0, ',', '.') }}/jam</td>
+                            <td>{{ $alat->customer->nama_customer }}</td>
+                            <td>{{ $alat->durasi }} menit</td>
+                            <td>{{ $alat->qty }}</td>
+                            <td>{{ $alat->detail }}</td>
+                            <td class="action-buttons">
+                                <a href="/sewa_alat/{{ $alat->id }}/edit?id_proyek_disetujui={{ $id_proyek_disetujui }}"
+                                    class="edit-button btn align-middle"
+                                    style="background-color: #efb944; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; vertical-align: middle;">
+                                    <img style="width: 18px; height: 18px; vertical-align: middle;"
+                                        src="https://img.icons8.com/?size=100&id=86374&format=png&color=FFFFFF"
+                                        alt="Edit">
+                                </a>
+                                <form action="/sewa_alat/{{ $alat->id }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="delete-button btn btn-edit align-middle"
+                                        onclick="confirmDelete(event)"
+                                        style="background-color: #ef4444; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; vertical-align: middle;">
+                                        <img style="width: 18px; height: 18px; vertical-align: middle;"
+                                            src="https://img.icons8.com/?size=100&id=DU8dSXkvLUkx&format=png&color=FFFFFF"
+                                            alt="Hapus">
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    @if ($sewaAlat->isEmpty())
+                        <tr>
+                            <td colspan="9" style="text-align: center;">Tidak ada data tersedia.</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </x-layout>

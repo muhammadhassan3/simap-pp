@@ -1,11 +1,12 @@
 <x-layout>
 
-    <div class="card shadow-sm">
+    <div class="card mb-4">
         <div class="card-body">
-            <h4 class="fw-bold mb-2">COSTUMER</h4>
+            <h2>Costomer</h2>
+
 
             {{-- BUTTON --}}
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: 20px; margin-bottom: 20px;">
                 <a href="{{ route('customer.create') }}" class="btn btn-primary px-3 m-0">+ Tambah Customer</a>
                 <div class="input-group w-auto ">
                     <input type="text" id="searchInput" class="form-control" placeholder="Cari..."
@@ -38,13 +39,12 @@
                                 <td class="align-middle">{{ $customer->email }}</td>
                                 <td class="align-middle">
                                     <div class="pt-3 d-flex gap-1 align-items-center">
-                                        <a href="{{ route('customer.edit', $customer->id) }}"
-                                            class="btn text-white" style="background-color: #DEAA00;">
+                                        <a href="{{ route('customer.edit', $customer->id) }}" class="btn text-white"
+                                            style="background-color: #DEAA00;">
                                             <i class="bi bi-pencil-fill text-white"></i>
                                         </a>
-                                        <a href="#" class="btn text-white"
-                                            style="background-color: #DE3F00;" data-bs-toggle="modal"
-                                            data-bs-target="#hapusCustomerModal"
+                                        <a href="#" class="btn text-white" style="background-color: #DE3F00;"
+                                            data-bs-toggle="modal" data-bs-target="#hapusCustomerModal"
                                             onclick="showModalHapus({{ $customer->id }})">
                                             <i class="bi bi-trash-fill text-white"></i>
                                         </a>
@@ -63,7 +63,7 @@
 
         </div>
     </div>
-    {{-- <div class="col-12">
+    {{-- <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <div style="font-size: 16px; margin-bottom: 18px" class="fw-bold">Costumer</div>

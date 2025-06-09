@@ -1,8 +1,10 @@
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl fixed-start ms-3 "
-    id="sidenav-main">
-    <div class="sidenav-header">
-        <a class="navbar-brand" href="#" target="_blank">
-            <img src="{{ asset('asset/Logo.png') }}" style="width: 200px; height: 60px;" alt="main_logo">
+<aside id="sidenav-main" class="sidenav navbar navbar-vertical bg-white navbar-expand-xs border-0 fixed-start">
+    <div
+        class="sidenav-header card shadow-sm m-3 d-flex justify-content-center align-items-center bg-white rounded-4 pt-0 pl-3 pb-2">
+        <a class="navbar-brand d-flex justify-content-center align-items-center" href="{{ route('dashboard') }}">
+            <img src="{{ asset('asset/Logo.png') }}" alt="main_logo" class="img-fluid"
+                style="max-width: 180px; height: auto; transition: transform 0.3s ease-in-out;"
+                onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
         </a>
     </div>
 
@@ -46,142 +48,144 @@
                     <span class="nav-link-text ms-1">Customer</span>
                 </a>
             </li>
-                 <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('kategori_proyek.index') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=7gtfJBXgkVkP&format=png&color=000000" alt="">
+                            src="https://img.icons8.com/?size=100&id=7gtfJBXgkVkP&format=png&color=000000"
+                            alt="">
                     </div>
-                    <span class="nav-link-text ms-1">Kategori</span>
+                    <span class="nav-link-text ms-1">Kategori Proyek</span>
                 </a>
             </li>
+
+            {{-- MANAJEMEN PROYEK --}}
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('show-tempat-proyek') }}">
+                <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#sidebarProyek"
+                    role="button" aria-expanded="false" aria-controls="sidebarProyek">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img style="width: 16px;"
                             src="https://img.icons8.com/?size=100&id=4rMyLuvp27Oa&format=png&color=000000"
                             alt="">
                     </div>
-                    <span class="nav-link-text ms-1">Tempat Proyek</span>
+                    <span class="nav-link-text ms-1">Manajemen Proyek</span>
+
                 </a>
+                <div class="collapse" id="sidebarProyek">
+                    <ul class="list-unstyled fw-normal pb-1 small ms-2 me-2">
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('show-tempat-proyek') }}">
+                                <i class="fas fa-map-marker-alt me-2"></i> Tempat Proyek
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('pengajuan_proposal.index') }}">
+                                <i class="fas fa-file-alt me-2"></i> Proposal
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('proyekdisetujui.index') }}">
+                                <i class="fas fa-check-circle me-2"></i> Proyek Disetujui
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('evaluasi.index') }}">
+                                <i class="fas fa-clipboard-list me-2"></i> Evaluasi
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('dokumen.index') }}">
+                                <i class="fas fa-folder me-2"></i> Dokumen Penyelesaian
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
+            {{-- MANAJEMEN PRODUK --}}
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('pengajuan_proposal.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=59777&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Proposal</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('proyekdisetujui.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=59777&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Proyek Disetujui</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('evaluasi.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=59777&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Evaluasi</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('dokumen.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=59777&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Dokumen Penyelesaian</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link  " href="{{ route('produk.index') }}">
+                <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#sidebarProduk"
+                    role="button" aria-expanded="false" aria-controls="sidebarProduk">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img style="width: 16px;"
                             src="https://img.icons8.com/?size=100&id=11271&format=png&color=000000" alt="">
                     </div>
-                    <span class="nav-link-text ms-1">Produk</span>
+                    <span class="nav-link-text ms-1">Manajemen Produk</span>
                 </a>
+                <div class="collapse" id="sidebarProduk">
+                    <ul class="list-unstyled fw-normal pb-1 small ms-2 me-2">
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('produk.index') }}">
+                                <i class="fas fa-box-open me-2"></i> Produk
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('penjualan.index') }}">
+                                <i class="fas fa-shopping-cart me-2"></i> Penjualan
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('pembelian.tampil') }}">
+                                <i class="fas fa-cart-arrow-down me-2"></i> Pembelian
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('market.index') }}">
+                                <i class="fas fa-bullhorn me-2"></i> Marketing
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
             </li>
 
+            {{-- MANAJEMEN TENAGA KERJA --}}
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('pekerja.index') }}">
+                <a class="nav-link d-flex align-items-center" data-bs-toggle="collapse" href="#sidebarTenagaKerja"
+                    role="button" aria-expanded="false" aria-controls="sidebarTenagaKerja">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=102261&format=png&color=000000" alt="">
+                            src="https://img.icons8.com/?size=100&id=102261&format=png&color=000000"
+                            alt="worker icon">
                     </div>
-                    <span class="nav-link-text ms-1">Pekerja</span>
+                    <span class="nav-link-text ms-1">Manajemen SDM</span>
                 </a>
+                <div class="collapse" id="sidebarTenagaKerja">
+                    <ul class="list-unstyled fw-normal pb-1 small ms-3 me-3">
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('pekerja.index') }}">
+                                <i class="fas fa-user-tie me-2"></i> Pekerja
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('pengawas-proyek.index') }}">
+                                <i class="fas fa-user-check me-2"></i> Pengawas
+                            </a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link px-3 py-2 rounded bg-light text-dark hover:bg-primary hover:text-white transition"
+                                href="{{ route('aktor.index') }}">
+                                <i class="fas fa-user-cog me-2"></i> Aktor
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('pengawas-proyek.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                             src="https://img.icons8.com/?size=100&id=102261&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Pengawas</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('penjualan.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=85383&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Penjualan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('pembelian.tampil') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=59994&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Pembelian</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('market.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=iV2d2QjFyUYL&format=png&color=000000"
-                            alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Marketing</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('aktor.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img style="width: 16px;"
-                            src="https://img.icons8.com/?size=100&id=102261&format=png&color=000000" alt="">
-                    </div>
-                    <span class="nav-link-text ms-1">Aktor</span>
-                </a>
-            </li>
-
 
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>

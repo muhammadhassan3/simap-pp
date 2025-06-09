@@ -1,15 +1,16 @@
 <x-layout>
 
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
-                <h4 class="mb-4">Pengajuan Proposal</h4>
-                <div class="d-flex justify-content-between align-items-center">
+                <h2>Pengajuan Proposal</h2>
+                <div class="d-flex justify-content-between align-items-center" style="margin-top: 20px; margin-bottom: 20px;">
                     <div class="d-flex gap-2 m-0">
                         <a href="{{ route('pengajuan_proposal.create') }}" class="btn btn-primary">+ Tambah Proposal</a>
                         <a href="{{ route('proyekdisetujui.index') }}" class="btn btn-primary">Lihat Proyek Disetujui</a>
                     </div>
-                    <input type="text" class="form-control w-25 mb-3" placeholder="Cari proposal..." id="searchInput">
+                    <input type="text" class="form-control w-25 mb-3" placeholder="Cari proposal..."
+                        id="searchInput">
                 </div>
 
                 <div class="table-responsive">
@@ -50,15 +51,18 @@
                                     </td>
                                     <td class="px-4 py-2 text-start">
                                         @if ($p->status_proposal == 'Pending')
-                                            <form action="{{ route('proposal.updateStatus',$p->id) }}?status=Disetujui" method="POST" class="d-inline">
+                                            <form action="{{ route('proposal.updateStatus', $p->id) }}?status=Disetujui"
+                                                method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="btn btn-success" title="Proposal Disetujui">
+                                                <button type="submit" class="btn btn-success"
+                                                    title="Proposal Disetujui">
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             </form>
 
-                                            <form action="{{ route('proposal.updateStatus', $p->id) }}?status=Ditolak" method="POST" class="d-inline">
+                                            <form action="{{ route('proposal.updateStatus', $p->id) }}?status=Ditolak"
+                                                method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-danger" title="Proposal Ditolak">

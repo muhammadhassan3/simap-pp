@@ -1,13 +1,12 @@
 <x-layout>
 
-<div class="container mt-lg-4">
     <div class="card">
         <div class="card-header bg-white">
             <div class="d-flex align-items-center gap-2">
-                <a href="{{ route('dokumen.index') }}">
-                    <i class="bi bi-arrow-left"></i>
+                <a href="{{ route('dokumen.index') }}"
+                    class="text-dark fw-semibold text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-arrow-left"></i> Tambah Dokumen Penyelesaian Proyek
                 </a>
-                <h4 class="mb-0">Tambah Dokumen Penyelesaian Proyek</h4>
             </div>
         </div>
         <div class="card-body">
@@ -24,8 +23,11 @@
                                 class="form-control select2 bg-black" required>
                                 <option value="">-- Pilih Proyek --</option>
                                 @foreach ($proyekSelesai as $item)
-                                <option value="{{ $item->id }}">{{ $item->pengajuanProposal->nama_proyek ?? 'Tidak Ada
-                                    Data' }}</option>
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->pengajuanProposal->nama_proyek ??
+                                            'Tidak Ada
+                                                                                                                                                            Data' }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -56,23 +58,23 @@
             </form>
         </div>
     </div>
-</div>
 
 
-@push('scripts')
-<!-- Load jQuery & Select2 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('#id_proyek_disetujui').select2({
-            placeholder: "-- Pilih Proyek --",
-            allowClear: true,
-            width: '100%'
-        });
-    });
-</script>
-@endpush
+    @push('scripts')
+        <!-- Load jQuery & Select2 -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#id_proyek_disetujui').select2({
+                    placeholder: "-- Pilih Proyek --",
+                    allowClear: true,
+                    width: '100%'
+                });
+            });
+        </script>
+    @endpush
 </x-layout>

@@ -1,10 +1,9 @@
 <x-layout>
     <div class="card shadow-sm p-4 mx-auto" style="max-width: 1200px; background-color: #FFFFFF">
         <div class="d-flex align-items-center mb-3">
-            <a href="{{ route('kategori_proyek.index') }}" class="text-dark me-2">
-                <i class="bi bi-arrow-left fs-4"></i>
+            <a href="{{ route('kategori_proyek.index') }}" class="text-dark fw-semibold text-decoration-none d-flex align-items-center gap-2">
+                <i class="bi bi-arrow-left fs-4"></i> Tambah Kategori Proyek
             </a>
-            <h4 class="mb-0">Tambah Kategori Proyek</h4>
         </div>
 
         <form action="{{ route('kategori_proyek.store') }}" method="POST">

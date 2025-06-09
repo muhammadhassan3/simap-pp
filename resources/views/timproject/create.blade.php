@@ -16,7 +16,7 @@
             }, 3000); // Alert hilang setelah 3 detik
         </script>
     @endif
-    <div class="container">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 1200px; background-color: #FFFFFF">
         <h2>Tambah Tim Proyek</h2>
         <form action="{{ route('tim-proyek.store') }}" method="POST">
             @csrf

@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="col-12">
+    <div class="">
         <div class="card mb-4">
             <div class="card-header pb-0" style="background: white">
                 <h2 class="mb-3">Tabel Pembelian</h2>
@@ -12,8 +12,8 @@
                     <!-- Form Pencarian -->
                     <form class="d-flex align-items-center gap-2 w-40" style="flex-grow: 1; max-width: 500px;">
 
-                        <input type="search" id="searchProject" class="form-control"
-                            placeholder="Cari" aria-label="Search">
+                        <input type="search" id="searchProject" class="form-control" placeholder="Cari"
+                            aria-label="Search">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="fas fa-search"></i>
@@ -72,26 +72,25 @@
         </div>
     </div>
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
             let searchInput = document.getElementById('searchProject');
             let rows = document.querySelectorAll('tbody tr');
             console.log('test');
 
-            if(searchInput){
-                searchInput.addEventListener('keyup', function (){
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function() {
                     console.log('test');
                     let value = searchInput.value.toLowerCase();
                     rows.forEach(row => {
                         let rowText = row.textContent.toLowerCase();
-                        if(rowText.includes(value)){
+                        if (rowText.includes(value)) {
                             row.style.display = '';
                         } else {
                             row.style.display = 'none';
                         }
                     });
                 })
-            }else{
+            } else {
                 console.log('searchProject tidak ada');
             }
         })
