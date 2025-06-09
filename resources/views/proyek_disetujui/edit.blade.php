@@ -2,7 +2,7 @@
     <div class="container mt-4">
         <div class="card p-4">
             <a href="{{ route('proyekdisetujui.index') }}" class="text-dark d-flex align-items-center">
-                <h4><i class="bi bi-arrow-left me-2"></i> <span>Edit Status</span></h4>
+                <h4><i class="bi bi-arrow-left me-2"></i> <span>Edit Proyek Disetujui</span></h4>
             </a>
 
 
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn text-white" style="background-color: #DEAA00;">Edit Status</button>
+                    <button type="submit" class="btn text-white" style="background-color: #DEAA00;">Edit Proyek Disetujui</button>
                 </div>
             </form>
         </div>

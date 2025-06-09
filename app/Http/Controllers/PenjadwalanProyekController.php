@@ -11,9 +11,20 @@ class PenjadwalanProyekController extends Controller
 {
     public function index(Request $request)
     {
-        $penjadwalanProyek = Penjadwalan::with(['proyekDisetujui.pengajuanProposal', 'supervisor.pekerja'])->where('id_proyek_disetujui', $request['id_proyek_disetujui'])->get();
-        $timProyek = TimProyek::with('pekerja')->where('id_project_disetujui', $request['id_proyek_disetujui'])->where('peran', 'supervisor')->first();
-        return view('penjadwalan_proyek.penjadwalan_proyek', ['penjadwalanProyek' => $penjadwalanProyek, 'id_proyek_disetujui' => $request['id_proyek_disetujui'], 'supervisor' => $timProyek ? $timProyek->pekerja->nama : 'Tidak Diketahui']);
+        $penjadwalanProyek = Penjadwalan::with(['proyekDisetujui.pengajuanProposal', 'supervisor.pekerja'])
+        ->where('id_proyek_disetujui', $request['id_proyek_disetujui'])
+        ->paginate(10); // Ubah get() menjadi paginate(10)
+        
+    $timProyek = TimProyek::with('pekerja')
+        ->where('id_project_disetujui', $request['id_proyek_disetujui'])
+        ->where('peran', 'supervisor')
+        ->first();
+        
+    return view('penjadwalan_proyek.penjadwalan_proyek', [
+        'penjadwalanProyek' => $penjadwalanProyek,
+        'id_proyek_disetujui' => $request['id_proyek_disetujui'],
+        'supervisor' => $timProyek ? $timProyek->pekerja->nama : 'Tidak Diketahui'
+    ]);
     }
 
 //    public function create(Request $request)

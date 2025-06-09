@@ -16,23 +16,26 @@
                     <table class="table table-hover align-middle border rounded shadow-sm">
                         <thead class="table-secondary">
                             <tr>
-                                <th>No</th>
-                                <th>Nama Proyek</th>
-                                <th>Tempat Proyek</th>
-                                <th>Harga Proyek</th>
-                                <th>Status</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
-                                <th width="50">Aksi</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Nama Proyek</th>
+                                <th class="text-center">Tempat Proyek</th>
+                                <th class="text-center">Harga Proyek (Rp)</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Tanggal Mulai</th>
+                                <th class="text-center">Tanggal Selesai</th>
+                                <th class="text-center" width="50">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($proyek as $key => $item)
                                 <tr>
-                                    <td class="text-center">{{ $key + 1 }}</td>
+                                    <td class="text-center">
+                                        {{ ($proyek->currentPage() - 1) * $proyek->perPage() + $loop->iteration }}</td>
                                     <td class="text-center">{{ $item->pengajuanProposal->nama_proyek }}</td>
-                                    <td class="text-center">{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}</td>
-                                    <td class="text-center">Rp {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
+                                    <td class="text-center">{{ $item->pengajuanProposal->tempatProyek->nama_tempat }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ number_format($item->pengajuanProposal->harga, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $item->status }}</td>
                                     <td class="text-center">{{ $item->tanggal_mulai }}</td>
                                     <td class="text-center">{{ $item->tanggal_selesai }}</td>
@@ -59,11 +62,33 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap px-2">
+                        <div class="d-flex align-items-center">
+                            <div class="badge bg-success text-white rounded-pill px-3 py-2 fw-normal">
+                                <i class="bi bi-info-circle me-1"></i>
+                                {{ $proyek->firstItem() ?? 0 }} - {{ $proyek->lastItem() ?? 0 }}
+                                of {{ $proyek->total() ?? 0 }} rows
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="badge bg-success text-white rounded-pill px-3 py-2 fw-normal">
+                                <a href="{{ $proyek->previousPageUrl() }}"
+                                    class="btn-sm text-white {{ $proyek->currentPage() == 1 ? 'disabled' : '' }}">
+                                    <i class="bi bi-chevron-left"></i> Previous
+                                </a>
+                                <span class="mx-2">Page {{ $proyek->currentPage() }} of
+                                    {{ $proyek->lastPage() }}</span>
+                                <a href="{{ $proyek->nextPageUrl() }}"
+                                    class="btn-sm text-white {{ $proyek->currentPage() == $proyek->lastPage() ? 'disabled' : '' }}">
+                                    Next <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
 </x-layout>
 
@@ -76,7 +101,7 @@
         Swal.fire({
             icon: 'success',
             title: 'Berhasil!',
-            text: '{{ session("success") }}',
+            text: '{{ session('success') }}',
             showConfirmButton: false,
             timer: 2000
         });
