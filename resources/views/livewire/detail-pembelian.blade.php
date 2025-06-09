@@ -61,7 +61,7 @@
                 const totalInput = parentRow.querySelector(".total_harga");
 
                 const qty = parseFloat(qtyInput.value) || 0;
-                const hargaSatuan = parseFloat(hargaInput.value.replace('.','')) || 0;
+                const hargaSatuan = parseFloat(hargaInput.value.replace(/\./g,'')) || 0;
                 const totalHarga = qty * hargaSatuan;
 
                 // Format angka dengan pemisah ribuan lokal Indonesia

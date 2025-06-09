@@ -34,13 +34,13 @@
                     </div>
                     <div class="form-group me-2">
                         <label for="qty" class="form-label">QTY</label>
-                        <input type="number" class="form-control" id="qty" name="qty"
+                        <input type="number" class="form-control qty" id="qty" name="qty"
                                value="{{ $detail->qty }}" min="0" required>
                     </div>
                     <div class="form-group me-2">
                         <label for="harga_satuan" class="form-label">Harga Satuan</label>
-                        <input type="text" class="form-control" id="harga_satuan" name="harga_satuan"
-                               value="{{ number_format($detail->harga_satuan, 0, ',', '.') }}" required>
+                        <input type="text" class="form-control harga_satuan" id="harga_satuan" name="harga_satuan"
+                               value="{{ number_format($detail->harga_satuan, 0, ',', '.') }}" required oninput="formatCurrency(this)">
                     </div>
                     <div class="form-group me-2">
                         <label for="total_harga" class="form-label">Total Harga</label>
@@ -52,4 +52,35 @@
             </div>
         </div>
     </div>
+    <script>
+        function formatCurrency(input) {
+            // Menghapus semua karakter yang bukan angka
+            let value = input.value.replace(/[^0-9]/g, '');
+
+            // Format angka dengan pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Mengupdate nilai input
+            input.value = value;
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            // Event delegation: Dengarkan input pada parent
+            document.addEventListener("input", function(event) {
+                if (event.target.classList.contains("qty") || event.target.classList.contains(
+                    "harga_satuan")) {
+                    const qtyInput = document.getElementById("qty");
+                    const hargaInput = document.getElementById("harga_satuan");
+                    const totalInput = document.getElementById("total_harga");
+
+                    const qty = parseInt(qtyInput.value) || 0;
+                    const hargaSatuan = parseInt(hargaInput.value.replace(/\./g,'')) || 0;
+                    console.log(`${qty} * ${hargaSatuan} (${hargaInput.value} = ${hargaInput.value.replace(/\./g,'')})`)
+                    const totalHarga = qty * hargaSatuan;
+
+                    // Format angka dengan pemisah ribuan lokal Indonesia
+                    totalInput.value = totalHarga.toLocaleString("id-ID");
+                }
+            });
+        });
+    </script>
 </x-layout>
